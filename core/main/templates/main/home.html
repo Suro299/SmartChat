@@ -1,12 +1,23 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'main/css/home/style.css' %}">
+    <title> Home </title>
 </head>
 <body>
-    <h1> Home </h1>
+    <header>
+        <div>
+            <h1> <span>Smart</span> Chat </h1>
+        </div>
+        <div>
+            <a href="#"><button class="reg_button"> {{user.username }} </button></a>
+        </div>
+    </header>
+
 </body>
 </html>

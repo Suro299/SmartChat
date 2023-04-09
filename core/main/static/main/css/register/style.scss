@@ -124,7 +124,7 @@ header {
 }
 
 
-.log_div {
+.reg_div {
     width: 90%;
     height: 60vh;
     position: absolute;
@@ -144,17 +144,40 @@ header {
         text-align: center;
         font-size: 2rem;
         color: rgba(245, 245, 245, 0.427);
+
+        
     }
   
     div {
+        margin-top: 7rem;
         width: 50%;
         height: 40%;
-        margin-top: 2rem;
         @include center;
+
+        @media screen and (max-width: 768px) {
+            margin-top: 2rem;
+        }
+
+        @media screen and (min-width: 600px) {
+            margin-top: 7rem;
+        }
+
+        
 
         form {
             @include center;
             flex-direction: column;
+
+            p {
+                top: 56vh;
+                position: absolute;
+                margin-top: 2rem;
+                color: red;
+                text-shadow: 0 0 10px #ff1818, 0 0 20px #ff1818, 0 0 30px #ff1818, 0 0 45px #ff1818, 0 0 65px #ff1818;
+                @media screen and (max-width: 600px) {
+                    top: 42vh;
+                }
+            }
 
             span {
                 width: 50rem;

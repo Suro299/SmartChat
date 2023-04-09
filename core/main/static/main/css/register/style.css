@@ -84,7 +84,7 @@ header {
           font-size: 1.6rem;
           margin-right: -0.1rem; } }
 
-.log_div {
+.reg_div {
   width: 90%;
   height: 60vh;
   position: absolute;
@@ -96,26 +96,41 @@ header {
   justify-content: center;
   align-items: center;
   flex-direction: column; }
-  .log_div h1 {
+  .reg_div h1 {
     font-size: 5rem;
     margin-bottom: 2rem; }
-  .log_div p {
+  .reg_div p {
     text-align: center;
     font-size: 2rem;
     color: rgba(245, 245, 245, 0.427); }
-  .log_div div {
+  .reg_div div {
+    margin-top: 7rem;
     width: 50%;
     height: 40%;
-    margin-top: 2rem;
     display: flex;
     justify-content: center;
     align-items: center; }
-    .log_div div form {
+    @media screen and (max-width: 768px) {
+      .reg_div div {
+        margin-top: 2rem; } }
+    @media screen and (min-width: 600px) {
+      .reg_div div {
+        margin-top: 7rem; } }
+    .reg_div div form {
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column; }
-      .log_div div form span {
+      .reg_div div form p {
+        top: 56vh;
+        position: absolute;
+        margin-top: 2rem;
+        color: red;
+        text-shadow: 0 0 10px #ff1818, 0 0 20px #ff1818, 0 0 30px #ff1818, 0 0 45px #ff1818, 0 0 65px #ff1818; }
+        @media screen and (max-width: 600px) {
+          .reg_div div form p {
+            top: 42vh; } }
+      .reg_div div form span {
         width: 50rem;
         height: 6vh;
         border-radius: 5px;
@@ -126,7 +141,7 @@ header {
         align-items: center;
         outline: none;
         padding: 0rem 2rem; }
-        .log_div div form span input {
+        .reg_div div form span input {
           width: 100%;
           height: 5.5vh;
           background-color: transparent;
@@ -135,7 +150,7 @@ header {
           border: none;
           font-size: 2rem;
           padding: 2rem; }
-      .log_div div form button {
+      .reg_div div form button {
         width: 50rem;
         height: 6vh;
         font-size: 2rem;
@@ -150,30 +165,30 @@ header {
         align-items: center;
         justify-content: space-between;
         padding: 0rem 3.5rem; }
-        .log_div div form button:hover {
+        .reg_div div form button:hover {
           cursor: pointer;
           width: 51rem;
           font-size: 2.2rem;
           transition: 0.2s; }
   @media only screen and (max-width: 600px) {
-    .log_div {
+    .reg_div {
       width: 100%;
       height: auto;
       top: 50%;
       transform: translate(-50%, -50%); }
-      .log_div h1 {
+      .reg_div h1 {
         font-size: 3rem;
         margin-bottom: 1rem; }
-      .log_div p {
+      .reg_div p {
         font-size: 1.5rem; }
-      .log_div div {
+      .reg_div div {
         width: 100%;
         height: auto; }
-        .log_div div form span {
+        .reg_div div form span {
           width: 100%;
           height: auto;
           max-width: 400px; }
-        .log_div div form button {
+        .reg_div div form button {
           width: 100%;
           max-width: 400px;
           margin-top: 1rem;

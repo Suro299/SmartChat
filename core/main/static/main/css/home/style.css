@@ -1,0 +1,65 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+html {
+  font-size: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: whitesmoke; }
+
+body {
+  background-color: #101010; }
+
+header {
+  width: 100%;
+  height: 7vh;
+  border-bottom: 1px solid #ffbf0099;
+  display: flex;
+  align-items: center; }
+  header div:first-child {
+    position: absolute;
+    left: 5rem; }
+    header div:first-child span {
+      color: #ffcf41;
+      font-size: 2.3rem;
+      margin-left: 0.5rem; }
+  header div:last-child {
+    position: absolute;
+    right: 4rem; }
+    header div:last-child .reg_button {
+      width: 12rem;
+      height: 4rem;
+      background: linear-gradient(to right top, #ff9a00, #f6d900);
+      border: none;
+      border-radius: 5px;
+      color: #1f1f1f;
+      font-size: 1.7rem;
+      transition: 0.3s; }
+      header div:last-child .reg_button:hover {
+        cursor: pointer;
+        background: linear-gradient(to right top, #ffad32, #ffee35);
+        width: 12.2rem;
+        height: 4.2rem;
+        font-size: 1.8rem;
+        margin-right: -0.1rem;
+        transition: 0.3s; }
+  @media screen and (max-width: 768px) {
+    header div:first-child {
+      left: 2rem; }
+      header div:first-child span {
+        font-size: 2rem;
+        margin-left: 0.5rem; }
+    header div:last-child {
+      right: 2rem; }
+      header div:last-child .reg_button {
+        width: 10rem;
+        height: 3.5rem;
+        font-size: 1.5rem; }
+        header div:last-child .reg_button:hover {
+          width: 10.2rem;
+          height: 3.7rem;
+          font-size: 1.6rem;
+          margin-right: -0.1rem; } }
+
+/*# sourceMappingURL=style.css.map */

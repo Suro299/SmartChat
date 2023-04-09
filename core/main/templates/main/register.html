@@ -1,12 +1,40 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main/css/register/style.css' %}">
     <title> Register </title>
 </head>
 <body>
-    <h1> Register  </h1>
+    <header>
+        <div>
+            <h1> <span>Smart</span> Chat </h1>
+        </div>
+        <div>
+            <a href="{% url 'login' %}"><button class="reg_button"> Login </button></a>
+        </div>
+    </header>
+
+    <div class="reg_div">
+        <h1> Create An Account </h1>
+        <p> Lorem ipsum dolor sit amet consectetur adipisicing <br> Laborum dolor commodi quo. Eius.</p>
+    
+        <div>
+            <form method="post">
+                
+                {% csrf_token %}
+
+                <span><input type = "text" name = "username" placeholder = "User Name"> <img src="{% static 'main/icon/login/user.svg' %}"></span>
+                <span> <input type = "password" name = "password1" placeholder = "Password"> <img src="{% static 'main/icon/login/lock.svg' %}"></span>
+                <span> <input type = "password" name = "password2" placeholder = "Repeat Password"> <img src="{% static 'main/icon/login/lock.svg' %}"></span>
+                <button type="submit"> Create An Account <img src="{% static 'main/icon/login/rigth.svg' %}"></button>
+                <p style = "display: {{ pdisplay }};"> Password mismatch Or None </p>                
+            </form>
+        </div>
+    </div>
 </body>
 </html>
