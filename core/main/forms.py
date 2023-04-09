@@ -25,7 +25,7 @@ class RegistrationForm(forms.Form):
         password2 = self.cleaned_data.get('password2')
         
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError('Пароли не совпадают')
+            raise forms.ValidationError('Password mismatch Or None ')
         
         contains_digit(password1)
         
