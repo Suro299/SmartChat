@@ -27,6 +27,10 @@ class RegistrationForm(forms.Form):
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError('Password mismatch Or None ')
         
+        
+        if len(password1) < 8:
+            raise forms.ValidationError('Password mismatch Or None ')
+        
         contains_digit(password1)
         
         return password1

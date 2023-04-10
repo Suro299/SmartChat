@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="{% static 'main/css/home/style.css' %}">
     <title> Home </title>
 </head>
@@ -14,10 +14,79 @@
         <div>
             <h1> <span>Smart</span> Chat </h1>
         </div>
+
         <div>
-            <a href="#"><button class="reg_button"> {{user.username }} </button></a>
+            <section>
+                <a href="">
+                    <button class="active_tab" >
+                        <span > Home </span> 
+                    </button>
+                </a>
+            </section>
+
+            <h1> | </h1>
+
+            <section>
+                <a href="">
+                    <button>
+                        <span> Chat </span> 
+                    </button>
+                </a>
+            </section>
+        </div>
+
+        <div>
+            <a href="#"><button id = "user_button" class="user_button"> {{user.username }} </button></a>
         </div>
     </header>
+    
+
+    <div id = "settings_window" class = "settings_window">
+        <ul>
+            <a href=""><li > Singned in as <b>{{user.username }}</b> </li></a>
+            <hr>
+            <a href=""><li> Profile settings </li></a>
+            <a href=""><li> Site Settings </li></a>
+            <hr>
+            <a href=""><li> Contact Us</li></a>
+            <a href=""><li> About Us </li></a>
+            <hr>
+            <a href="{% url 'logout' %}"><li> Sing Out </li></a>
+            
+        </ul>
+    </div>
+
+
+
+    <footer id = "footer">
+        
+
+        <div>
+            <section>
+                <a href="">
+                    <button class="active_tab" >
+                        <span > Home </span> 
+                    </button>
+                </a>
+            </section>
+
+            <div id = "footer_button_div" class="footer_up_down">
+                <button id = "footer_button">
+                    ⇡
+                </button>
+            </div>
+
+            <section>
+                <a href="">
+                    <button>
+                        <span> Chat </span> 
+                    </button>
+                </a>
+            </section>
+        </div>
+    </footer>
+
+    <script src="{% static 'main/js/home/app.js' %}"></script>
 
 </body>
 </html>
