@@ -8,8 +8,12 @@ from django.contrib.auth.models import User
 
 
 def home(request):
+    user_list = User.objects.all()
+    
     if request.user.is_authenticated: 
-        return render(request, "main/home.html")
+        return render(request, "main/home.html", context = {
+            "user_list": user_list
+        })
     else: 
         return redirect("login")
 
@@ -60,6 +64,7 @@ def login_request(request):
 
 
 def logout_request(request):
+
 	logout(request)
 	messages.info(request, "You have successfully logged out.") 
 	return redirect("home")

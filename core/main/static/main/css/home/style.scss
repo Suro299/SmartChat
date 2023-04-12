@@ -1,5 +1,19 @@
 $page_bgc: #101010;
+$yellow_border: 2px solid #ffbf0099;
 
+
+::-webkit-scrollbar {
+    width: 1.5rem;
+    border-radius: 0 1rem 1rem 0 ;
+    background-color: #1f1f1f; 
+}
+  
+::-webkit-scrollbar-thumb {
+    border-radius:1rem;
+    background-color: #1f1f1f;
+    border: 1px solid #5c5c5c;
+
+  }
 
 * {
     margin: 0;
@@ -56,7 +70,7 @@ footer {
                 height: 100%;
                 color: whitesmoke;
                 background-color: transparent;
-                border: 2px solid #ffbf0099;
+                border: $yellow_border;
                 border-radius: 50%;
                 font-size: 2rem;
             }
@@ -187,6 +201,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 0 50px 0 rgba(255, 191, 0, 0.234);
 
     div {
 
@@ -465,4 +480,71 @@ header {
             }
         }
     }
+}
+
+
+
+.users_list {
+    width: 35rem;
+    height: 90vh;
+    left: 2rem;
+    top: 8vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-top: 2rem;
+    position: fixed;
+    border-radius: 1rem;
+    border: $yellow_border;
+    box-shadow: 0 0 10px 0 rgba(255, 191, 0, 0.234);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
+
+    h1 {
+        font-size: 3rem;
+    }
+
+    ul {
+        margin-top: 2rem;
+        width: 100%;
+        height: 100%;
+        li {
+            width: 100%;
+            height: 6rem;
+            display: flex;
+            align-items: center;
+            padding-left: 1rem;
+            transition: 0.3s;
+
+            img {
+                width: 3rem;
+            }
+            
+            a {
+                text-decoration: none;
+
+                h2 {
+                    color: whitesmoke;
+                    margin-left: 1rem;
+                    font-size: 1.5rem;
+
+                    span {
+                        font-weight: 100;
+                    }
+                }
+            }
+
+            &:hover {
+                margin-left: 2rem;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+            
+        }
+    }
+
 }

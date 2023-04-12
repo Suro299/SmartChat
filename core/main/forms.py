@@ -2,8 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 def contains_digit(password):
-    if password and not any(char.isdigit() for char in password):
-        raise ValidationError('Пароль должен содержать хотя бы одну цифру.')
+    pass
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(label="User Name")

@@ -36,10 +36,35 @@
         </div>
 
         <div>
-            <a href="#"><button id = "user_button" class="user_button"> {{user.username }} </button></a>
+            <!-- <a href="#"><button id = "user_button" class="user_button"> {{user.username }} </button></a> -->
+            <a href="#"> <img id = "user_button" class="user_button_icon" src="{% static './main/default_avatars/default_avatar.png' %}" width="45px" alt="B"> </a>
+
         </div>
     </header>
     
+    <nav class = "users_list">
+        <h1> Users </h1>
+        <ul>
+
+            {% for i in user_list%}
+            <li> 
+                <img src="{% static './main/default_avatars/default_avatar.png' %}" alt=""> 
+                {% if i.is_staff %}
+                    <a href=""> <h2> {{ i.username }} <span style="color: #ffd800;"> (Staff) </span></h2></a>
+                {% else %}
+                <a href=""> <h2> {{ i.username }} <span style="color: rgb(82, 193, 49);"> (User) </span></h2> </a>
+                {% endif %}
+            </li>
+            {% endfor %}
+            
+        </ul>
+    </nav>
+
+
+
+
+
+
 
     <div id = "settings_window" class = "settings_window">
         <ul>
