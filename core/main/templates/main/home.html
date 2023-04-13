@@ -43,26 +43,62 @@
     </header>
     
     <nav class = "users_list">
-        <h1> Users </h1>
-        <ul>
-
-            {% for i in user_list%}
-            <li> 
-                <img src="{% static './main/default_avatars/default_avatar.png' %}" alt=""> 
-                {% if i.is_staff %}
-                    <a href=""> <h2> {{ i.username }} <span style="color: #ffd800;"> (Staff) </span></h2></a>
-                {% else %}
-                <a href=""> <h2> {{ i.username }} <span style="color: rgb(82, 193, 49);"> (User) </span></h2> </a>
-                {% endif %}
-            </li>
-            {% endfor %}
+        <div>
+            <h1> Users </h1>
+            <ul>
             
-        </ul>
+                <li> 
+                    <img src="{% static './main/default_avatars/default_avatar.png' %}" alt=""> 
+                    {% if user.is_staff %}
+                        <a href=""> <h2> {{ user.username }} <span style="color: #ffd800;"> (Staff) </span></h2></a>
+                    {% else %}
+                    <a href=""> <h2> {{ user.username }} <span style="color: rgb(82, 193, 49);"> (User) </span></h2> </a>
+                    {% endif %}
+                </li>
+            
+            
+                {% for i in user_list%}
+                    {% if i.username != user.username %}
+                        <li> 
+                            <img src="{% static './main/default_avatars/default_avatar.png' %}" alt=""> 
+                            {% if i.is_staff %}
+                                <a href=""> <h2> {{ i.username }} <span style="color: #ffd800;"> (Staff) </span></h2></a>
+                            {% else %}
+                            <a href=""> <h2> {{ i.username }} <span style="color: rgb(82, 193, 49);"> (User) </span></h2> </a>
+                            {% endif %}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                    
+            </ul>
+            </div>
     </nav>
 
 
 
+    <main>
+        <section>
+            <div> POST </div>
+            <div> POST </div>
+            <div> POST </div>
+            <div> POST </div>
+            <div> POST </div>
+            <div> POST </div>
+            <div> POST </div>
+            <div> POST </div>
+            <div> POST </div>
+            <div> POST </div>
+            <div> POST </div>
+        </section>
+      
+        <span>
+            <form method="post">
+                <input type="text" placeholder="Add post">
+                <button type="submit"> Go </button>
+            </form>
+        </span>
 
+    </main>
 
 
 

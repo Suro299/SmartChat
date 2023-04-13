@@ -10,8 +10,8 @@ $yellow_border: 2px solid #ffbf0099;
   
 ::-webkit-scrollbar-thumb {
     border-radius:1rem;
-    background-color: #1f1f1f;
-    border: 1px solid #5c5c5c;
+    background-color: #7b7b7b;
+    border: 0.5rem solid #1f1f1f;
 
   }
 
@@ -31,8 +31,28 @@ html {
 body {
     background-color: $page_bgc;
     overflow-x: hidden;
-}
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 7vh 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+      'header header header header header header'
+      'menu main main main main main'
+      'menu main main main main main'
+      'menu main main main main main'
+      'menu main main main main main';
 
+    margin: 0;
+
+    @media screen and (max-width: 768px) {
+        grid-template-areas:
+            'header header header header header header'
+            'main main main main main main'
+            'main main main main main main'
+            'main main main main main main'
+            'main main main main main main'
+            'footer footer footer footer footer footer';
+    }
+}
 
 footer {
     position: fixed;
@@ -44,9 +64,11 @@ footer {
     justify-content: center;
     align-items: start;
     transition: 0.3s;
+    background-color: $page_bgc;
 
+    grid-area: footer;
     @media screen and (max-width: 768px) {
-        display: flex;
+        display: grid;
     }
 
     div {
@@ -195,7 +217,9 @@ footer {
 
 
 header {
+    position: fixed;
     width: 100%;
+    grid-area: header;
     height: 7vh;
     border-bottom: 1px solid #ffbf0099;
     display: flex;
@@ -385,6 +409,7 @@ header {
 
 
 .settings_window {
+    background-color: $page_bgc;
     right: -30rem;
     top: 9rem;
     box-shadow: 0px 0px 18px 2px rgba(255, 255, 255, 0.13);
@@ -485,20 +510,33 @@ header {
 
 
 .users_list {
-    width: 35rem;
-    height: 90vh;
-    left: 2rem;
-    top: 8vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    padding-top: 2rem;
+    grid-area: menu;
     position: fixed;
-    border-radius: 1rem;
-    border: $yellow_border;
-    box-shadow: 0 0 10px 0 rgba(255, 191, 0, 0.234);
+    top: 7vh;
+    left: 0;
+    width: 20%;
+    height: calc(100% - 7vh);
+    background-color: $page_bgc;
+    overflow-y: auto;
+    
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+
+    div {
+        width: 90%;
+        height: 95%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        border-radius: 1rem;
+        padding-top: 2rem;
+        border: $yellow_border;
+        box-shadow: 0 0 10px 0 rgba(255, 191, 0, 0.234);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
     
     @media screen and (max-width: 768px) {
         display: none;
@@ -546,5 +584,85 @@ header {
             
         }
     }
+
+}
+
+
+main {
+    height: auto;
+    background-color: chartreuse;
+    grid-area: main;
+    position: fixed;
+    top: 7vh;
+    left: 20%;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media screen and (max-width: 768px) {
+        left: 0;
+    }
+    
+    section {
+        top: 0;
+        background-color: #bc4d4d;
+        width: 100%;
+        overflow-y: auto;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 2rem;
+        
+        div {
+            width: 90%;
+            height: 10rem;
+            background-color: #1f1f1f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: whitesmoke;
+            margin-bottom: 2rem;
+            flex-shrink: 0; 
+        }
+    }
+
+    span {
+        width: 95%;
+        height: 10rem;
+        margin: 1rem 0;
+        border-radius: 2rem;
+        background-color: #bc4d4d;
+        display: flex;
+        padding: 0.5rem;
+        form {
+
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            input {
+                border-radius: 2rem;
+                border: none;
+                padding-left: 3rem;
+                width: 87rem;
+                height: 100%;
+            }
+
+            button {
+                flex-shrink: 0; 
+                width: 3rem;
+                height: 3rem;
+                margin-left: 2rem;
+                border: 1px solid red;
+                border-radius: 50%;
+            }
+        }
+    }
+
 
 }
