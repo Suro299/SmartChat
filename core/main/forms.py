@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from .models import PostsModel
 
 def contains_digit(password):
     pass
@@ -45,3 +46,15 @@ class RegistrationForm(forms.Form):
         contains_digit(password1)
         
         return cleaned_data
+
+
+
+class PostModelForm(forms.ModelForm):
+    class Meta:
+        model = PostsModel
+        fields = ["username", "is_staff", "post_title", "post_text"]
+        
+        
+        
+
+

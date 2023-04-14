@@ -1,21 +1,38 @@
 from django.shortcuts import render, redirect
-from .forms import RegistrationForm
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
+from .forms import RegistrationForm, PostModelForm
+from .models import PostsModel
+
 
 def home(request):
     user_list = User.objects.all()
-    
+    post_list = PostsModel.objects.all()[::-1]
     if request.user.is_authenticated: 
         return render(request, "main/home.html", context = {
-            "user_list": user_list
+            "user_list": user_list,
+            "post_list": post_list
         })
     else: 
         return redirect("login")
+
+def add_post(request):
+    if request.method == "POST":
+        form = PostModelForm(request.POST)
+        
+        if form.is_valid():
+            PostsModel.objects.create(**form.cleaned_data)
+            return redirect("home")
+    else:
+        form = PostModelForm()
+        
+    return render(request, "main/add_post.html", context = {
+        "form": form
+    })
 
 def register_request(request):
     pdisplay = "none"

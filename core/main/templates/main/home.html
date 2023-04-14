@@ -36,7 +36,6 @@
         </div>
 
         <div>
-            <!-- <a href="#"><button id = "user_button" class="user_button"> {{user.username }} </button></a> -->
             <a href="#"> <img id = "user_button" class="user_button_icon" src="{% static './main/default_avatars/default_avatar.png' %}" width="45px" alt="B"> </a>
 
         </div>
@@ -77,25 +76,80 @@
 
 
     <main>
-        <section>
-            <div> POST </div>
-            <div> POST </div>
-            <div> POST </div>
-            <div> POST </div>
-            <div> POST </div>
-            <div> POST </div>
-            <div> POST </div>
-            <div> POST </div>
-            <div> POST </div>
-            <div> POST </div>
-            <div> POST </div>
+        <section class = "posts_sections">
+
+            {% for i in post_list%}
+            <div class = "post_det_div">
+                <menu>
+                    <img src="{% static './main/default_avatars/default_avatar.png' %}" alt=""> 
+                    <h1> {{ i.username }} </h1>
+                    
+                    {% if i.is_staff == "True" %}
+                        <div>
+                            Staff
+                        </div>
+                    {% else %}
+                        <div style = "border: 2px solid rgb(43, 255, 0); background-color: rgba(26, 255, 0, 0.347);">
+                            User
+                        </div>
+                    {% endif %}
+
+                    <hr>
+    
+                    <ul>
+                        <dl class="pairs pairs--justified">
+                            <dt> Messages: </dt>
+                            <dd> N </dd>
+                        </dl>
+    
+                        <dl class="pairs pairs--justified">
+                            <dt> Reactions: </dt>
+                            <dd> N </dd>
+                        </dl>
+    
+                        <dl class="pairs pairs--justified">
+                            <dt> Points: </dt>
+                            <dd> N </dd>
+                        </dl>
+                    </ul>
+
+                    
+
+
+                </menu>
+                
+                <section class = "post_main">
+                    <section>
+                        <h1> {{ i.post_title }} </h1>
+                    
+                        <hr>
+
+                        <p> 
+                            {{ i.post_text }}
+                        </p>
+                    </section>
+
+                    <section class = "post_info">
+                        <section>
+                            <h5> Like </h5>
+                            <h5> DisLike </h5>
+                        </section>
+                      
+                       
+                        <section>
+                            <h5> User: {{ i.username }} </h5>
+                            <h5> Post: #{{ i.id }} </h5>
+                        </section> 
+                            
+                    </section>
+                </section>
+                   
+            </div>
+            {% endfor %}
         </section>
       
         <span>
-            <form method="post">
-                <input type="text" placeholder="Add post">
-                <button type="submit"> Go </button>
-            </form>
+            <a href="{% url 'add_post' %}"> <button> Add Post </button> </a>
         </span>
 
     </main>
