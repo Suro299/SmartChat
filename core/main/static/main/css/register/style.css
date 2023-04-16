@@ -31,7 +31,8 @@ html {
   color: whitesmoke; }
 
 body {
-  background-color: #101010; }
+  background-color: #101010;
+  overflow: hidden; }
 
 header {
   width: 100%;
@@ -84,114 +85,155 @@ header {
           font-size: 1.6rem;
           margin-right: -0.1rem; } }
 
-.reg_div {
-  width: 90%;
-  height: 60vh;
+section {
   position: absolute;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column; }
-  .reg_div h1 {
-    font-size: 5rem;
-    margin-bottom: 2rem; }
-  .reg_div p {
-    text-align: center;
-    font-size: 2rem;
-    color: rgba(245, 245, 245, 0.427); }
-  .reg_div div {
-    margin-top: 7rem;
-    width: 50%;
-    height: 40%;
+  gap: 2px;
+  flex-wrap: wrap;
+  overflow: hidden; }
+  section::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(#000, #ffcf41, #000);
+    animation: animate 5s linear infinite; }
+  section span {
+    position: relative;
+    display: block;
+    width: calc(6.25vw - 2px);
+    height: calc(6.25vw - 2px);
+    background: #181818;
+    z-index: 2;
+    transition: 1.5s; }
+    section span:hover {
+      background: #ffcf41;
+      transition: 0s; }
+  section .signin {
+    margin-top: -5rem;
+    width: 40rem;
+    height: 60rem;
     display: flex;
     justify-content: center;
-    align-items: center; }
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    background: #222222;
+    z-index: 1000;
+    padding: 40px;
+    border-radius: 4px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); }
     @media screen and (max-width: 768px) {
-      .reg_div div {
-        margin-top: 2rem; } }
-    @media screen and (min-width: 600px) {
-      .reg_div div {
-        margin-top: 7rem; } }
-    .reg_div div form {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column; }
-      .reg_div div form p {
-        top: 56vh;
-        position: absolute;
-        margin-top: 2rem;
-        color: red;
-        text-shadow: 0 0 10px #ff1818, 0 0 20px #ff1818, 0 0 30px #ff1818, 0 0 45px #ff1818, 0 0 65px #ff1818; }
-        @media screen and (max-width: 600px) {
-          .reg_div div form p {
-            top: 42vh; } }
-      .reg_div div form span {
-        width: 50rem;
-        height: 6vh;
-        border-radius: 5px;
-        margin-bottom: 2rem;
-        background-color: #2a2a2a;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        outline: none;
-        padding: 0rem 2rem; }
-        .reg_div div form span input {
-          width: 100%;
-          height: 5.5vh;
-          background-color: transparent;
-          color: whitesmoke;
-          outline: none;
-          border: none;
-          font-size: 2rem;
-          padding: 2rem; }
-      .reg_div div form button {
-        width: 50rem;
-        height: 6vh;
-        font-size: 2rem;
-        background-image: radial-gradient(circle, #ef36b6, #8500c5);
-        border: none;
-        outline: none;
-        border-radius: 5px;
-        color: whitesmoke;
-        transition: 0.2s;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0rem 3.5rem; }
-        .reg_div div form button:hover {
-          cursor: pointer;
-          width: 51rem;
-          font-size: 2.2rem;
-          transition: 0.2s; }
-  @media only screen and (max-width: 600px) {
-    .reg_div {
+      section .signin {
+        width: 35rem;
+        height: 50rem; } }
+    section .signin p {
+      font-size: 1.5rem;
+      color: #ff2828; }
+    section .signin .content {
+      position: relative;
       width: 100%;
-      height: auto;
-      top: 50%;
-      transform: translate(-50%, -50%); }
-      .reg_div h1 {
-        font-size: 3rem;
-        margin-bottom: 1rem; }
-      .reg_div p {
-        font-size: 1.5rem; }
-      .reg_div div {
+      height: 90%;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      flex-direction: column;
+      gap: 40px; }
+      @media screen and (max-width: 768px) {
+        section .signin .content {
+          height: 70%; } }
+      section .signin .content h1 {
+        font-size: 2em;
+        color: #ffcf41;
+        text-transform: uppercase; }
+      section .signin .content .form {
         width: 100%;
-        height: auto; }
-        .reg_div div form span {
-          width: 100%;
-          height: auto;
-          max-width: 400px; }
-        .reg_div div form button {
-          width: 100%;
-          max-width: 400px;
-          margin-top: 1rem;
-          justify-content: space-between; } }
+        display: flex;
+        flex-direction: column;
+        gap: 25px; }
+        section .signin .content .form .inputBx {
+          position: relative;
+          width: 100%; }
+          section .signin .content .form .inputBx:nth-child(4) {
+            margin-bottom: 3rem; }
+            @media screen and (max-width: 768px) {
+              section .signin .content .form .inputBx:nth-child(4) {
+                margin-bottom: 2rem; } }
+          section .signin .content .form .inputBx input {
+            position: relative;
+            width: 100%;
+            background: #333333;
+            border: none;
+            outline: none;
+            padding: 25px 10px 7.5px;
+            border: 4px;
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 1em; }
+          section .signin .content .form .inputBx i {
+            position: absolute;
+            left: 0;
+            padding: 15px 10px;
+            font-style: normal;
+            color: #aaaaaa;
+            transition: 0.5s;
+            pointer-events: none; }
+
+.signin .content .form .inputBx input:focus ~ i, .signin .content .form .inputBx input:valid ~ i {
+  transform: translateY(-7.5px);
+  font-size: 0.8em;
+  color: #ffffff; }
+
+.signin .content .form .links {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between; }
+  .signin .content .form .links a {
+    color: #ffffff;
+    text-decoration: none; }
+    .signin .content .form .links a:nth-child(2) {
+      font-size: 1.5rem;
+      color: #b68800fb;
+      font-weight: 600; }
+
+.signin .content .form .inputBx button[type="submit"] {
+  border: none;
+  width: 100%;
+  height: 4rem;
+  margin-top: 2rem;
+  padding: 10px;
+  background-image: radial-gradient(circle, #ef36b6, #8500c5);
+  color: #111111;
+  font-weight: 600;
+  font-size: 1.25em;
+  letter-spacing: 0.05em;
+  cursor: pointer; }
+
+@media (max-width: 1400px) {
+  section span {
+    width: calc(9vw - 2px);
+    height: calc(9vw - 2px); } }
+@media (min-width: 750) {
+  section span {
+    width: 200px;
+    height: 200px;
+    width: calc(10vw - 2px);
+    height: calc(10vw - 2px); }
+
+  section .signin {
+    background-color: red;
+    margin-top: 0rem;
+    width: 20rem;
+    height: 30rem; } }
+@keyframes animate {
+  0% {
+    transform: translateY(-100%); }
+  100% {
+    transform: translateY(100%); } }
 
 /*# sourceMappingURL=style.css.map */

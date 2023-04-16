@@ -19,6 +19,7 @@ $yellow_border: 2px solid #ffbf0099;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-decoration: none;
 
 }
 
@@ -430,7 +431,6 @@ header {
             border: 1px solid #30363d;
         }
         a {
-            text-decoration: none;
             color: rgb(158, 158, 158);
 
             li {
@@ -562,8 +562,6 @@ header {
             }
             
             a {
-                text-decoration: none;
-
                 h2 {
                     color: whitesmoke;
                     margin-left: 1rem;
@@ -614,12 +612,14 @@ main {
         display: flex;
         flex-direction: column;
         align-items: center;
+        
 
 
 
         .post_det_div {
-            border-radius: 1rem;
+            color: rgb(164, 164, 164);
 
+            border-radius: 1rem;
             margin-bottom: 5rem;
             background-color: #1f1f1f;
             width: 90%;
@@ -633,9 +633,10 @@ main {
               'menu main main main main main'
               'menu main main main main main';
         
+              
         }
 
-        menu {
+        .menu {
             grid-area: menu;
             width: 20rem;
             padding-top: 2rem;
@@ -648,10 +649,11 @@ main {
             }
 
             h1 {
-                margin-top: 1rem;
+                
+                margin-top: 2rem;
                 margin-bottom: 2rem;
                 font-size: 1.8rem;
-
+                color: whitesmoke;
                 @media screen and (max-width: 768px) {
                     font-size: 1.3rem;
                 }
@@ -662,7 +664,7 @@ main {
                 height: 4rem;
                 border-radius: 1.5rem;
                 border: 2px solid rgb(255, 208, 0);
-                color: rgb(255, 255, 255);
+                color: white;
                 background-color: rgba(255, 208, 0, 0.347);
                 display: flex;
                 justify-content: center;
@@ -707,7 +709,7 @@ main {
                     justify-content: space-between;
                     align-items: center;
                     font-size: 1.6rem;
-
+                    color: rgb(195, 195, 195);
                     @media screen and (max-width: 768px) {
                         font-size: 1rem;
                     }
@@ -720,72 +722,107 @@ main {
 
         .post_main {
             grid-area: main;
-            padding: 1rem 1rem 0rem 1rem;
+            padding: 2rem 1rem 0rem 1rem;
             display: flex;
             justify-content: space-between;
             flex-direction: column;
 
-            section {
-                &:first-child {
-                    hr {
-                        margin: 2rem 0 4rem 0rem;
+            a {
+                cursor: pointer;
 
-                        @media screen and (max-width: 768px) {
-                            margin: 1rem 0 2rem 0rem;
+                hr {
+                    margin: 2rem 0 4rem 0rem;
+                    @media screen and (max-width: 768px) {
+                        margin: 1rem 0 2rem 0rem;
 
-                        }
-                    }
-    
-                    h1 {
-                        font-size: 3.5rem;
-                        color: whitesmoke;
-                        margin-bottom: 1rem;
-    
-                        @media screen and (max-width: 768px) {
-                            font-size: 1.6rem;
-                        }
-                    }
-    
-                    p {
-                        font-size: 1.8rem;
-    
-                        @media screen and (max-width: 768px) {
-                            font-size: 1.4rem;
-                        }
                     }
                 }
-    
-    
-                &:last-child {
-                    width: 100%;
-                    height: 3rem;
-                    border-top: 2px solid rgb(74, 74, 74);
-                    margin-top: 1rem;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
 
-                    section {
-                        display: flex;
-                        width: 20rem;
-                        height: 100%;
+                h1 {
+                    font-size: 3.5rem;
+                    color: whitesmoke;
+                    margin-bottom: 1rem;
+
+                    @media screen and (max-width: 768px) {
+                        font-size: 1.6rem;
+                    }
+                }
+
+                p {
+                    font-size: 1.8rem;
+
+                    @media screen and (max-width: 768px) {
+                        font-size: 1.4rem;
+                    }
+                }
+            }
+
+            section {
+                
+                width: 100%;
+                height: 5rem;
+                border-top: 2px solid rgb(74, 74, 74);
+                margin-top: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-size: 1.4rem;
+
+                section {
+                    display: flex;
+                    justify-content: space-evenly;
+                    text-align: center;
+                    width: 20rem;
+                    height: 100%;
+                    border: none;
+                    align-items: center;
+                    width: 20rem;
+                    margin-bottom: 0.7rem;
+
+                    h5 {
+                        font-size: 1.2rem;
+                    }
+
+                    &:first-child {
+                        width: 9rem;
+                    }
+
+                    button {
+                        background-color: transparent;
+                        outline: none;
+                        margin-right: 2rem;
                         border: none;
-                        align-items: center;
-                        &:not(:first-child){
-                            justify-content: end;
-                            
-                            h5 {
-                                margin-bottom: 0.7rem;
+                        cursor: pointer;
+
+                        img {
+                            width: 2rem;
+                            transition: 0.2s;
+                        }
+
+                        &:first-child {
+                            &:hover {
+                                img{
+                                    filter: drop-shadow(0 0 3px rgb(109, 252, 0));
+                                }
+                            }
+
+                            &:active {
+                                $shadow: red;                            }
+                        }
+
+
+                        &:last-child {
+                            &:hover {
+                                img{
+                                    filter: drop-shadow(0 0 3px red);
+                                }
                             }
                         }
 
-
-                        h5 {
-                            margin-left: 2rem;
-                        }
                     }
-                    
+
                 }
+                    
             }
         }
 

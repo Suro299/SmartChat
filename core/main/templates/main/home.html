@@ -80,7 +80,7 @@
 
             {% for i in post_list%}
             <div class = "post_det_div">
-                <menu>
+                <a href = "" class = "menu">
                     <img src="{% static './main/default_avatars/default_avatar.png' %}" alt=""> 
                     <h1> {{ i.username }} </h1>
                     
@@ -97,17 +97,17 @@
                     <hr>
     
                     <ul>
-                        <dl class="pairs pairs--justified">
+                        <dl>
                             <dt> Messages: </dt>
                             <dd> N </dd>
                         </dl>
     
-                        <dl class="pairs pairs--justified">
+                        <dl>
                             <dt> Reactions: </dt>
                             <dd> N </dd>
                         </dl>
     
-                        <dl class="pairs pairs--justified">
+                        <dl>
                             <dt> Points: </dt>
                             <dd> N </dd>
                         </dl>
@@ -116,10 +116,10 @@
                     
 
 
-                </menu>
+                </a>
                 
                 <section class = "post_main">
-                    <section>
+                    <a>
                         <h1> {{ i.post_title }} </h1>
                     
                         <hr>
@@ -127,12 +127,12 @@
                         <p> 
                             {{ i.post_text }}
                         </p>
-                    </section>
-
+                    </a>
+                    
                     <section class = "post_info">
                         <section>
-                            <h5> Like </h5>
-                            <h5> DisLike </h5>
+                            <button id = "{{ i.id }}" value = "like "> <img src="{% static 'main/icon/home/thumbs-up.svg' %}"> </button>
+                            <button id = "{{ i.id }}" value = "dislike"> <img src="{% static 'main/icon/home/thumbs-down.svg' %}"> </button>
                         </section>
                       
                        

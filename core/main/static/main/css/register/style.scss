@@ -1,3 +1,11 @@
+$color1: #181818;
+$color2: #ffcf41;
+$color3: #222222;
+$color4: #333333;
+$color5: #ffffff;
+$color6: #aaaaaa;
+$color7: #111111;
+
 @mixin center {
     display: flex;
     justify-content: center;
@@ -45,6 +53,7 @@ html {
 
 body {
     background-color: #101010;
+    overflow: hidden;
 }
 
 header {
@@ -124,142 +133,196 @@ header {
 }
 
 
-.reg_div {
-    width: 90%;
-    height: 60vh;
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    @include center;
-    flex-direction: column;
-  
-    h1 {
-        font-size: 5rem;
-        margin-bottom: 2rem;
-    }
-  
-    p {
-        text-align: center;
-        font-size: 2rem;
-        color: rgba(245, 245, 245, 0.427);
+section {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 2px;
+	flex-wrap: wrap;
+	overflow: hidden;
+	&::before {
+		content: '';
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(#000, $color2, #000);
+		animation: animate 5s linear infinite;
+	}
+	span {
+		position: relative;
+		display: block;
+		width: calc(6.25vw - 2px);
+		height: calc(6.25vw - 2px);
+		background: $color1;
+		z-index: 2;
+		transition: 1.5s;
+		&:hover {
+			background: $color2;
+			transition: 0s;
+		}
+	}
 
-        
-    }
-  
-    div {
-        margin-top: 7rem;
-        width: 50%;
-        height: 40%;
-        @include center;
+	.signin {
+		margin-top: -5rem;
+		width: 40rem;
+		height: 60rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		position: absolute;
+		background: $color3;
+		z-index: 1000;
+		padding: 40px;
+		border-radius: 4px;
+		box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
 
         @media screen and (max-width: 768px) {
-            margin-top: 2rem;
+		    width: 35rem;
+		    height: 50rem;
         }
 
-        @media screen and (min-width: 600px) {
-            margin-top: 7rem;
-        }
-
+		p {
+			font-size: 1.5rem;
+			color: rgb(255, 40, 40);
+		}
         
+		.content {
+			position: relative;
+			width: 100%;
+			height: 90%;
+			display: flex;
+			justify-content: space-evenly;
+			align-items: center;
+			
+			flex-direction: column;
+			gap: 40px;
 
-        form {
-            @include center;
-            flex-direction: column;
-
-            p {
-                top: 56vh;
-                position: absolute;
-                margin-top: 2rem;
-                color: red;
-                text-shadow: 0 0 10px #ff1818, 0 0 20px #ff1818, 0 0 30px #ff1818, 0 0 45px #ff1818, 0 0 65px #ff1818;
-                
-                @media screen and (max-width: 600px) {
-                    top: 42vh;
-                }
+            @media screen and (max-width: 768px) {
+                height: 70%;
             }
 
-            span {
-                width: 50rem;
-                height: 6vh;
-                border-radius: 5px;
-                margin-bottom: 2rem;
-                background-color: #2a2a2a;
-                @include center;
-                outline: none;
-                padding: 0rem 2rem;
-                
-                input {
-                    width: 100%;
-                    height: 5.5vh;
-                    background-color: transparent;
-                    color: whitesmoke;
-                    outline: none;
-                    border: none;
-                    font-size: 2rem;
-                    padding: 2rem;
-                }
-            }
+            
+			h1 {
+				font-size: 2em;
+				color: $color2;
+				text-transform: uppercase;
+			}
+			.form {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				gap: 25px;
+				.inputBx {
+					position: relative;
+					width: 100%;
 
-        button {
-            width: 50rem;
-            height: 6vh;
-            font-size: 2rem;
-            background-image: radial-gradient(circle, #ef36b6, #8500c5);
-            border: none;
-            outline: none;
-            border-radius: 5px;
-            color: whitesmoke;
-            transition: 0.2s;
-            @include center;
-            justify-content: space-between;
-            padding: 0rem 3.5rem;
-            &:hover {
-                cursor: pointer;
-                width: 51rem;
-                font-size: 2.2rem;
-                transition: 0.2s;
-            }
-        }
-    }
+                    &:nth-child(4) {
+					    margin-bottom: 3rem;
+                        @media screen and (max-width: 768px) {
+					        margin-bottom: 2rem;
+                        }
+                    }
+					input {
+						position: relative;
+						width: 100%;
+						background: $color4;
+						border: none;
+						outline: none;
+						padding: 25px 10px 7.5px;
+						border: 4px;
+						color: $color5;
+						font-weight: 500;
+						font-size: 1em;
+					}
+
+                    i {
+						position: absolute;
+						left: 0;
+						padding: 15px 10px;
+						font-style: normal;
+						color: $color6;
+						transition: 0.5s;
+						pointer-events: none;
+					}
+				}
+			}
+		}
+	}
 }
-    
-    // Media Query for mobile devices
-    @media only screen and (max-width: 600px) {
-        width: 100%;
-        height: auto;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
+.signin .content .form .inputBx input:focus ~ i, .signin .content .form .inputBx input:valid ~ i {
+	transform: translateY(-7.5px);
+	font-size: 0.8em;
+	color: $color5;
+}
+.signin .content .form .links {
 
-        p {
+	position: relative;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	a {
+		color: $color5;
+		text-decoration: none;
+		&:nth-child(2) {
             font-size: 1.5rem;
-        }
+			color: #b68800fb;
+			font-weight: 600;
+		}
+	}
+}
+.signin .content .form .inputBx button[type="submit"] {
+	border: none;
+	width: 100%;
+	height: 4rem;
+	margin-top: 2rem;
+	padding: 10px;
+	background-image: radial-gradient(circle, #ef36b6, #8500c5);
+	color: $color7;
+	font-weight: 600;
+	font-size: 1.25em;
+	letter-spacing: 0.05em;
+	cursor: pointer;
+}
 
-        div {
-            width: 100%;
-            height: auto;
 
-            form {
-                span {
-                    width: 100%;
-                    height: auto;
-                    max-width: 400px;
-                }
+@media (max-width: 1400px){
+	section span{
+		width: calc(9vw - 2px);
+		height: calc(9vw - 2px);
+	}
+}
 
-                button {
-                    width: 100%;
-                    max-width: 400px;
-                    margin-top: 1rem;
-                    justify-content: space-between;
-                }
-            }
+@media (min-width: 750){
+	section span{
+        width: 200px;
+        height: 200px;
+		width: calc(10vw - 2px);
+		height: calc(10vw - 2px);
+	}
+
+    
+    section {
+        .signin {
+            background-color: red;
+            margin-top: 0rem;
+            width: 20rem;
+            height: 30rem;
         }
     }
 }
-  
+
+
+@keyframes animate{
+	0%
+	{
+		transform: translateY(-100%);
+	}
+	100%
+	{
+		transform: translateY(100%);
+	}
+}
