@@ -5,203 +5,102 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'main/css/home/style.css' %}">
-    <title> Home </title>
+    <title> Posts </title>
 </head>
 <body>
+
     <header>
-        <div>
+        <section>
             <h1> <span>Smart</span> Chat </h1>
-        </div>
+        </section>
 
-        <div>
-            <section>
-                <a href="">
-                    <button class="active_tab" >
-                        <span > Home </span> 
-                    </button>
-                </a>
-            </section>
+        <section>
+            <input type="text" placeholder = "Search">
+        </section>
 
-            <h1> | </h1>
-
-            <section>
-                <a href="">
-                    <button>
-                        <span> Chat </span> 
-                    </button>
-                </a>
-            </section>
-        </div>
-
-        <div>
-            <a href="#"> <img id = "user_button" class="user_button_icon" src="{% static './main/default_avatars/default_avatar.png' %}" width="45px" alt="B"> </a>
-
-        </div>
+        <section>
+            <button> <img src="{% static 'main/default_avatars/default_avatar.png'%}" alt=""> </button>
+            <h3> Suro299 </h3>
+        </section>
     </header>
-    
-    <nav class = "users_list">
-        <div>
-            <h1> Users </h1>
-            <ul>
-            
-                <li> 
-                    <img src="{% static './main/default_avatars/default_avatar.png' %}" alt=""> 
-                    {% if user.is_staff %}
-                        <a href=""> <h2> {{ user.username }} <span style="color: #ffd800;"> (Staff) </span></h2></a>
-                    {% else %}
-                    <a href=""> <h2> {{ user.username }} <span style="color: rgb(82, 193, 49);"> (User) </span></h2> </a>
-                    {% endif %}
-                </li>
-            
-            
-                {% for i in user_list%}
-                    {% if i.username != user.username %}
-                        <li> 
-                            <img src="{% static './main/default_avatars/default_avatar.png' %}" alt=""> 
-                            {% if i.is_staff %}
-                                <a href=""> <h2> {{ i.username }} <span style="color: #ffd800;"> (Staff) </span></h2></a>
-                            {% else %}
-                            <a href=""> <h2> {{ i.username }} <span style="color: rgb(82, 193, 49);"> (User) </span></h2> </a>
-                            {% endif %}
-                        </li>
-                    {% endif %}
-                {% endfor %}
-                    
-            </ul>
-            </div>
-    </nav>
+    <menu>
+        <p> A list of users </p>
+        <hr>
+        <ul>
 
-
+            {% for i in user_list%}
+                {% if i.is_staff %}
+                    <li>
+                        <a href="">
+                            <img src="{% static 'main/default_avatars/default_avatar.png'%}" alt="">
+                            <h3 style = "color: rgba(230, 174, 8, 0.721)" > {{ i.username }} </h3>
+                        </a>
+                    </li>
+                {% else %}
+                    <li style = "box-shadow: 17px 0px 1px 0px rgba(71, 208, 52, 0.89) inset;">
+                        <a href="">
+                            <img src="{% static 'main/default_avatars/default_avatar.png'%}" alt="">
+                            <h3> {{ i.username }} </h3>
+                        </a>
+                    </li>
+                {% endif%}
+            {% endfor %}
+        </ul>
+    </menu>
 
     <main>
-        <section class = "posts_sections">
-
-            {% for i in post_list%}
-            <div class = "post_det_div">
-                <a href = "" class = "menu">
-                    <img src="{% static './main/default_avatars/default_avatar.png' %}" alt=""> 
-                    <h1> {{ i.username }} </h1>
-                    
-                    {% if i.is_staff == "True" %}
-                        <div>
-                            Staff
-                        </div>
-                    {% else %}
-                        <div style = "border: 2px solid rgb(43, 255, 0); background-color: rgba(26, 255, 0, 0.347);">
-                            User
-                        </div>
-                    {% endif %}
-
-                    <hr>
-    
-                    <ul>
-                        <dl>
-                            <dt> Messages: </dt>
-                            <dd> N </dd>
-                        </dl>
-    
-                        <dl>
-                            <dt> Reactions: </dt>
-                            <dd> N </dd>
-                        </dl>
-    
-                        <dl>
-                            <dt> Points: </dt>
-                            <dd> N </dd>
-                        </dl>
-                    </ul>
-
-                    
-
-
-                </a>
-                
-                <section class = "post_main">
-                    <a>
-                        <h1> {{ i.post_title }} </h1>
-                    
-                        <hr>
-
-                        <p> 
-                            {{ i.post_text }}
-                        </p>
-                    </a>
-                    
-                    <section class = "post_info">
-                        <section>
-                            <button id = "{{ i.id }}" value = "like "> <img src="{% static 'main/icon/home/thumbs-up.svg' %}"> </button>
-                            <button id = "{{ i.id }}" value = "dislike"> <img src="{% static 'main/icon/home/thumbs-down.svg' %}"> </button>
-                        </section>
-                      
-                       
-                        <section>
-                            <h5> User: {{ i.username }} </h5>
-                            <h5> Post: #{{ i.id }} </h5>
-                        </section> 
-                            
-                    </section>
-                </section>
-                   
-            </div>
-            {% endfor %}
-        </section>
-      
-        <span>
-            <a href="{% url 'add_post' %}"> <button> Add Post </button> </a>
-        </span>
-
+        
     </main>
 
+    <nav>
+        <section>
+            <h1> Friends </h1>
 
-
-    <div id = "settings_window" class = "settings_window">
-        <ul>
-            <a href=""><li > Singned in as <b>{{user.username }}</b> </li></a>
-            <hr>
-            <a href=""><li> Profile settings </li></a>
-            <a href=""><li> Site Settings </li></a>
-            <hr>
-            <a href=""><li> Contact Us</li></a>
-            <a href=""><li> About Us </li></a>
-            <hr>
-            <a href="{% url 'logout' %}"><li> Sing Out </li></a>
-            
-        </ul>
-    </div>
-
-
-
-    <footer id = "footer">
+            <span>
+                
+                <img src="{% static 'main/default_avatars/default_avatar.png'%}" alt=""></div>
+                <img src="{% static 'main/default_avatars/default_avatar.png'%}" alt=""></div>
+                <img src="{% static 'main/default_avatars/default_avatar.png'%}" alt=""></div>
+                <img src="{% static 'main/default_avatars/default_avatar.png'%}" alt=""></div>
+                <img src="{% static 'main/default_avatars/default_avatar.png'%}" alt=""></div>
+                <img src="{% static 'main/default_avatars/default_avatar.png'%}" alt=""></div>
+            </span>
+        </section>
         
+        <section>
+            <h1> Account Statistics </h1>
 
-        <div>
-            <section>
-                <a href="">
-                    <button class="active_tab" >
-                        <span > Home </span> 
-                    </button>
-                </a>
-            </section>
+            <span>
 
-            <div id = "footer_button_div" class="footer_up_down">
-                <button id = "footer_button">
-                    ⇡
-                </button>
-            </div>
+                <div class = "stat_div">
+                    <h2> Posts posted </h2>
+                    <p> 25 </p>
+                    <div>
+                        <div style = "width: 25%;">  </div>
+                    </div>
+                </div>
 
-            <section>
-                <a href="">
-                    <button>
-                        <span> Chat </span> 
-                    </button>
-                </a>
-            </section>
-        </div>
-    </footer>
+                <div class = "stat_div" >
+                    <h2> Reactions </h2>
+                    <p> 80 </p>
+                    <div>
+                        <div style = "width: 80%;">  </div>
+                    </div>
+                </div>
 
-    <script src="{% static 'main/js/home/app.js' %}"></script>
+                <div class = "stat_div" >
+                    <h2> Points </h2>
+                    <p> 430 </p>
+                    <div>
+                        <div style = "width: 43%;">  </div>
+                    </div>
+                </div>
+
+            </span>
+        </section>
+    </nav>
 
 </body>
 </html>
