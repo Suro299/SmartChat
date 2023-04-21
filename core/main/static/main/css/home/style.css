@@ -26,12 +26,12 @@ body {
   display: grid;
   overflow-x: hidden;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: 7vh 1fr 1fr 1fr 1fr;
-  grid-template-areas: 'header header header header header header header' 'menu main main main main nav nav' 'menu main main main main nav nav' 'menu main main main main nav nav' 'menu main main main main nav nav';
+  grid-template-rows: 7vh 1fr 1fr 1fr 1fr, 1fr;
+  grid-template-areas: 'header header header header header header header' 'menu main main main main nav nav' 'menu main main main main nav nav' 'menu main main main main nav nav' 'menu main main main main nav nav' 'menu footer footer footer footer nav nav';
   margin: 0; }
   @media screen and (max-width: 1313px) {
     body {
-      grid-template-areas: 'header header header header header header header' 'main main main main main main main' 'main main main main main main main' 'main main main main main main main' 'main main main main main main main'; } }
+      grid-template-areas: 'header header header header header header header' 'main main main main main main main' 'main main main main main main main' 'main main main main main main main' 'menu main main main main nav nav' 'footer footer footer footer footer footer footer'; } }
 
 .background_imgae {
   width: 80%;
@@ -109,7 +109,8 @@ header {
         width: 100%;
         height: 100%;
         opacity: 75%;
-        transition: 0.3s; }
+        transition: 0.3s;
+        border: 1px solid rgba(138, 138, 138, 0.794); }
     header section:last-child h3 {
       font-size: 1.8rem;
       margin-left: 1rem;
@@ -174,7 +175,9 @@ menu {
         menu ul li a img {
           width: 4.2rem;
           opacity: 75%;
-          transition: 0.3s; }
+          transition: 0.3s;
+          border-radius: 50%;
+          border: 1px solid rgba(138, 138, 138, 0.794); }
         menu ul li a h3 {
           font-size: 1.8rem;
           margin-left: 1rem; }
@@ -182,47 +185,114 @@ menu {
 main {
   z-index: 1;
   grid-area: main;
-  padding: 5rem 4rem;
+  padding: 5rem 2rem;
+  margin-left: 5rem;
   display: flex;
   flex-direction: column;
-  align-items: center; }
-  main section {
-    width: 110%;
+  justify-content: start;
+  max-height: 70vh; }
+  main .post {
+    margin-bottom: 4rem;
+    width: 100%;
     height: auto;
-    margin-left: 13rem;
     background-color: rgba(89, 107, 134, 0.236);
     border-radius: 2rem;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 3rem; }
-    main section div:first-child {
+    @media screen and (max-width: 1313px) {
+      main .post {
+        width: 100%; } }
+    main .post div:first-child {
       max-width: 25rem;
       height: 100%;
       display: flex;
       justify-content: center;
       align-items: start; }
-      main section div:first-child img {
-        aspect-ratio: 16/9;
-        width: 23rem;
+      main .post div:first-child img {
+        border: 1px solid rgba(138, 138, 138, 0.794);
+        max-width: 23rem;
+        min-width: 15rem;
         border-radius: 1rem; }
-    main section div:last-child {
+    main .post div:nth-child(2) {
       margin-left: 2rem;
       display: flex;
       flex-direction: column; }
-      main section div:last-child h1 {
+      main .post div:nth-child(2) h1 {
         font-size: 2rem; }
-      main section div:last-child span {
+      main .post div:nth-child(2) span {
         width: 100%;
         display: flex;
         margin-top: 1.5rem; }
-        main section div:last-child span:nth-child(2) p {
+        main .post div:nth-child(2) span:nth-child(2) p {
           color: rgba(253, 253, 253, 0.746); }
-          main section div:last-child span:nth-child(2) p:not(:first-child) {
+          main .post div:nth-child(2) span:nth-child(2) p:not(:first-child) {
             margin-left: 2rem; }
-        main section div:last-child span:nth-child(3) p {
+        main .post div:nth-child(2) span:nth-child(3) p {
           color: rgba(253, 253, 253, 0.862);
           font-size: 1.5rem; }
+        main .post div:nth-child(2) span:nth-child(5) form {
+          display: flex;
+          flex-direction: row;
+          align-items: center; }
+          main .post div:nth-child(2) span:nth-child(5) form dl {
+            display: flex;
+            justify-content: center;
+            align-items: center; }
+            main .post div:nth-child(2) span:nth-child(5) form dl p {
+              font-size: 2rem;
+              margin-left: 0.5rem; }
+            main .post div:nth-child(2) span:nth-child(5) form dl:not(:nth-child(2)) {
+              margin-left: 2rem; }
+            main .post div:nth-child(2) span:nth-child(5) form dl:nth-child(2) button:hover {
+              cursor: pointer; }
+              main .post div:nth-child(2) span:nth-child(5) form dl:nth-child(2) button:hover img {
+                transition: 0.3s;
+                filter: drop-shadow(0 0 1rem #48ff00); }
+            main .post div:nth-child(2) span:nth-child(5) form dl:nth-child(3) button:hover {
+              cursor: pointer; }
+              main .post div:nth-child(2) span:nth-child(5) form dl:nth-child(3) button:hover img {
+                transition: 0.3s;
+                filter: drop-shadow(0 0 1rem red); }
+            main .post div:nth-child(2) span:nth-child(5) form dl:nth-child(4) button:hover {
+              cursor: pointer; }
+              main .post div:nth-child(2) span:nth-child(5) form dl:nth-child(4) button:hover img {
+                transition: 0.3s;
+                filter: drop-shadow(0 0 1rem #00ffd5); }
+          main .post div:nth-child(2) span:nth-child(5) form button {
+            font-size: 1.2rem;
+            border: none;
+            outline: none;
+            color: whitesmoke;
+            background-color: transparent; }
+            main .post div:nth-child(2) span:nth-child(5) form button img {
+              transition: 0.3s; }
+      main .post div:nth-child(2) a {
+        margin: 1.5rem 0 1.5rem 0; }
+        main .post div:nth-child(2) a span {
+          padding-top: 1.5rem;
+          display: flex;
+          align-items: center;
+          border-top: 1px solid silver; }
+          main .post div:nth-child(2) a span h1 {
+            color: rgba(253, 253, 253, 0.91);
+            margin-left: 1rem; }
+          main .post div:nth-child(2) a span img {
+            width: 4rem;
+            border-radius: 50%;
+            border: 1px solid rgba(138, 138, 138, 0.794); }
+  @media screen and (max-width: 1313px) {
+    main {
+      margin-left: 0rem; } }
+
+footer {
+  grid-area: footer;
+  margin-left: 5rem;
+  border: 1px solid red;
+  margin-bottom: 2rem; }
+  @media screen and (max-width: 1313px) {
+    footer {
+      margin-left: 0rem; } }
 
 nav {
   z-index: 1;
@@ -261,7 +331,8 @@ nav {
           border-radius: 50%;
           opacity: 75%;
           transition: 0.3s;
-          margin: 1rem; }
+          margin: 1rem;
+          border-radius: 50%; }
           nav section:first-child span img:hover {
             padding: 0;
             cursor: pointer;

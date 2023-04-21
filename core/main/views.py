@@ -3,14 +3,14 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-
-from .forms import RegistrationForm, PostModelForm
+from users.models import CustomUser as User
+from .forms import NewUserForm, PostModelForm
 from .models import PostsModel
 
 
 def home(request):
     user_list = User.objects.all()
+    
     post_list = PostsModel.objects.all()[::-1]
     if request.user.is_authenticated: 
         return render(request, "main/home.html", context = {
@@ -21,39 +21,38 @@ def home(request):
         return redirect("login")
 
 def add_post(request):
-    if request.method == "POST":
-        form = PostModelForm(request.POST)
-        
+    if request.method == 'POST':
+        form = PostModelForm(request.POST, request.FILES)
         if form.is_valid():
-            PostsModel.objects.create(**form.cleaned_data)
+            message = form.save(commit=False)
+            message.sender = request.user
+            message.save()
             return redirect("home")
     else:
         form = PostModelForm()
         
-    return render(request, "main/add_post.html", context = {
-        "form": form
-    })
+    return render(request, 'main/add_post.html', context= {'form': form})
+
+
+
 
 def register_request(request):
     pdisplay = "none"
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():  
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            User.objects.create_user(username=username, password=password)
-            user = authenticate(request, username=username, password=password)
+    if request.method == "POST":
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
             login(request, user)
-            return redirect('home')
+            messages.success(request, "Registration successful." )
+            return redirect("home")
         pdisplay = "flex"
-    else:
-        form = RegistrationForm()
-        
+        messages.error(request, "Unsuccessful registration. Invalid information.")
+    form = NewUserForm()
+ 
     return render(request, template_name='main/register.html', context= {
-        'form': form,
+        "form": form,
         "pdisplay": pdisplay
         })
-
 
 
 

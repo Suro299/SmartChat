@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,14 +11,12 @@
 </head>
 <body>
     
-    <form method="post">
-        {% csrf_token %} 
+    <form method="post" enctype="multipart/form-data" >
+        {% csrf_token %}
         
-        <input type="hidden" name = "username" value = "{{ user.username }}">
-        <input type="hidden" name = "is_staff" value = "{{ user.is_staff }}">
-
         <input type = "text" name = "post_title" placeholder = "title"> <br> <br>
         <textarea cols="30" rows="10" name="post_text" placeholder = "Post Text"> </textarea> <br>
+        <input type = "file" name = "post_image"> <br> <br>
 
         <button type="submit"> Post </button>
 

@@ -26,8 +26,8 @@
         </section>
 
         <section>
-            <button> <img src="{% static 'main/default_avatars/default_avatar.png'%}" alt=""> </button>
-            <h3> Suro299 </h3>
+            <button> <img src="{{ user.avatar.url }}" alt=""> </button>
+            <h3> {{ user.username }} </h3>
         </section>
     </header>
     <menu>
@@ -39,30 +39,37 @@
                 {% if i.is_staff %}
                     <li>
                         <a href="">
-                            <img src="{% static 'main/default_avatars/default_avatar.png'%}" alt="">
+                            <img src="{{ i.avatar.url }}" alt="">
                             <h3 style = "color: rgba(230, 174, 8, 0.721)" > {{ i.username }} </h3>
                         </a>
                     </li>
                 {% else %}
                     <li style = "box-shadow: 17px 0px 1px 0px rgba(71, 208, 52, 0.89) inset;">
                         <a href="">
-                            <img src="{% static 'main/default_avatars/default_avatar.png'%}" alt="">
+                            <img src="{{ i.avatar.url }}" alt="User avatar">
                             <h3> {{ i.username }} </h3>
                         </a>
                     </li>
                 {% endif%}
             {% endfor %}
+
         </ul>
     </menu>
 
     <main>
-        <section>
+
+        {% for i in post_list%}
+        <section  class = "post">
             <div>
-                <img src="{% static 'main/img/backgrounds/load_imgae.jpeg'%}" alt="">
+                {% if i.post_image %}
+                    <img src="{{ i.post_image.url }}" alt="">
+                {% else %}
+                    <img src="{% static 'main/img/backgrounds/load_imgae.jpeg'%}" alt="">
+                {% endif %}
             </div>
 
             <div>
-                <h1> Title Lorem ipsum dolor sit amet consectetur, adipisicing elit. Delectus explicabo ratione ipsum doloribus qui </h1>
+                <h1> {{ i.post_title }} </h1>
 
                 <span>
                     <p> #code </p>
@@ -71,14 +78,35 @@
 
                 <span>
                     <p>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur exercitationem expedita quis accusantium nobis consectetur aliquam tempore! In sint aut sunt laboriosam eum eius iste nobis unde, optio ipsa hic.
+                        {{ i.post_text }}
                     </p>
                 </span>
 
-            </div>
+                <a href="">
+                    <span>
+                        <img src="{{ i.sender.avatar.url }}" alt="">
 
+                        <h1> {{ i.sender.username }} </h1>
+                    </span>
+                </a>
+
+                <span>
+                    <form method="post">
+                        {% csrf_token %}
+                        <dl><button type="submit"><img src="{% static 'main/icon/home/dislike.svg' %}" alt="like"> </button> <p> {{ i.like }} </p> </dl>
+                        <dl><button type="submit"><img src="{% static 'main/icon/home/like.svg' %}" alt="dislike"> </button> <p> {{ i.dislike }} </p> </dl>
+                        <dl><button type="submit"><img src="{% static 'main/icon/home/comment.svg' %}" alt="Comment"> </button> <p> {{ i.comments }} </p> </dl>
+                    </form>
+                </span>
+            </div>
         </section>
+        {% endfor %}
+        main/static/main/icon/home/like.svg
     </main>
+
+    <footer>
+        <a href="{% url 'add_post' %}"> <button> Add Post </button> </a>
+    </footer>
 
     <nav>
         <section>
@@ -102,25 +130,26 @@
 
                 <div class = "stat_div">
                     <h2> Posts posted </h2>
-                    <p> 25 </p>
+                    <p> {{ user.posts_posted}} </p>
                     <div>
-                        <div style = "width: 25%;">  </div>
+                        <div style = "width: {{ user.points }}%;">  </div>
                     </div>
                 </div>
-
+                
+                
                 <div class = "stat_div" >
                     <h2> Reactions </h2>
-                    <p> 80 </p>
+                    <p> {{ user.reactions }} </p>
                     <div>
-                        <div style = "width: 80%;">  </div>
+                        <div style = "width: {{ user.reactions }}%;">  </div>
                     </div>
                 </div>
 
                 <div class = "stat_div" >
                     <h2> Points </h2>
-                    <p> 430 </p>
+                    <p> {{ user.points }} </p>
                     <div>
-                        <div style = "width: 43%;">  </div>
+                        <div style = "width: {{ user.points }}%;">  </div>
                     </div>
                 </div>
 
