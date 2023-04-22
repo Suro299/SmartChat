@@ -9,16 +9,61 @@ from .models import PostsModel
 
 
 def home(request):
-    user_list = User.objects.all()
-    
-    post_list = PostsModel.objects.all()[::-1]
-    if request.user.is_authenticated: 
-        return render(request, "main/home.html", context = {
-            "user_list": user_list,
-            "post_list": post_list
-        })
-    else: 
+    if not(request.user.is_authenticated): 
         return redirect("login")
+
+    user_list = User.objects.all()
+    post_list = PostsModel.objects.all()[::-1]
+
+    if request.method == "POST":
+        
+        btn_l = request.POST.get("btn_l")    
+        btn_d = request.POST.get("btn_d") 
+        
+        if btn_l:
+            prod = PostsModel.objects.get(id = btn_l)
+            post = PostsModel.objects.get(id= btn_l)
+            if request.user in prod.likers.all():
+                prod.like -= 1
+                post.likers.remove(request.user)
+                
+            else:
+                prod.like += 1
+                post.likers.add(request.user)
+                
+                if request.user in prod.dislikers.all():
+                    prod.dislike -= 1
+                    post.dislikers.remove(request.user)
+                    
+                    
+        elif btn_d:    
+            prod = PostsModel.objects.get(id = btn_d)
+            post = PostsModel.objects.get(id= btn_d)
+            
+            if request.user in prod.dislikers.all():
+                prod.dislike -= 1
+                post.dislikers.remove(request.user)
+                
+            else:
+                prod.dislike += 1
+                post.dislikers.add(request.user)
+                
+                if request.user in prod.likers.all():
+                    prod.like -= 1
+                    post.likers.remove(request.user)
+                    
+            
+        prod.save()  
+        
+        
+       
+         
+        return redirect("home")
+
+    return render(request, "main/home.html", context = {
+            "user_list": user_list,
+            "post_list": post_list,
+        })
 
 def add_post(request):
     if request.method == 'POST':

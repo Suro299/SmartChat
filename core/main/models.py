@@ -13,5 +13,9 @@ class PostsModel(models.Model):
     comments = models.PositiveBigIntegerField("Comments Count", blank = True, default = 0)
     timestamp = models.DateTimeField(auto_now_add = True)
     
+    likers = models.ManyToManyField(CustomUser, related_name = "likers", blank = True)
+    dislikers = models.ManyToManyField(CustomUser, related_name = "dislikers", blank = True)
+    
     def __str__(self) -> str:
         return f"{self.post_title}"
+    

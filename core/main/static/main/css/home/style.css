@@ -82,7 +82,8 @@ header {
       padding-left: 2rem;
       background-color: rgba(245, 245, 245, 0.127);
       font-size: 1.8rem;
-      color: whitesmoke; }
+      color: whitesmoke;
+      color: #1cc01c; }
       @media screen and (max-width: 768px) {
         header section:nth-child(2) input {
           display: none; } }
@@ -254,11 +255,14 @@ main {
               main .post div:nth-child(2) span:nth-child(5) form dl:nth-child(3) button:hover img {
                 transition: 0.3s;
                 filter: drop-shadow(0 0 1rem red); }
-            main .post div:nth-child(2) span:nth-child(5) form dl:nth-child(4) button:hover {
-              cursor: pointer; }
-              main .post div:nth-child(2) span:nth-child(5) form dl:nth-child(4) button:hover img {
-                transition: 0.3s;
-                filter: drop-shadow(0 0 1rem #00ffd5); }
+            main .post div:nth-child(2) span:nth-child(5) form dl:nth-child(4) a {
+              display: flex;
+              color: whitesmoke; }
+              main .post div:nth-child(2) span:nth-child(5) form dl:nth-child(4) a:hover {
+                cursor: pointer; }
+                main .post div:nth-child(2) span:nth-child(5) form dl:nth-child(4) a:hover img {
+                  transition: 0.3s;
+                  filter: drop-shadow(0 0 1rem #00ffd5); }
           main .post div:nth-child(2) span:nth-child(5) form button {
             font-size: 1.2rem;
             border: none;
@@ -267,20 +271,20 @@ main {
             background-color: transparent; }
             main .post div:nth-child(2) span:nth-child(5) form button img {
               transition: 0.3s; }
-      main .post div:nth-child(2) a {
-        margin: 1.5rem 0 1.5rem 0; }
-        main .post div:nth-child(2) a span {
-          padding-top: 1.5rem;
-          display: flex;
-          align-items: center;
-          border-top: 1px solid silver; }
-          main .post div:nth-child(2) a span h1 {
-            color: rgba(253, 253, 253, 0.91);
-            margin-left: 1rem; }
-          main .post div:nth-child(2) a span img {
-            width: 4rem;
-            border-radius: 50%;
-            border: 1px solid rgba(138, 138, 138, 0.794); }
+    main .post div a {
+      margin: 1.5rem 0 1.5rem 0; }
+      main .post div a span {
+        padding-top: 1.5rem;
+        display: flex;
+        align-items: center;
+        border-top: 1px solid silver; }
+        main .post div a span h1 {
+          color: rgba(253, 253, 253, 0.91);
+          margin-left: 1rem; }
+        main .post div a span img {
+          width: 4rem;
+          border-radius: 50%;
+          border: 1px solid rgba(138, 138, 138, 0.794); }
   @media screen and (max-width: 1313px) {
     main {
       margin-left: 0rem; } }

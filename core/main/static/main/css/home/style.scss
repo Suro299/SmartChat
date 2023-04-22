@@ -126,7 +126,7 @@ header {
                 background-color: rgba(245, 245, 245, 0.127);
                 font-size: 1.8rem;
                 color: whitesmoke;
-
+                color: rgb(28, 192, 28);
                 @media screen and (max-width: 768px) {
                     display: none;
                 }
@@ -287,6 +287,7 @@ main {
     flex-direction: column;
     justify-content: start;
     max-height: 70vh;
+    
     .post {
         margin-bottom: 4rem;
         width: 100%;
@@ -391,7 +392,9 @@ main {
                                     }
                                 }
                                 &:nth-child(4) {
-                                    button {
+                                    a {
+                                        display: flex;
+                                        color: whitesmoke;
                                         &:hover {
                                             cursor: pointer; 
                                             img {
@@ -415,30 +418,28 @@ main {
                                 }
                                 
                             }
-
-
+                        }
                         }
                     }
                 }
 
                 a {
-                        margin: 1.5rem 0 1.5rem 0;
-                        span { 
-                            padding-top: 1.5rem;
-                            display: flex;
-                            align-items: center;
-                            border-top: 1px solid silver;
+                    margin: 1.5rem 0 1.5rem 0;
+                    span { 
+                        padding-top: 1.5rem;
+                        display: flex;
+                        align-items: center;
+                        border-top: 1px solid silver;
 
-                        h1 {
-                            color: rgba(253, 253, 253, 0.91);
-                            margin-left: 1rem;
-                        } 
+                    h1 {
+                        color: rgba(253, 253, 253, 0.91);
+                        margin-left: 1rem;
+                    } 
 
-                        img {
-                            width: 4rem;
-                            border-radius: 50%;
-                            border: $ava_border;
-                        }
+                    img {
+                        width: 4rem;
+                        border-radius: 50%;
+                        border: $ava_border;
                     }
                 }
             }
