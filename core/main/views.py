@@ -15,45 +15,53 @@ def home(request):
     user_list = User.objects.all()
     post_list = PostsModel.objects.all()[::-1]
 
+    
     if request.method == "POST":
-        
+
         btn_l = request.POST.get("btn_l")    
         btn_d = request.POST.get("btn_d") 
         
+        user = User.objects.get(username=request.user.username)
+        
+      
         if btn_l:
             prod = PostsModel.objects.get(id = btn_l)
-            post = PostsModel.objects.get(id= btn_l)
+            
             if request.user in prod.likers.all():
                 prod.like -= 1
-                post.likers.remove(request.user)
-                
+                user.reactions -= 1
+                prod.likers.remove(request.user)
             else:
                 prod.like += 1
-                post.likers.add(request.user)
+                user.reactions += 1
+                prod.likers.add(request.user)
                 
                 if request.user in prod.dislikers.all():
                     prod.dislike -= 1
-                    post.dislikers.remove(request.user)
+                    user.reactions -= 1
+                    prod.dislikers.remove(request.user)
                     
                     
         elif btn_d:    
             prod = PostsModel.objects.get(id = btn_d)
-            post = PostsModel.objects.get(id= btn_d)
             
             if request.user in prod.dislikers.all():
                 prod.dislike -= 1
-                post.dislikers.remove(request.user)
-                
+                user.reactions -= 1
+                prod.dislikers.remove(request.user)
             else:
                 prod.dislike += 1
-                post.dislikers.add(request.user)
+                user.reactions += 1
+                prod.dislikers.add(request.user)
                 
                 if request.user in prod.likers.all():
                     prod.like -= 1
-                    post.likers.remove(request.user)
+                    user.reactions -= 1
+                    prod.likers.remove(request.user)
                     
             
         prod.save()  
+        user.save()
         
         
        
@@ -67,16 +75,40 @@ def home(request):
 
 def add_post(request):
     if request.method == 'POST':
+        
+        post_tags = request.POST.get("post_tags")
+        
+        if post_tags:
+            tags = post_tags.split(" ")
+            
+            while "" in tags:
+                tags.remove("")
+
+            for i in tags:
+                if i.strip()[0] != "#":
+                    message = ""
+                    return render(request, 'main/add_post.html', context= {
+                        "message": "Tags error"
+                        })
+        
         form = PostModelForm(request.POST, request.FILES)
         if form.is_valid():
             message = form.save(commit=False)
             message.sender = request.user
             message.save()
+
+            user = User.objects.get(username=request.user.username)
+            user.posts_posted += 1
+            user.save()
+            
             return redirect("home")
     else:
         form = PostModelForm()
         
-    return render(request, 'main/add_post.html', context= {'form': form})
+    return render(request, 'main/add_post.html', context= {
+                        'form': form,
+                        "message": ""
+                        })
 
 
 

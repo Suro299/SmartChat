@@ -61,6 +61,9 @@
         {% for i in post_list%}
         <section  class = "post">
             <div>
+                <span>
+                    <p> #{{ i.id }} </p>
+                </span>
                 {% if i.post_image %}
                     <img src="{{ i.post_image.url }}" alt="">
                 {% else %}
@@ -72,8 +75,7 @@
                 <h1> {{ i.post_title }} </h1>
 
                 <span>
-                    <p> #code </p>
-                    <p> #esiminchkaroche </p>
+                    <p> {{ i.post_tags }} </p>
                 </span>
 
                 <span>
@@ -143,7 +145,7 @@
                     <h2> Posts posted </h2>
                     <p> {{ user.posts_posted}} </p>
                     <div>
-                        <div style = "width: {{ user.points }}%;">  </div>
+                        <div style = "width: {{ user.posts_posted }}%;">  </div>
                     </div>
                 </div>
                 

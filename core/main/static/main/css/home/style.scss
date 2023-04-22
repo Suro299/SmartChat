@@ -1,6 +1,8 @@
 $page_bgc_1: #101010;
 $post_bgc_1: rgba(89, 107, 134, 0.236);
+
 $text_color_1: rgba(245, 245, 245, 0.699);
+$text_color_2: whitesmoke;
 $yellow_border: 2px solid #ffbf0099;
 $ava_border: 1px solid rgba(138, 138, 138, 0.794);
 
@@ -27,7 +29,7 @@ $ava_border: 1px solid rgba(138, 138, 138, 0.794);
 html {
     font-size: 10px;
     font-family: Arial, Helvetica, sans-serif;
-    color: whitesmoke;
+    color: $text_color_2;
 }
 
 body {
@@ -55,7 +57,7 @@ body {
             'main main main main main main main'
             'main main main main main main main'
             'main main main main main main main'
-            'menu main main main main nav nav'
+            'main main main main main main main'
             'footer footer footer footer footer footer footer';
     }
 }
@@ -125,7 +127,7 @@ header {
                 padding-left: 2rem;
                 background-color: rgba(245, 245, 245, 0.127);
                 font-size: 1.8rem;
-                color: whitesmoke;
+                color: $text_color_2;
                 color: rgb(28, 192, 28);
                 @media screen and (max-width: 768px) {
                     display: none;
@@ -189,7 +191,7 @@ header {
                 }
 
                 h3 {
-                    color: whitesmoke;
+                    color: $text_color_2;
                     transition: 0.3s;
                 }
             }
@@ -204,7 +206,6 @@ menu {
     height: 92vh;
     top: 8vh;
     padding: 6rem 2rem 2rem 2rem;
-    // border: 1px solid red;
     width: auto;
 
     @media screen and (max-width: 1313px) {
@@ -214,7 +215,7 @@ menu {
     p {
         margin-left: 1rem;
         font-size: 2.2rem;
-        color: whitesmoke;
+        color: $text_color_2;
         margin-bottom: 4rem;
     }
 
@@ -279,6 +280,8 @@ menu {
 
 
 main {
+    margin-top: 3rem;
+    height: 100%;
     z-index: 1;
     grid-area: main;
     padding: 5rem 2rem;
@@ -287,6 +290,8 @@ main {
     flex-direction: column;
     justify-content: start;
     max-height: 70vh;
+    overflow-x: hidden;
+    overflow-y: auto;
     
     .post {
         margin-bottom: 4rem;
@@ -300,26 +305,42 @@ main {
 
         @media screen and (max-width: 1313px) {
             width: 100%;
+            flex-direction: column;
         }
 
         div {
-
             &:first-child {
                 max-width: 25rem;
                 height: 100%;
                 display: flex;
-                justify-content: center;
-                align-items: start;
+                justify-content: start;
+                align-items: center;
+                flex-direction: column;
 
+                span {
+                    width: 90%;
+                    text-align: start;
+                    margin-bottom: 1rem;
+                    p {
+                        font-size: 1.5rem;
+                        text-align: start;
+                    }
+                }
                 img {
                     border: $ava_border;
                     max-width: 23rem;
                     min-width: 15rem;
                     border-radius: 1rem;
+
+                    @media screen and (max-width: 1313px) {
+                        margin-bottom: 2rem;
+                    }
                 }
             }
 
             &:nth-child(2) {
+                width: 100%;
+
                 margin-left: 2rem;
                 display: flex;
                 flex-direction: column;
@@ -394,7 +415,7 @@ main {
                                 &:nth-child(4) {
                                     a {
                                         display: flex;
-                                        color: whitesmoke;
+                                        color: $text_color_2;
                                         &:hover {
                                             cursor: pointer; 
                                             img {
@@ -410,7 +431,7 @@ main {
                                 font-size: 1.2rem;
                                 border: none;
                                 outline: none;
-                                color: whitesmoke;
+                                color: $text_color_2;
                                 background-color: transparent; 
                                 
                                 img {
@@ -447,27 +468,16 @@ main {
     }
 
     @media screen and (max-width: 1313px) {
-        margin-left: 0rem;
+        margin-left: 3rem;
     }
 
 }
 
-footer {
-    grid-area: footer;
-    margin-left: 5rem;
-    border: 1px solid red;
-    margin-bottom: 2rem;
-    @media screen and (max-width: 1313px) {
-        margin-left: 0rem;
-    }
-}
+
 
 nav {
     z-index: 1;
-
     grid-area: nav;
-    // border: 1px solid red;
-
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
@@ -615,3 +625,35 @@ nav {
     }
 }
 
+footer {
+    grid-area: footer;
+    margin-left: 5rem;
+    margin-bottom: 2rem;
+    padding: 0 2rem;
+
+    a {
+        width: 100%;
+        height: 50%;
+
+        button {
+            width: 100%;
+            height: 100%;
+            border-radius: 5rem;
+            background-color: $page_bgc_1;
+            border: $ava_border;
+            color: $text_color_2;
+            font-size: 1.7rem;
+            transition: 0.2s;
+
+            &:hover {
+                cursor: pointer;
+                box-shadow: 0px 0px 0.3rem 0px $text_color_1;
+                transition: 0.2s;
+            }
+        }
+    }
+ 
+    @media screen and (max-width: 1313px) {
+        margin-left: 0rem;
+    }
+}

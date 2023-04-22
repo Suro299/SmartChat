@@ -31,7 +31,7 @@ body {
   margin: 0; }
   @media screen and (max-width: 1313px) {
     body {
-      grid-template-areas: 'header header header header header header header' 'main main main main main main main' 'main main main main main main main' 'main main main main main main main' 'menu main main main main nav nav' 'footer footer footer footer footer footer footer'; } }
+      grid-template-areas: 'header header header header header header header' 'main main main main main main main' 'main main main main main main main' 'main main main main main main main' 'main main main main main main main' 'footer footer footer footer footer footer footer'; } }
 
 .background_imgae {
   width: 80%;
@@ -184,6 +184,8 @@ menu {
           margin-left: 1rem; }
 
 main {
+  margin-top: 3rem;
+  height: 100%;
   z-index: 1;
   grid-area: main;
   padding: 5rem 2rem;
@@ -191,7 +193,9 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: start;
-  max-height: 70vh; }
+  max-height: 70vh;
+  overflow-x: hidden;
+  overflow-y: auto; }
   main .post {
     margin-bottom: 4rem;
     width: 100%;
@@ -203,19 +207,32 @@ main {
     padding: 3rem; }
     @media screen and (max-width: 1313px) {
       main .post {
-        width: 100%; } }
+        width: 100%;
+        flex-direction: column; } }
     main .post div:first-child {
       max-width: 25rem;
       height: 100%;
       display: flex;
-      justify-content: center;
-      align-items: start; }
+      justify-content: start;
+      align-items: center;
+      flex-direction: column; }
+      main .post div:first-child span {
+        width: 90%;
+        text-align: start;
+        margin-bottom: 1rem; }
+        main .post div:first-child span p {
+          font-size: 1.5rem;
+          text-align: start; }
       main .post div:first-child img {
         border: 1px solid rgba(138, 138, 138, 0.794);
         max-width: 23rem;
         min-width: 15rem;
         border-radius: 1rem; }
+        @media screen and (max-width: 1313px) {
+          main .post div:first-child img {
+            margin-bottom: 2rem; } }
     main .post div:nth-child(2) {
+      width: 100%;
       margin-left: 2rem;
       display: flex;
       flex-direction: column; }
@@ -287,16 +304,7 @@ main {
           border: 1px solid rgba(138, 138, 138, 0.794); }
   @media screen and (max-width: 1313px) {
     main {
-      margin-left: 0rem; } }
-
-footer {
-  grid-area: footer;
-  margin-left: 5rem;
-  border: 1px solid red;
-  margin-bottom: 2rem; }
-  @media screen and (max-width: 1313px) {
-    footer {
-      margin-left: 0rem; } }
+      margin-left: 3rem; } }
 
 nav {
   z-index: 1;
@@ -390,5 +398,30 @@ nav {
   @media screen and (max-width: 1313px) {
     nav {
       display: none; } }
+
+footer {
+  grid-area: footer;
+  margin-left: 5rem;
+  margin-bottom: 2rem;
+  padding: 0 2rem; }
+  footer a {
+    width: 100%;
+    height: 50%; }
+    footer a button {
+      width: 100%;
+      height: 100%;
+      border-radius: 5rem;
+      background-color: #101010;
+      border: 1px solid rgba(138, 138, 138, 0.794);
+      color: whitesmoke;
+      font-size: 1.7rem;
+      transition: 0.2s; }
+      footer a button:hover {
+        cursor: pointer;
+        box-shadow: 0px 0px 0.3rem 0px rgba(245, 245, 245, 0.699);
+        transition: 0.2s; }
+  @media screen and (max-width: 1313px) {
+    footer {
+      margin-left: 0rem; } }
 
 /*# sourceMappingURL=style.css.map */

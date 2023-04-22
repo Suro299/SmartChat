@@ -15,10 +15,13 @@
         {% csrf_token %}
         
         <input type = "text" name = "post_title" placeholder = "title"> <br> <br>
+        <input type="text" name = "post_tags" placeholder = "#tag_1 #tag_2">
         <textarea cols="30" rows="10" name="post_text" placeholder = "Post Text"> </textarea> <br>
         <input type = "file" name = "post_image"> <br> <br>
 
         <button type="submit"> Post </button>
+
+        <p> {{ message }}</p>
 
     </form>
 </body>

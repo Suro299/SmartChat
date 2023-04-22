@@ -20,7 +20,7 @@ class NewUserForm(UserCreationForm):
 class PostModelForm(forms.ModelForm):
     class Meta:
         model = PostsModel
-        fields = ["post_title", "post_text", "post_image"]
+        fields = ["post_title", "post_text", "post_image", "post_tags"]
         
 
 
