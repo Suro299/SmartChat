@@ -14,6 +14,20 @@
     <div class="background_imgae">
         <img  src="{% static 'main/img/backgrounds/home_bgp.jpg'%}" alt="">
     </div>
+
+    <div class = "menu_left">
+
+        <ul>
+            <li>{{user.username }}</li>
+            <hr>
+            <li> Go To Chats </li>
+            <hr>
+            <li>User Settings</li>
+            <li>Site Settings</li>
+            <hr>
+            <li> LogOut</li>
+        </ul>
+    </div>
     
     <header>
 
@@ -78,11 +92,9 @@
                     <p> {{ i.post_tags }} </p>
                 </span>
 
-                <span>
-                    <p>
-                        {{ i.post_text }}
-                    </p>
-                </span>
+                <a class = "post_text" href = "">
+                    {{ i.post_text }}
+                </a>
 
                 <a href="">
                     <span>
@@ -97,15 +109,15 @@
                         {% csrf_token %}
 
                         {% if user in i.likers.all %}
-                            <dl><button value = "{{i.id}}" name = "btn_l" type="submit"><img style=" filter: drop-shadow(0 0 1rem rgb(72, 255, 0));  width: 2rem;" src="{% static 'main/icon/home/active_like.svg' %}" alt="like"> </button> <p> {{ i.like }} </p> </dl>
+                            <dl><button value = "{{i.id}}" name = "btn_l" type="submit"><img style=" filter: drop-shadow(0 0 1rem rgb(72, 255, 0));  width: 2.5rem;" src="{% static 'main/icon/home/active_like.svg' %}" alt="like"> </button> <p> {{ i.likers.count }} </p> </dl>
                         {% else %}
-                            <dl><button value = "{{i.id}}" name = "btn_l" type="submit"><img src="{% static 'main/icon/home/like.svg' %}" alt="like"> </button> <p> {{ i.like }} </p> </dl>
+                            <dl><button value = "{{i.id}}" name = "btn_l" type="submit"><img src="{% static 'main/icon/home/like.svg' %}" alt="like"> </button> <p> {{ i.likers.count }} </p> </dl>
                         {% endif %}
 
                         {% if user in i.dislikers.all %}
-                            <dl><button value = "{{i.id}}" name = "btn_d" type="submit"><img style = "filter: drop-shadow(0 0 1rem rgb(255, 0, 0)); width: 2rem;" src="{% static 'main/icon/home/active_dislike.svg' %}" alt="dislike"> </button> <p> {{ i.dislike }} </p> </dl>
+                            <dl><button value = "{{i.id}}" name = "btn_d" type="submit"><img style = "filter: drop-shadow(0 0 1rem rgb(255, 0, 0)); width: 2.3rem;" src="{% static 'main/icon/home/active_dislike.svg' %}" alt="dislike"> </button> <p> {{ i.dislikers.count }} </p> </dl>
                         {% else %}
-                            <dl><button value = "{{i.id}}" name = "btn_d" type="submit"><img src="{% static 'main/icon/home/dislike.svg' %}" alt="dislike"> </button> <p> {{ i.dislike }} </p> </dl>
+                            <dl><button value = "{{i.id}}" name = "btn_d" type="submit"><img src="{% static 'main/icon/home/dislike.svg' %}" style = "width: 2.3rem;" alt="dislike"> </button> <p> {{ i.dislikers.count  }} </p> </dl>
                         {% endif %}
                         
                         <dl><a href=""><img src="{% static 'main/icon/home/comment.svg' %}" alt="Comment"> </> <p> {{ i.comments }} </p></a> </dl>

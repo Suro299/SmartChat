@@ -28,16 +28,13 @@ def home(request):
             prod = PostsModel.objects.get(id = btn_l)
             
             if request.user in prod.likers.all():
-                prod.like -= 1
                 user.reactions -= 1
                 prod.likers.remove(request.user)
             else:
-                prod.like += 1
                 user.reactions += 1
                 prod.likers.add(request.user)
                 
                 if request.user in prod.dislikers.all():
-                    prod.dislike -= 1
                     user.reactions -= 1
                     prod.dislikers.remove(request.user)
                     
@@ -46,16 +43,13 @@ def home(request):
             prod = PostsModel.objects.get(id = btn_d)
             
             if request.user in prod.dislikers.all():
-                prod.dislike -= 1
                 user.reactions -= 1
                 prod.dislikers.remove(request.user)
             else:
-                prod.dislike += 1
                 user.reactions += 1
                 prod.dislikers.add(request.user)
                 
                 if request.user in prod.likers.all():
-                    prod.like -= 1
                     user.reactions -= 1
                     prod.likers.remove(request.user)
                     

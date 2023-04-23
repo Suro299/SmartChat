@@ -9,8 +9,6 @@ class PostsModel(models.Model):
     post_text = models.TextField("Post Content")
     post_image = models.ImageField("Post Image", blank = True)
     post_tags = models.CharField("Post Title", max_length = 100, blank = True)
-    like = models.PositiveBigIntegerField("Likes Count", blank = True, default = 0)
-    dislike = models.PositiveBigIntegerField("Dislikes Count", blank = True, default = 0)
     comments = models.PositiveBigIntegerField("Comments Count", blank = True, default = 0)
     timestamp = models.DateTimeField(auto_now_add = True)
     
