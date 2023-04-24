@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-------- START CSS -------->
+    <link rel="stylesheet" href="{% static 'main/css/ftf/style.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/inc/style.css' %}">
+    <!-------- END CSS -------->
+    <title> 404 - page not found  </title>
+</head>
+<body>
+    <div class="background_imgae">
+        <img  src="{% static 'main/img/backgrounds/home_bgp.jpg'%}" alt="">
+    </div>
+    
+    {% include 'main/inc/settings_menu.html' %}
+
+    <header>
+        <section>
+            <h1> <span>Smart</span> Chat </h1>
+        </section>
+
+        <section id = "user_btn">
+            <button> <img src="{{ user.avatar.url }}" alt=""> </button>
+            <h3> {{ user.username }} </h3>
+        </section>
+    </header>
+
+    <main>
+        <section>
+            <img src="{% static 'main/icon/404/error_icon.svg'%}" alt="">
+
+            <h1>4<span>0</span>4</h1>
+
+            <p>Sorry, the requested page was not found. You may have clicked on a link that was in error <br> 
+                or the resource may have been removed. <br>
+                (( P.S. Suron sayti nervery kerav ))
+            </p>
+            <section>
+
+                <a href="" onclick="history.back();return false;" ><button> Back </button></a>
+                <a href="" onclick="alert(' Hly Patrast Chi ! ');" ><button> Contact Us </button></a>
+            </section>
+
+        </section>
+    </main>
+</body>
+    <!-------- START JS -------->
+    <script src = "{% static 'main/js/home/settings_menu.js' %}" ></script>
+    <!-------- END JS -------->
+</html>

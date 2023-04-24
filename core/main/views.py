@@ -8,7 +8,7 @@ from .forms import NewUserForm, PostModelForm
 from .models import PostsModel
 
 
-def home(request):
+def posts(request):
     if not(request.user.is_authenticated): 
         return redirect("login")
 
@@ -60,12 +60,16 @@ def home(request):
         
        
          
-        return redirect("home")
+        return redirect("posts")
 
-    return render(request, "main/home.html", context = {
+    return render(request, "main/posts.html", context = {
             "user_list": user_list,
             "post_list": post_list,
         })
+    
+    
+def ftf(request):
+    return render(request, "main/ftf.html")
 
 def add_post(request):
     if request.method == 'POST':
@@ -95,7 +99,7 @@ def add_post(request):
             user.posts_posted += 1
             user.save()
             
-            return redirect("home")
+            return redirect("posts")
     else:
         form = PostModelForm()
         
@@ -115,7 +119,7 @@ def register_request(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Registration successful." )
-            return redirect("home")
+            return redirect("posts")
         pdisplay = "flex"
         messages.error(request, "Unsuccessful registration. Invalid information.")
     form = NewUserForm()
@@ -138,7 +142,7 @@ def login_request(request):
            if user is not None:
                login(request, user)
                messages.info(request, f"You are now logged in as {username}.")
-               return redirect("home")
+               return redirect("posts")
            else:
                 messages.error(request,"Invalid username or password.")
         else:
@@ -151,7 +155,6 @@ def login_request(request):
 
 
 def logout_request(request):
-
 	logout(request)
 	messages.info(request, "You have successfully logged out.") 
-	return redirect("home")
+	return redirect("posts")

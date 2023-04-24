@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'main/css/home/style.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/inc/style.css' %}">
     <title> Posts </title>
 </head>
 <body>
@@ -15,19 +16,7 @@
         <img  src="{% static 'main/img/backgrounds/home_bgp.jpg'%}" alt="">
     </div>
 
-    <div class = "menu_left">
-
-        <ul>
-            <li>{{user.username }}</li>
-            <hr>
-            <li> Go To Chats </li>
-            <hr>
-            <li>User Settings</li>
-            <li>Site Settings</li>
-            <hr>
-            <li> LogOut</li>
-        </ul>
-    </div>
+    {% include 'main/inc/settings_menu.html' %}
     
     <header>
 
@@ -39,7 +28,7 @@
             <input type="text" placeholder = "Search">
         </section>
 
-        <section>
+        <section id = "user_btn">
             <button> <img src="{{ user.avatar.url }}" alt=""> </button>
             <h3> {{ user.username }} </h3>
         </section>
@@ -183,4 +172,7 @@
     </nav>
 
 </body>
+    <!-------- START JS -------->
+    <script src = "{% static 'main/js/home/settings_menu.js' %}" ></script>
+    <!-------- END JS -------->
 </html>
