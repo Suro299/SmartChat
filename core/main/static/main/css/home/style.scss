@@ -340,12 +340,13 @@ main {
 
             &:nth-child(2) {
                 width: 100%;
-
+                margin-top: 3rem;
                 margin-left: 2rem;
                 display: flex;
                 flex-direction: column;
 
                 h1 {
+                    
                     font-size: 2rem;
                 }
 
@@ -372,7 +373,7 @@ main {
                     }
 
                     
-
+                    
                     &:nth-child(5) {
                         form {
                             display: flex;
@@ -443,8 +444,69 @@ main {
                                 
                             }
                         }
-                        }
                     }
+
+                    &:nth-child(6) {
+                        height: 4rem;
+                        display: flex;
+                        justify-content: end;
+                        align-items: center;
+
+                        a {
+                            button {
+                                width: 4rem;
+                                height: 4rem;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                border: none;
+                                outline: none;
+                                margin-left: 2rem;
+                                border-radius: 5px;
+                                color: whitesmoke;
+                                transition: 0.2s;
+                                
+                                img {
+                                    width: 1.8rem;
+                                }
+
+                                
+                            }
+
+                            &:nth-child(1) {
+                                button {
+                                    background-color: rgb(18, 140, 18);
+                                }
+                            }
+
+                            &:nth-child(2) {
+                                button {
+                                    background-color: rgb(198, 28, 28);
+                                }
+                            }
+
+                            &:hover {
+                                button {
+                                    cursor: pointer;
+                                }
+
+                                &:nth-child(1) {
+                                    button {
+                                        background-color: rgb(66, 203, 66);
+                                    } 
+                                }
+    
+                                &:nth-child(2) {
+                                    button {
+                                        background-color: rgb(234, 49, 49);
+                                    }
+                                }
+                            }
+                        }
+                   
+                    }
+                    }
+                    
                 }
 
                 a {

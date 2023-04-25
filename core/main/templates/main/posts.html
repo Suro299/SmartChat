@@ -112,6 +112,22 @@
                         <dl><a href=""><img src="{% static 'main/icon/home/comment.svg' %}" alt="Comment"> </> <p> {{ i.comments }} </p></a> </dl>
                     </form>
                 </span>
+
+                {% if i.sender.username == user.username %}
+                <span>
+                    <a href="">
+                        <button value = "{{i.id}}" name = "edit_btn">
+                            <img src="{% static 'main/icon/home/edit_post.svg' %}" alt="Edit">
+                        </button>
+                    </a>
+                    
+                    <a href="">
+                        <button value = "{{i.id}}" name = "delete_btn"> 
+                            <img src="{% static 'main/icon/home/del_post.svg' %}" alt="Delete">
+                        </button>
+                    </a>
+                </span>
+                {% endif %}
             </div>
         </section>
         {% endfor %}

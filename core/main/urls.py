@@ -7,5 +7,5 @@ urlpatterns = [
     path("login/", views.login_request, name = "login"),
     path("register/", views.register_request, name = "register"),
     path("logout/", views.logout_request, name = "logout"),
-    path("404-page/", views.ftf, name = "404-page")
+    path("404-page/", views.ftf, name = "404-page"),
 ]

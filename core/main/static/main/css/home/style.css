@@ -232,6 +232,7 @@ main {
             margin-bottom: 2rem; } }
     main .post div:nth-child(2) {
       width: 100%;
+      margin-top: 3rem;
       margin-left: 2rem;
       display: flex;
       flex-direction: column; }
@@ -290,6 +291,35 @@ main {
             background-color: transparent; }
             main .post div:nth-child(2) span:nth-child(5) form button img {
               transition: 0.3s; }
+        main .post div:nth-child(2) span:nth-child(6) {
+          height: 4rem;
+          display: flex;
+          justify-content: end;
+          align-items: center; }
+          main .post div:nth-child(2) span:nth-child(6) a button {
+            width: 4rem;
+            height: 4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            outline: none;
+            margin-left: 2rem;
+            border-radius: 5px;
+            color: whitesmoke;
+            transition: 0.2s; }
+            main .post div:nth-child(2) span:nth-child(6) a button img {
+              width: 1.8rem; }
+          main .post div:nth-child(2) span:nth-child(6) a:nth-child(1) button {
+            background-color: #128c12; }
+          main .post div:nth-child(2) span:nth-child(6) a:nth-child(2) button {
+            background-color: #c61c1c; }
+          main .post div:nth-child(2) span:nth-child(6) a:hover button {
+            cursor: pointer; }
+          main .post div:nth-child(2) span:nth-child(6) a:hover:nth-child(1) button {
+            background-color: #42cb42; }
+          main .post div:nth-child(2) span:nth-child(6) a:hover:nth-child(2) button {
+            background-color: #ea3131; }
     main .post div a {
       margin: 1.5rem 0 1.5rem 0; }
       main .post div a span {

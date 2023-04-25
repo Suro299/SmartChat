@@ -7,7 +7,6 @@ from users.models import CustomUser as User
 from .forms import NewUserForm, PostModelForm
 from .models import PostsModel
 
-
 def posts(request):
     if not(request.user.is_authenticated): 
         return redirect("login")
@@ -52,16 +51,13 @@ def posts(request):
                 if request.user in prod.likers.all():
                     user.reactions -= 1
                     prod.likers.remove(request.user)
-                    
+            
             
         prod.save()  
         user.save()
-        
-        
-       
-         
-        return redirect("posts")
 
+        return redirect("posts")
+    
     return render(request, "main/posts.html", context = {
             "user_list": user_list,
             "post_list": post_list,
