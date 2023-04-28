@@ -18,21 +18,8 @@
 
     {% include 'main/inc/settings_menu.html' %}
     
-    <header>
+    {% include 'main/inc/header.html' %}
 
-        <section>
-            <h1> <span>Smart</span> Chat </h1>
-        </section>
-
-        <section>
-            <input type="text" placeholder = "Search">
-        </section>
-
-        <section id = "user_btn">
-            <button> <img src="{{ user.avatar.url }}" alt=""> </button>
-            <h3> {{ user.username }} </h3>
-        </section>
-    </header>
     <menu>
         <p> A list of users </p>
         <hr>
@@ -78,7 +65,9 @@
                 <h1> {{ i.post_title }} </h1>
 
                 <span>
-                    <p> {{ i.post_tags }} </p>
+                    {% for j in i.post_tags.all %}
+                        <p> {{ j.name }} </p>
+                    {% endfor %}
                 </span>
 
                 <a class = "post_text" href = "">
@@ -115,13 +104,11 @@
 
                 {% if i.sender.username == user.username %}
                 <span>
-                    <a href="">
+                    <a href="del_post/{{i.id}}">
                         <button value = "{{i.id}}" name = "edit_btn">
                             <img src="{% static 'main/icon/home/edit_post.svg' %}" alt="Edit">
                         </button>
-                    </a>
-                    
-                    <a href="">
+                        
                         <button value = "{{i.id}}" name = "delete_btn"> 
                             <img src="{% static 'main/icon/home/del_post.svg' %}" alt="Delete">
                         </button>

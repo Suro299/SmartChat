@@ -49,84 +49,6 @@ body {
     position: relative;
     z-index: -2; }
 
-header {
-  z-index: 1;
-  grid-area: header;
-  display: flex;
-  align-items: center;
-  padding: 1rem 3rem;
-  background-color: transparent;
-  height: 8vh; }
-  @media screen and (max-width: 768px) {
-    header {
-      padding: 2rem; } }
-  header section:first-child h1 {
-    font-size: 3rem;
-    color: transparent;
-    -webkit-background-clip: text;
-    background-clip: text;
-    background-image: linear-gradient(to right, #ffb300, #ffe100, #f3fa62); }
-    @media screen and (max-width: 768px) {
-      header section:first-child h1 {
-        font-size: 2.5rem; } }
-  header section:nth-child(2) {
-    margin-left: 7.2%;
-    height: 5vh;
-    width: 30%; }
-    header section:nth-child(2) input {
-      width: 100%;
-      height: 100%;
-      border-radius: 0.5rem;
-      border: none;
-      outline: none;
-      padding-left: 2rem;
-      background-color: rgba(245, 245, 245, 0.127);
-      font-size: 1.8rem;
-      color: whitesmoke; }
-      @media screen and (max-width: 768px) {
-        header section:nth-child(2) input {
-          display: none; } }
-  header section:last-child {
-    right: 3rem;
-    position: absolute;
-    display: flex;
-    align-items: center; }
-    @media screen and (max-width: 768px) {
-      header section:last-child {
-        margin-top: 0.5rem; } }
-    header section:last-child button {
-      width: 5rem;
-      height: 5rem;
-      border-radius: 50%;
-      border: none;
-      background-color: transparent; }
-      @media screen and (max-width: 768px) {
-        header section:last-child button {
-          width: 5rem;
-          height: 5rem; } }
-      header section:last-child button img {
-        border-radius: 50%;
-        width: 100%;
-        height: 100%;
-        opacity: 75%;
-        transition: 0.3s;
-        border: 1px solid rgba(138, 138, 138, 0.794); }
-    header section:last-child h3 {
-      font-size: 1.8rem;
-      margin-left: 1rem;
-      color: rgba(245, 245, 245, 0.699);
-      transition: 0.3s; }
-    header section:last-child:hover {
-      transition: 0.3s;
-      cursor: pointer; }
-      header section:last-child:hover img {
-        opacity: 100%;
-        transition: 0.3s;
-        cursor: pointer; }
-      header section:last-child:hover h3 {
-        color: whitesmoke;
-        transition: 0.3s; }
-
 menu {
   z-index: 1;
   grid-area: menu;
@@ -236,8 +158,8 @@ main {
       margin-left: 2rem;
       display: flex;
       flex-direction: column; }
-      main .post div:nth-child(2) h1 {
-        font-size: 2rem; }
+      main .post div:nth-child(2) h1:nth-child(1) {
+        font-size: 3rem; }
       main .post div:nth-child(2) .post_text {
         width: 100%;
         display: flex;
@@ -245,13 +167,20 @@ main {
         color: rgba(253, 253, 253, 0.862);
         font-size: 1.5rem; }
       main .post div:nth-child(2) span {
-        width: 100%;
         display: flex;
         margin-top: 1.5rem; }
-        main .post div:nth-child(2) span:nth-child(2) p {
-          color: rgba(253, 253, 253, 0.746); }
-          main .post div:nth-child(2) span:nth-child(2) p:not(:first-child) {
-            margin-left: 2rem; }
+        main .post div:nth-child(2) span:nth-child(2) {
+          display: flex;
+          justify-content: start;
+          align-items: center; }
+          main .post div:nth-child(2) span:nth-child(2) p {
+            padding: 0.6rem 1rem;
+            border-radius: 0.5rem;
+            background-color: #5a3ecc;
+            color: white;
+            font-size: 1.5rem; }
+            main .post div:nth-child(2) span:nth-child(2) p:not(:first-child) {
+              margin-left: 2rem; }
         main .post div:nth-child(2) span:nth-child(5) form {
           display: flex;
           flex-direction: row;
@@ -296,30 +225,32 @@ main {
           display: flex;
           justify-content: end;
           align-items: center; }
-          main .post div:nth-child(2) span:nth-child(6) a button {
-            width: 4rem;
-            height: 4rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: none;
-            outline: none;
-            margin-left: 2rem;
-            border-radius: 5px;
-            color: whitesmoke;
-            transition: 0.2s; }
-            main .post div:nth-child(2) span:nth-child(6) a button img {
-              width: 1.8rem; }
-          main .post div:nth-child(2) span:nth-child(6) a:nth-child(1) button {
-            background-color: #128c12; }
-          main .post div:nth-child(2) span:nth-child(6) a:nth-child(2) button {
-            background-color: #c61c1c; }
-          main .post div:nth-child(2) span:nth-child(6) a:hover button {
-            cursor: pointer; }
-          main .post div:nth-child(2) span:nth-child(6) a:hover:nth-child(1) button {
-            background-color: #42cb42; }
-          main .post div:nth-child(2) span:nth-child(6) a:hover:nth-child(2) button {
-            background-color: #ea3131; }
+          main .post div:nth-child(2) span:nth-child(6) a {
+            display: flex; }
+            main .post div:nth-child(2) span:nth-child(6) a button {
+              width: 4rem;
+              height: 4rem;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border: none;
+              outline: none;
+              margin-left: 2rem;
+              border-radius: 5px;
+              color: whitesmoke;
+              transition: 0.2s; }
+              main .post div:nth-child(2) span:nth-child(6) a button img {
+                width: 1.8rem; }
+              main .post div:nth-child(2) span:nth-child(6) a button:nth-child(1) {
+                background-color: #128c12; }
+                main .post div:nth-child(2) span:nth-child(6) a button:nth-child(1):hover {
+                  cursor: pointer;
+                  background-color: #42cb42; }
+              main .post div:nth-child(2) span:nth-child(6) a button:nth-child(2) {
+                background-color: #c61c1c; }
+                main .post div:nth-child(2) span:nth-child(6) a button:nth-child(2):hover {
+                  cursor: pointer;
+                  background-color: #ea3131; }
     main .post div a {
       margin: 1.5rem 0 1.5rem 0; }
       main .post div a span {

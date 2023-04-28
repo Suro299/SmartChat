@@ -20,17 +20,8 @@
     
     {% include 'main/inc/settings_menu.html' %}
 
-    <header>
-        <section>
-            <h1> <span>Smart</span> Chat </h1>
-        </section>
-
-        <section id = "user_btn">
-            <button> <img src="{{ user.avatar.url }}" alt=""> </button>
-            <h3> {{ user.username }} </h3>
-        </section>
-    </header>
-
+    {% include 'main/inc/header.html' %}
+    
     <main>
         <section>
             <img src="{% static 'main/icon/404/error_icon.svg'%}" alt="">
@@ -43,8 +34,8 @@
             </p>
             <section>
 
-                <a href="" onclick="history.back();return false;" ><button> Back </button></a>
-                <a href="" onclick="alert(' Hly Patrast Chi ! ');" ><button> Contact Us </button></a>
+                <a onclick="history.back();" ><button> Back </button></a>
+                <a onclick="alert(' Hly Patrast Chi ! ');" ><button> Contact Us </button></a>
             </section>
 
         </section>

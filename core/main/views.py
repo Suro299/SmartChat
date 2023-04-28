@@ -2,10 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.shortcuts import render, redirect
 from users.models import CustomUser as User
 from .forms import NewUserForm, PostModelForm
-from .models import PostsModel
+from .models import PostsModel, Tag
 
 def posts(request):
     if not(request.user.is_authenticated): 
@@ -13,8 +12,10 @@ def posts(request):
 
     user_list = User.objects.all()
     post_list = PostsModel.objects.all()[::-1]
-
+   
+            
     
+            
     if request.method == "POST":
 
         btn_l = request.POST.get("btn_l")    
@@ -56,8 +57,9 @@ def posts(request):
         prod.save()  
         user.save()
 
+        
         return redirect("posts")
-    
+
     return render(request, "main/posts.html", context = {
             "user_list": user_list,
             "post_list": post_list,
@@ -70,29 +72,28 @@ def ftf(request):
 def add_post(request):
     if request.method == 'POST':
         
-        post_tags = request.POST.get("post_tags")
-        
-        if post_tags:
-            tags = post_tags.split(" ")
-            
-            while "" in tags:
-                tags.remove("")
+        post_tags = request.POST.get("post_tags")            
 
-            for i in tags:
-                if i.strip()[0] != "#":
-                    message = ""
-                    return render(request, 'main/add_post.html', context= {
-                        "message": "Tags error"
-                        })
-        
         form = PostModelForm(request.POST, request.FILES)
         if form.is_valid():
             message = form.save(commit=False)
             message.sender = request.user
             message.save()
+            
+            if post_tags:
+                tags = post_tags.split(" ")
+
+                for i in tags:
+                    i = i.strip()
+
+                    if i != "" and i != "#" and i[0] == "#":
+                        
+                        tag_instance, _ = Tag.objects.get_or_create(name = i[1:])
+                        message.post_tags.add(tag_instance) 
 
             user = User.objects.get(username=request.user.username)
             user.posts_posted += 1
+            
             user.save()
             
             return redirect("posts")
@@ -102,9 +103,20 @@ def add_post(request):
     return render(request, 'main/add_post.html', context= {
                         'form': form,
                         "message": ""
-                        })
+                    })
 
 
+
+def del_post(request, id):
+    post = PostsModel.objects.get(pk=id)
+    
+    if request.method == "POST":
+        post.delete()
+        return redirect("posts")
+             
+    return render(request, "main/del_post.html", context = {
+       "post": post
+    })
 
 
 def register_request(request):
