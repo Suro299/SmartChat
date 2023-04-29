@@ -15,10 +15,70 @@
     {% include 'main/inc/settings_menu.html' %}
     {% include 'main/inc/header.html' %}
 
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit"> Delete </button>
-        <button onclick="history.back();" > Back </button>
-    </form>
+    <main>
+        <section  class = "post">
+            <div>
+                <span>
+                    <p> #{{ del_post.id }} </p>
+                </span>
+                {% if del_post.post_image %}
+                    <img src="{{ del_post.post_image.url }}" alt="">
+                {% else %}
+                    <img src="{% static 'main/img/backgrounds/load_imgae.jpeg'%}" alt="">
+                {% endif %}
+            </div>
+
+            <div>
+                <h1> {{ del_post.post_title }} </h1>
+
+                <span>
+                    {% for j in del_post.post_tags.all %}
+                        <p> {{ j.name }} </p>
+                    {% endfor %}
+                </span>
+
+                <a class = "post_text" href = "">
+                    {{ del_post.post_text }}
+                </a>
+
+                <a href="">
+                    <span>
+                        <img src="{{ del_post.sender.avatar.url }}" alt="">
+
+                        <h1> {{ del_post.sender.username }} </h1>
+                    </span>
+                </a>
+
+                <span>
+                    <form>
+                        {% csrf_token %}
+
+                        {% if user in del_post.likers.all %}
+                            <dl><button><img style=" filter: drop-shadow(0 0 1rem rgb(72, 255, 0));  width: 2.5rem;" src="{% static 'main/icon/home/active_like.svg' %}" alt="like"> </button> <p> {{ del_post.likers.count }} </p> </dl>
+                        {% else %}
+                            <dl><button><img src="{% static 'main/icon/home/like.svg' %}" alt="like"> </button> <p> {{ del_post.likers.count }} </p> </dl>
+                        {% endif %}
+
+                        {% if user in del_post.dislikers.all %}
+                            <dl><button><img style = "filter: drop-shadow(0 0 1rem rgb(255, 0, 0)); width: 2.3rem;" src="{% static 'main/icon/home/active_dislike.svg' %}" alt="dislike"> </button> <p> {{ del_post.dislikers.count }} </p> </dl>
+                        {% else %}
+                            <dl><button><img src="{% static 'main/icon/home/dislike.svg' %}" style = "width: 2.3rem;" alt="dislike"> </button> <p> {{ del_post.dislikers.count  }} </p> </dl>
+                        {% endif %}
+                        
+                        <dl><a href=""><img src="{% static 'main/icon/home/comment.svg' %}" alt="Comment"> </> <p> {{ del_post.comments }} </p></a> </dl>
+                    </form>
+                </span>
+            </div>
+        </section>
+
+        <section>
+            <a onclick="history.back();" ><button> Back </button></a>
+            <form method="post">
+                {% csrf_token %}
+                <a ><button type="submit"> Delete </button></a>
+            </form>
+        </section>
+        
+    </main>
 </body>
 </html>

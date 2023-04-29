@@ -110,13 +110,19 @@ def add_post(request):
 def del_post(request, id):
     post = PostsModel.objects.get(pk=id)
     
-    if request.method == "POST":
-        post.delete()
+    
+    if post.sender.username == request.user.username: 
+        if request.method == "POST":
+            post.delete()
+            return redirect("posts")
+
+        return render(request, "main/del_post.html", context = {
+           "del_post": post
+        })
+    else:
         return redirect("posts")
-             
-    return render(request, "main/del_post.html", context = {
-       "post": post
-    })
+    
+    
 
 
 def register_request(request):
