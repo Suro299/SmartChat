@@ -1,0 +1,249 @@
+$bgc_1: #101010;
+$bgc_2: #181818;
+$border_color: rgb(119, 119, 119);
+
+$txt_cl_1: whitesmoke;
+$txt_cl_2: rgb(167, 167, 167);
+$txt_cl_3: rgba(245, 245, 245, 0.519);
+
+$ava_border: 1px solid rgba(138, 138, 138, 0.794);
+@mixin overflow {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+    width: 1.5rem;
+    border-radius: 0 1rem 1rem 0;
+    background-color: #1f1f1f; 
+}
+  
+::-webkit-scrollbar-thumb {
+    border-radius:1rem;
+    background-color: #7b7b7b;
+    border: 0.5rem solid #1f1f1f;
+
+  }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}   
+
+html {
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: $txt_cl_1;
+}
+
+body {
+    background-color: $bgc_1;
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 0.8fr repeat(4, 1fr) 0.8fr;
+    grid-template-rows: 0.4fr repeat(5, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+
+    & > button {
+        width: 12rem;
+        height: 3.5rem;
+        position: absolute;
+        z-index: 1;
+        left: 8rem;
+        top: 9rem;
+        background-color: $bgc_2;
+        color: $txt_cl_1;
+        transition: 0.2s;
+        border: 1px solid $bgc_2 + #1f1f1f;
+        &:hover {
+            cursor: pointer;
+            background-color: $bgc_2 + #0a0a0a;
+            border: 2px solid rgb(94, 0, 0);
+            border-radius: 5px;
+        }
+    }
+}
+
+
+main {
+    grid-area: 2 / 1 / 7 / 7; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+;
+        & > button {
+            left: 2rem;
+            top: 9rem;    
+            color: #1f1f1f;
+            padding: 1rem 2.5rem;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            position: absolute;
+            outline: none;
+            background: #f9513e;
+            border: none;
+            z-index: 1;
+            font-size: 1.6rem;
+    
+            &::after {
+                position: absolute;
+                content: "";
+                width: 0;
+                height: 100%;
+                top: 0;
+                right: 0;
+                z-index: -1;
+                background-color: #ff3d3d;
+                transition: all 0.3s ease;
+            }
+            
+            &:hover {
+                color: #000000;
+    
+                &:after {
+                    left: 0;
+                    width: 100%;
+                }
+            }
+    
+            &:active {
+                top: 9.5rem;
+            }
+        }
+
+    & > div { 
+        -webkit-box-shadow:  0px 0px 20px 20px rgba(0, 0, 0, 0.308);
+        -moz-box-shadow:  0px 0px 20px 20px rgba(0, 0, 0, 0.308);
+        box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.308);
+        width: 50rem;
+        background-color:$bgc_2;
+        padding: 10rem 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    
+        margin-top: -10rem;
+    
+        & > div {
+            width: 100%;            
+            display: flex;
+            justify-content: center;
+            &:nth-child(1) {
+                h1 {
+                    margin-bottom: 4rem;
+                    font-size: 3rem;
+                    background: radial-gradient(ellipse farthest-side at top center,  #e8c812 50%, #ffb700 100%);
+                    background-clip: text;
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+                margin-bottom: 4rem;
+            }
+    
+            &:nth-child(2) {
+                & > form {
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: column;
+                    align-items: center;
+                    width: 100%;
+    
+                    & > input {
+                        width: 90%;
+                        height: 4rem;
+                        background-color: $bgc_2;
+                        border: none;
+                        border-bottom: 1px solid $border_color;
+                        outline: none;
+                        color: $txt_cl_1;
+                        padding-left: 0.5rem;
+                        font-size: 1.5rem;
+                        margin-bottom: 3rem;
+                    }
+
+                    & > textarea {
+                        width: 90%;
+                        height: 20rem;
+                        resize: none;
+                        outline: none;
+                        background-color: $bgc_2;
+                        border: 1px solid $border_color;
+                        margin-bottom: 2rem;
+                        padding: 2rem;
+                        color: $txt_cl_1;
+                        border-radius: 5px;
+                    }
+    
+                    & > button {
+                        margin-top: 3rem;
+                        width: 90%;
+                        height: 4rem;
+                        color: #1f1f1f;
+                        padding: 1rem 2.5rem;
+                        background: transparent;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        position: relative;
+                        display: inline-block;
+                        
+                        outline: none;
+                        background: #fed221;
+                        border: none;
+                        z-index: 1;
+                        font-size: 1.6rem;
+    
+                        &::after {
+                            position: absolute;
+                            content: "";
+                            width: 0;
+                            height: 100%;
+                            top: 0;
+                            right: 0;
+                            z-index: -1;
+                            background-color: #ffef3d;
+                            transition: all 0.3s ease;
+                        }
+                        
+                        &:hover {
+                            color: #000000;
+    
+                            &:after {
+                                left: 0;
+                                width: 100%;
+                            }
+                        }
+    
+                        &:active {
+                            top: 0.2rem;
+                        }
+                    }
+                } 
+            }
+    
+            &:nth-child(3) {
+                margin-top: 2rem;
+                display: flex;
+                justify-content: space-between;
+                padding: 0 2rem;
+                & > a {
+                    color: $txt_cl_2;
+                    font-size: 1.3rem;
+                    transition: 0.2s;
+    
+                    &:hover {
+                        cursor: pointer;
+                        color: white;
+                    }
+                }
+            }
+        }
+    }
+    
+}

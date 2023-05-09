@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block css %} 
+    <link rel="stylesheet" href="{% static 'main/css/404/style.css'%}">
+{% endblock %}
+
+{% block title %} SmartChat | 404 {% endblock %}
+
+{% block main %} 
+    <main>
+        <img src="{% static 'main/img/404_img.png'%}" alt="">
+
+        <h1> Page Not Fount :( </h1>
+        <h3> 
+            Sorry, the requested page was not found. <br>
+            You may have clicked on a link that was in error,  
+            or the resource may have been removed.
+        </h3>
+
+        <div>
+            <a>
+                <button onclick="history.back()"> Back </button>
+            </a>
+            
+            <a href="{% url 'posts' %}">
+                <button> Posts Page </button>
+            </a>
+        </div>
+    </main>
+{% endblock %}

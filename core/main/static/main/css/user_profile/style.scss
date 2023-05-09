@@ -1,0 +1,795 @@
+$bgc_1: #101010;
+$bgc_2: #181818;
+
+$txt_cl_1: whitesmoke;
+$txt_cl_2: rgb(167, 167, 167);
+$txt_cl_3: rgba(245, 245, 245, 0.519);
+
+$ava_border: 1px solid rgba(137, 137, 137, 0.794);
+
+@mixin overflow {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+@mixin black_shadow {
+    -webkit-box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.308);
+    -moz-box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.308);
+    box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.308);
+}
+
+@mixin likes_mix {
+    & > svg {
+        width: 2.4rem;
+        height: 2.4rem;
+        transition: 0.3s;
+    }
+
+    &:nth-child(1) {
+        &:hover {
+            cursor: pointer;
+
+            & > svg {
+                stroke: #38ac3a;
+            }
+        }
+    }
+
+    &:nth-child(2) {
+        &:hover {
+            cursor: pointer;
+            & > svg {
+                stroke: #ac1616;
+            }
+        }
+    }
+
+
+    &:nth-child(3) {
+        &:hover {
+            cursor: pointer;
+            & > svg {
+                stroke: #9a8617;
+            }
+        }
+    } 
+}
+
+::-webkit-scrollbar {
+    width: 1.5rem;
+    border-radius: 0 1rem 1rem 0;
+    background-color: #1f1f1f; 
+}
+  
+::-webkit-scrollbar-thumb {
+    border-radius:1rem;
+    background-color: #7b7b7b;
+    border: 0.5rem solid #1f1f1f;
+
+  }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}   
+
+html {
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: $txt_cl_1;
+}
+
+body {
+    background-color: $bgc_1;
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    overflow-x: hidden;
+    grid-template-columns: 0.8fr repeat(4, 1fr) 0.8fr;
+    grid-template-rows: 0.4fr repeat(5, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+
+    &::before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: -1; 
+        background: url("../../img/./siluet_krug_svechenie23_141558_1920x1080.jpg") center / cover no-repeat;
+        filter: blur(15px); 
+    }
+
+    &::after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        opacity: 40%;
+        background-color: rgb(46, 46, 46);
+        z-index: -1;
+    }
+}
+
+.goBack {
+    left: 2rem;
+    top: 6rem;    
+    color: #1f1f1f;
+    padding: 0.8rem 2.5rem;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    position: absolute;
+    outline: none;
+    background: #f9513e;
+    border: none;
+    z-index: 1;
+    font-size: 1.6rem;
+
+    &::after {
+        position: absolute;
+        content: "";
+        width: 0;
+        height: 100%;
+        top: 0;
+        right: 0;
+        z-index: -1;
+        background-color: #ff3d3d;
+        transition: all 0.3s ease;
+    }
+    
+    &:hover {
+        color: #000000;
+
+        &:after {
+            left: 0;
+            width: 100%;
+        }
+    }
+
+    &:active {
+        top: 6.5rem;    
+    }
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+}
+
+main {
+    grid-area: 2 / 1 / 7 / 7;
+    padding: 2rem;
+    height: auto;
+    margin-top: 2rem;
+
+    & > section {
+        @include black_shadow();
+        background-color:transparentize($bgc_2, 0.2);
+        &:nth-child(1) {
+            @include black_shadow;
+            overflow: hidden;
+            width: 100%;
+            height: 25rem;
+            display: flex;
+            justify-content: center;
+        
+            @media screen and (max-width: 771px) {
+                flex-direction: column;
+                height: 50rem;
+            }
+
+            & > div {
+                padding: 3rem;
+                display: flex;
+                align-items: center;
+                width: 50%;
+                
+                @media screen and (max-width: 771px) {
+                    width: 100%;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                &:nth-child(1) {
+                    & > div {
+                        height: 20rem;
+                        &:nth-child(1) {
+                            // border: 1px solid red;
+                            & > img {
+                                width: 20rem;
+                                border: 3px solid;
+                                border-color: $ava_border;
+                                border-radius: 50%;
+
+                                @media screen and (max-width: 1000px) {
+                                    width: 10rem;
+                                }
+                            }
+                            
+                        }
+    
+                        &:nth-child(2) {
+                            // border: 1px solid blue;
+                            margin-left: 3rem;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            flex-direction: column;
+    
+                            & > div {
+                                // border: 1px solid yellow;
+                                width: 100%;
+    
+                                // User name / description 
+                                &:nth-child(1) {
+                                    & > h1 {
+                                        font-size: 4.4rem;
+
+
+                                        & > a {
+                                            color: $txt_cl_3;
+                                            font-size: 2.4rem;
+                                            transition: 0.2s;
+                                            &:hover {
+                                                color: $txt_cl_1;
+                                            }
+
+                                        }
+                                        @media screen and (max-width: 1000px) {
+                                            font-size: 3.4rem;
+                                        }
+                                    }
+    
+                                    & > h3 {
+                                        margin-left: 0.5rem;
+                                        font-size: 1.5rem;
+                                        color: $txt_cl_2;
+                                        margin-top: 1rem;
+
+                                        @media screen and (max-width: 1000px) {
+                                            font-size: 1rem;
+                                        }
+                                    }
+
+                                    & > div {
+                                        margin-top: 1.2rem;
+                                        padding-left: 0.5rem;
+                                        & > a {
+                                            font-size: 1.2rem;
+                                            transition: 0.2s;
+                                            color: rgb(172, 172, 172);
+
+                                            @media screen and (max-width: 1000px) {
+                                                font-size: 1rem;
+                                            }
+
+                                            &:nth-child(2) {
+                                                margin-left: 2rem;
+                                            }
+
+                                            &:nth-child(1) {
+                                                &:hover {
+                                                    color: whitesmoke;
+                                                }
+                                            }
+                                            &:nth-child(2) {
+                                                &:hover {
+                                                    color: whitesmoke;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                // User Languages
+                                &:nth-child(2) {
+                                    width: 22rem;
+                                    padding: 0 1rem;
+                                    margin-left: -4rem;
+                                    @media screen and (max-width: 1000px) {
+                                        width: 85%;
+                                    }
+
+                                    & > h1{
+                                        margin-bottom: 2rem;
+                                        @media screen and (max-width: 1000px) {
+                                            font-size: 1.4rem;
+                                        }
+                                    }
+    
+                                    & > div {
+                                        display: flex;
+                                        justify-content: space-between;
+                                        align-items: center;
+    
+                                        & > h1 > a {
+                                            color: $txt_cl_2;
+                                            transition: 0.2s;
+                                            -webkit-transition: 0.2s;
+                                            -moz-transition: 0.2s;
+                                            -ms-transition: 0.2s;
+                                            -o-transition: 0.2s;
+                                        
+                                            &:hover {
+                                                cursor: pointer;
+                                                color: $txt_cl_1;
+                                            }
+                                        }
+                                        & > img {
+                                            flex-direction: row;
+                                            width: 4rem;
+                                            padding: 0.5rem;
+                                            border-radius: 50%;
+                                            border: 1px solid;
+                                            border-color: #2c2c2c;
+                                            @media screen and (max-width: 1000px) {
+                                                width: 3rem;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &:nth-child(2) {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                    padding: 0;
+                    border-left: 1px solid $bgc_2 + #1f1f1f;
+                    @media screen and (max-width: 771px) {
+                        border: none;
+                    }
+
+                    & > div {
+                        width: 100%;
+                        height: 50%;
+                        height: 100%;
+                        display: flex;
+                        padding: 2rem 0 2rem 6rem;
+                        justify-content: space-evenly;
+                        align-items: start;
+                        flex-direction: column;
+
+                        &:nth-child(1) {
+                            border-bottom: 1px solid $bgc_2 + #1f1f1f;
+
+                            & > h1 {
+                                font-size: 2rem;
+                                
+                                @media screen and (max-width: 1000px) {
+                                    font-size: 1.4rem;
+                                    margin-bottom: 2rem;
+                                }
+                            
+                            }
+
+                            & > div {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+
+                                & > h3 {
+                                    font-size: 1.4rem;
+
+
+                                    @media screen and (max-width: 1000px) {
+                                        font-size: 1rem;
+                                    }
+                                }
+
+                                & > div {
+                                    width: 25rem;
+                                    background-color: #3f3f3f;
+                                    margin: 0 2rem;
+                                    height: 50%;
+
+
+                                    @media screen and (max-width: 1000px) {
+                                        width: 18rem;
+                                    }
+
+                                    div {
+                                        width: 43%;
+                                        height: 100%;
+                                        background: linear-gradient(90deg, #4568dc, #b06ab3);
+                                        transition: width 0.5s ease-in-out;
+                                    }
+                                }
+                            }
+                        }
+                        
+                        &:nth-child(2) {
+                            padding: 0;
+                            & > form {
+
+                                @media screen and (max-width: 790px) {
+                                    padding-top: 3rem;
+                                }
+
+                                width: 100%;
+                                height: 100%;
+                                display: flex;
+                                justify-content: space-evenly;
+                                align-items: center;
+
+                                & > .follow:hover {
+                                    border: 1px solid rgba(0, 128, 0, 0.677);
+                                    background: rgba(33, 105, 23, 0.09);
+                                }
+
+                                & > .unfollow {
+                                    background: rgba(23, 105, 23, 0.334);
+                                    &:hover {
+                                        border: 1px solid rgba(247, 38, 38, 0.806);
+                                        background: rgba(105, 23, 23, 0.334);
+                                    }
+                                }
+
+                                & > a { 
+                                    width: 100%;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    & > .edit_profile {
+                                        width: 90%;
+                                        transition: 0.2s;
+                                        &:hover {
+                                            border: 1px solid rgba(242, 188, 79, 0.809);
+                                            background: rgba(105, 105, 23, 0.179);
+                                        }
+                                    }
+                                }
+
+                                & > .send_message:hover {
+                                    border: 1px solid rgba(242, 188, 79, 0.809);
+                                    background: rgba(105, 105, 23, 0.179);
+                                }
+
+                                button {
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    background-color: rgb(17, 17, 17);
+                                    color: whitesmoke;
+                                    border: 1px solid #4b4b4b;
+                                    border-radius: 5px;
+                                    width: 45%;
+                                    height: 5rem;
+                                    font-size: 2rem;
+                                    opacity: 70%;
+                                    transition: 0.2s;
+                                    
+                                    @media screen and (max-width: 1000px) {
+                                        width: 40%;
+                                        font-size: 1.4rem;
+                                    }
+
+                                    & > img {
+                                        width: 2rem;
+                                        margin-right: 2rem;
+ 
+                                        @media screen and (max-width: 1000px) {
+                                            width: 1.4rem;
+                                        }
+
+                                        @media screen and (max-width: 1000px) {
+                                            margin-right: 1rem;
+                                        }
+                                    }
+
+                                    &:hover {
+                                        cursor: pointer;
+                                        opacity: 100%;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &:nth-child(2) {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            margin-top: 5rem;
+            
+            
+            & > span {
+
+                &:nth-child(1) {
+
+                    margin-top: 2rem;
+                    & > h1 {
+                        font-size: 3rem;
+                    }
+                }
+
+                &:nth-child(2) {
+                                        
+                    margin-top: 2rem;
+                    width: 100%;
+                    padding: 2.2rem;
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: flex-start;
+                    justify-content: space-evenly;
+                    
+        
+                    @media screen and (max-width: 800px) {
+                        margin-top: 2rem;
+                    }
+                    
+                    @media screen and (max-width: 1290px) {
+                        flex-direction: column;
+                        flex-wrap: nowrap;
+                        align-items: center;
+                    }
+        
+                    & > div {
+                        -webkit-box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.308);
+                        -moz-box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.308);
+                        box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.308);
+                        overflow: hidden;
+                        width: 38rem;
+                        height: 35rem;
+                        border-radius: 10px;
+                        background-color: $bgc_1;
+                        margin-bottom: 2rem;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        flex-direction: column;
+                        padding: 1rem;
+                        outline: hidden;
+                        opacity: 90%;
+                        transition: 0.2s;
+
+                &:hover {
+                    opacity: 100%;
+                }
+        
+                    }
+        
+                    & > .img-post {
+
+                        a:hover ~ & {
+                            background-color: lightblue;
+                        }
+                        
+                        & > div {
+                            // border: 1px solid red;
+                            width: 100%;
+                            display: flex;
+                            justify-content: center;
+                            
+                            &:nth-child(1) {
+                                margin-top: 2rem;
+                                max-height: 60%;
+                            }
+        
+                            &:nth-child(2) {
+                                // border: 1px solid blue;
+                                padding: 2rem 2rem 1rem 2rem;
+                                justify-content: space-between;
+                            }
+        
+                            & > div {
+                                // border: 1px solid blue;
+                                display: flex;
+                                justify-content: center;
+        
+                                &:nth-child(1) {
+                                    margin-right: 2rem;
+                                    flex-direction: column;
+                                    justify-content: space-evenly;
+                                    
+                                    & > a { 
+                                        & > h1 {
+                                            font-size: 2rem;
+                                            display: flex;
+                                            align-items: center;
+                                            color: whitesmoke;
+                                            margin-bottom: 0.5rem;
+                                            & > span {
+                                                margin-left: 0.5rem;
+                                                font-size: 1.4rem;
+                                            }
+                                        }
+        
+                                        & > div {
+                                            display: flex;
+                                            justify-content: space-between;
+                                            width: 80%;
+                                            margin-bottom: 0.5rem;
+                                            & > p {
+                                                color: $txt_cl_3;
+                                            }
+                                        }
+        
+        
+                                        & > h3 {
+                                            font-size: 1.2rem;
+                                            color: $txt_cl_2;
+                                        }
+        
+        
+                                    }
+                                }
+        
+                                &:nth-child(2) {
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: space-between;
+                                    & > div {
+                                        // border: 1px solid red;
+        
+                                        &:nth-child(1) {
+                                            margin-bottom: 2rem;
+                                            opacity: 60%;
+                                            transition: 0.2s;
+        
+                                            & > a {
+                                                display: flex;
+                                                justify-content: center;
+                                                align-items: center;
+                                                color: whitesmoke;
+                                                & > img {
+                                                    width: 4rem;
+                                                    height: 4rem;
+                                                    margin-right: 1rem;
+                                                }
+                                            }
+        
+                                            &:hover {
+                                                cursor: pointer;
+                                                opacity: 100%;
+                                            }
+                                        
+                                        }
+        
+                                        &:nth-child(2) {
+                                            & > form {
+                                                width: 100%;
+                                                display: flex;
+                                                justify-content: space-evenly;
+                                                & > button {
+                                                    background-color: transparent;
+                                                    border: none;
+                                                    outline: none;
+                                                    display: flex;
+                                                    flex-direction: column;
+                                                    align-items: center;
+                                                    color: $txt_cl_1;
+                                                    @include likes_mix;        
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+        
+        
+                    & > .simple-post {
+                        padding: 1.5rem 3rem;
+                        & > div {
+                            width: 100%;
+                            margin-bottom: 2rem;
+        
+                            &:nth-child(1) {
+                                margin-right: 2rem;
+                                flex-direction: column;
+                                justify-content: space-evenly;
+                                
+                                & > a { 
+                                    & > h1 {
+                                        font-size: 2rem;
+                                        display: flex;
+                                        align-items: center;
+                                        color: whitesmoke;
+                                        margin-top: 1rem;
+                                        margin-bottom: 2rem;
+                                        & > span {
+                                            margin-left: 0.5rem;
+                                            font-size: 1.4rem;
+                                        }
+                                    }
+        
+                                    & > div {
+                                        display: flex;
+                                        justify-content: space-between;
+                                        width: 70%;
+                                        margin-bottom: 1rem;
+        
+                                        & > p {
+                                            color: $txt_cl_3;
+                                        }
+                                    }
+        
+        
+                                    & > h3 {
+                                        font-size: 1.2rem;
+                                        color: $txt_cl_2;
+                                    }
+                                }
+                            }
+        
+                            &:nth-child(2) {
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;                        
+                                & > div {
+        
+                                    &:nth-child(1) {
+                                        padding: 1rem 0;
+                                        opacity: 60%;
+                                        transition: 0.2s;
+        
+                                        & > a {
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            color: whitesmoke;
+                                            & > img {
+                                                width: 4rem;
+                                                height: 4rem;
+                                                margin-right: 1rem;
+                                            }
+                                        }
+        
+                                        &:hover {
+                                            cursor: pointer;
+                                            opacity: 100%;
+                                        }
+                                    
+                                    }
+        
+                                    &:nth-child(2) {
+                                        height: 90%;
+                                        & > form {
+                                            width: 100%;
+                                            height: 100%;
+                                            display: flex;
+                                            justify-content: end;
+                                            align-items: end;
+        
+                                            & > button {
+                                                background-color: transparent;
+                                                border: none;
+                                                outline: none;
+                                                display: flex;
+                                                flex-direction: column;
+                                                align-items: center;
+                                                color: $txt_cl_1;
+        
+                                                &:not(:last-child) {
+                                                    margin-right: 1rem;
+                                                }
+                                                
+                                                @include likes_mix;  
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
+}

@@ -2,173 +2,160 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.http import HttpResponse  
+from django.contrib.sites.shortcuts import get_current_site  
+from django.utils.encoding import force_bytes, force_str  
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
+from django.template.loader import render_to_string  
+from .tokens import account_activation_token  
+from django.contrib.auth.models import User  
+from django.core.mail import EmailMessage  
+from django.contrib.auth import get_user_model
+from .forms import NewUserForm
 from users.models import CustomUser as User
-from .forms import NewUserForm, PostModelForm
-from .models import PostsModel, Tag
-
-def posts(request):
-    if not(request.user.is_authenticated): 
-        return redirect("login")
-
-    user_list = User.objects.all()
-    post_list = PostsModel.objects.all()[::-1]
-   
-            
-    
-            
-    if request.method == "POST":
-
-        btn_l = request.POST.get("btn_l")    
-        btn_d = request.POST.get("btn_d") 
-        
-        user = User.objects.get(username=request.user.username)
-        
-      
-        if btn_l:
-            prod = PostsModel.objects.get(id = btn_l)
-            
-            if request.user in prod.likers.all():
-                user.reactions -= 1
-                prod.likers.remove(request.user)
-            else:
-                user.reactions += 1
-                prod.likers.add(request.user)
-                
-                if request.user in prod.dislikers.all():
-                    user.reactions -= 1
-                    prod.dislikers.remove(request.user)
-                    
-                    
-        elif btn_d:    
-            prod = PostsModel.objects.get(id = btn_d)
-            
-            if request.user in prod.dislikers.all():
-                user.reactions -= 1
-                prod.dislikers.remove(request.user)
-            else:
-                user.reactions += 1
-                prod.dislikers.add(request.user)
-                
-                if request.user in prod.likers.all():
-                    user.reactions -= 1
-                    prod.likers.remove(request.user)
-            
-            
-        prod.save()  
-        user.save()
-
-        
-        return redirect("posts")
-
-    return render(request, "main/posts.html", context = {
-            "user_list": user_list,
-            "post_list": post_list,
-        })
-    
-    
-def ftf(request):
-    return render(request, "main/ftf.html")
-
-def add_post(request):
-    if request.method == 'POST':
-        
-        post_tags = request.POST.get("post_tags")            
-
-        form = PostModelForm(request.POST, request.FILES)
-        if form.is_valid():
-            message = form.save(commit=False)
-            message.sender = request.user
-            message.save()
-            
-            if post_tags:
-                tags = post_tags.split(" ")
-
-                for i in tags:
-                    i = i.strip()
-
-                    if i != "" and i != "#" and i[0] == "#":
-                        
-                        tag_instance, _ = Tag.objects.get_or_create(name = i[1:])
-                        message.post_tags.add(tag_instance) 
-
-            user = User.objects.get(username=request.user.username)
-            user.posts_posted += 1
-            
-            user.save()
-            
-            return redirect("posts")
-    else:
-        form = PostModelForm()
-        
-    return render(request, 'main/add_post.html', context= {
-                        'form': form,
-                        "message": ""
-                    })
 
 
 
-def del_post(request, id):
-    post = PostsModel.objects.get(pk=id)
-    
-    
-    if post.sender.username == request.user.username: 
-        if request.method == "POST":
-            post.delete()
-            return redirect("posts")
-
-        return render(request, "main/del_post.html", context = {
-           "del_post": post
-        })
-    else:
-        return redirect("posts")
-    
-    
+def posts(reuqest):
+    return render(reuqest, "main/posts.html")
 
 
-def register_request(request):
-    pdisplay = "none"
-    if request.method == "POST":
-        form = NewUserForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, "Registration successful." )
-            return redirect("posts")
-        pdisplay = "flex"
-        messages.error(request, "Unsuccessful registration. Invalid information.")
-    form = NewUserForm()
- 
-    return render(request, template_name='main/register.html', context= {
-        "form": form,
-        "pdisplay": pdisplay
-        })
+def about_us(reuqest):
+    return render(reuqest, "main/about_us.html")
+
+def contact_us(reuqest):
+    return render(reuqest, "main/contact_us.html")
 
 
+
+
+def confid_settings(reuqest):
+    return render(reuqest, "main/confid_settings.html")
+
+
+def confirm_delete(reuqest):
+    return render(reuqest, "main/confirm_delete.html")
+
+
+
+def create_post(reuqest):
+    return render(reuqest, "main/create_post.html")
+
+
+
+
+def lastest_update(reuqest):
+    return render(reuqest, "main/lastest_update.html")
+
+
+
+
+
+def post_page(reuqest):
+    return render(reuqest, "main/post_page.html")
+
+
+def profil_settings(reuqest):
+    return render(reuqest, "main/profil_settings.html")
+
+
+
+
+
+def signup(request):  
+    if request.method == 'POST':  
+        form = NewUserForm(request.POST)  
+        if form.is_valid():  
+            user = form.save(commit=False)  
+            user.is_active = False  
+            user.save()  
+            current_site = get_current_site(request)  
+            mail_subject = 'Activation link has been sent to your email id'  
+            message = render_to_string('main/acc_active_email.html', {  
+                'user': user,  
+                'domain': current_site.domain,  
+                'uid':urlsafe_base64_encode(force_bytes(user.pk)),  
+                'token':account_activation_token.make_token(user),  
+            })  
+            to_email = form.cleaned_data.get('email')  
+            email = EmailMessage(  
+                        mail_subject, message, to=[to_email]  
+            )  
+            email.send()  
+            return render(request, "main/pls_check_email.html")
+    else:  
+        form = NewUserForm()  
+    return render(request, 'main/register.html', {'form': form})  
+
+
+def activate(request, uidb64, token):  
+    User = get_user_model()  
+    try:  
+        uid = force_str(urlsafe_base64_decode(uidb64))  
+        user = User.objects.get(pk=uid)  
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):  
+        user = None  
+    if user is not None and account_activation_token.check_token(user, token):  
+        user.is_active = True  
+        user.save()  
+        return render(request, "main/verif_email.html") 
+    else:  
+        return render(request, "main/invalid_link.html")  
 
 
 def login_request(request):
-    if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-           username = form.cleaned_data.get('username')
-           password = form.cleaned_data.get('password')
-           user = authenticate(username=username, password=password)
-           if user is not None:
-               login(request, user)
-               messages.info(request, f"You are now logged in as {username}.")
-               return redirect("posts")
-           else:
-                messages.error(request,"Invalid username or password.")
-        else:
-            messages.error(request,"Invalid username or password.")
-    form = AuthenticationForm()
-    print("aa")
-    
-    return render(request=request, template_name="main/login.html", context={"login_form":form})
-
-
+	if request.method == "POST":
+		form = AuthenticationForm(request, data=request.POST)
+		if form.is_valid():
+			username = form.cleaned_data.get('username')
+			password = form.cleaned_data.get('password')
+			user = authenticate(username=username, password=password)
+			if user is not None:
+				login(request, user)
+				messages.info(request, f"You are now logged in as {username}.")
+				return redirect("posts")
+			else:
+				messages.error(request,"Invalid username or password.")
+		else:
+			messages.error(request,"Invalid username or password.")
+	form = AuthenticationForm()
+	return render(request=request, template_name="main/login.html", context={"login_form":form})
 
 def logout_request(request):
 	logout(request)
 	messages.info(request, "You have successfully logged out.") 
 	return redirect("posts")
+
+
+
+
+
+def user_more(reuqest):
+    return render(reuqest, "main/user_more.html")
+
+
+def user_profile(reuqest):
+    return render(reuqest, "main/user_profile.html")
+
+
+
+
+
+
+def verif_email(reuqest):
+    return render(reuqest, "main/verif_email.html")
+
+def pls_check_email(reuqest):
+    return render(reuqest, "main/pls_check_email.html")
+
+def invalid_link(reuqest):
+    return render(reuqest, "main/invalid_link.html")
+
+
+
+def ftf(reuqest):
+    return render(reuqest, "main/404.html")
+

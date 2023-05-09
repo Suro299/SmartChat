@@ -1,0 +1,46 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block css %} 
+    <link rel="stylesheet" href="{% static 'main/css/create_post/style.css' %}">
+{% endblock %}
+
+{% block title %} SmartChat | Create Post {% endblock %}
+
+{% block main %} 
+    <main>
+        <button onclick="history.back()">Go Back</button>
+
+        <div>
+
+            <div>
+                <h1> Create Post </h1>
+            </div>
+    
+            <div>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input typego to youre mother="text" name="username" placeholder = "Post Title*">
+                    <input type="text" name="tags" placeholder = "Tags >> #tag_1 #tag_2..">
+
+                    <textarea name="description" maxlength = "1000" placeholder = "Descrition*" ></textarea>
+                    
+                    <div class="file-upload">
+                        <div class="file-select">
+                            <div class="file-select-button" id="fileName">Choose File</div>
+                            <div class="file-select-name" id="noFile">No file chosen...</div> 
+                            <input type="file" name="img" onchange="ChangeInputLable()">
+                        </div>
+                    </div>
+
+                    <button type="submit"> Create </button>
+                </form>
+            </div>
+            
+    
+        </div>
+    </main>
+
+
+    
+{% endblock %} 

@@ -1,133 +1,55 @@
-<!-- {% load static %}
+{% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang = "en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'main/css/register/style.css' %}">
-    <title> Register </title>
+    <meta charset = "UTF-8">
+    <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main/css/login-register/style.css' %}">
+
+    <title> SmartChat | Create Account </title>
 </head>
 <body>
-    <header>
-        <div>
-            <h1> <span>Smart</span> Chat </h1>
-        </div>
-        <div>
-            <a href="{% url 'login' %}"><button class="reg_button"> Login </button></a>
-        </div>
-    </header>
+    <div>
 
-    <div class="reg_div">
-        <h1> Create An Account </h1>
-        <p> Lorem ipsum dolor sit amet consectetur adipisicing <br> Laborum dolor commodi quo. Eius.</p>
-    
+        <div>
+            <h1> SmartChat </h1>
+        </div>
+
         <div>
             <form method="post">
-                
                 {% csrf_token %}
+                
+                <div>
+                    <img src="{% static 'main/icon/user.svg' %}" alt="">
+                    <input type="text" name="username" placeholder = "Username">
+                </div>
+                <div>
+                    <img src="{% static 'main/icon/mail.svg' %}" alt="">
+                    <input type="email" name="email" placeholder = "email@exemple.com">
+                </div>
 
-                <span><input type = "text" name = "username" placeholder = "User Name"> <img src="{% static 'main/icon/login/user.svg' %}"></span>
-                <span> <input type = "password" name = "password1" placeholder = "Password"> <img src="{% static 'main/icon/login/lock.svg' %}"></span>
-                <span> <input type = "password" name = "password2" placeholder = "Repeat Password"> <img src="{% static 'main/icon/login/lock.svg' %}"></span>
-                <button type="submit"> Create An Account <img src="{% static 'main/icon/login/rigth.svg' %}"></button>
-                <p style = "display: {{ pdisplay }};"> min password len 8 </p>                
+                <div>
+                    <img src="{% static 'main/icon/lock.svg' %}" alt="">
+                    <input type="password" name="password1" placeholder = "Password">
+                </div>
+
+                <div>
+                    <img src="{% static 'main/icon/lock.svg' %}" alt="">
+                    <input type="password" name="password2" placeholder = "Repeat Password">
+                </div>
+
+                <button type="sumbit" class="custom-btn btn-15"> Register </button>
+
             </form>
         </div>
+        
+
+        <div style = "justify-content: end;">
+            <a href="{% url 'login' %}"> Log in </a>
+        </div>
+
     </div>
 </body>
-</html> -->
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'main/css/register/style.css' %}">
-    <title> Create An Account </title>
-</head>
-<body>
-    <header>
-        <div>
-            <h1> <span>Smart</span> Chat </h1>
-        </div>
-    </header>
-
-    <section>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-        <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> 
-    
-        <div class="signin">
-            <div class="content">
-                <h1>  Create An Account  </h1>
-                <form method="post" class="form">
-                    {% csrf_token %}
-                    
-                    <div class="inputBx">
-                      <input name = "username" type="text" required>
-                      <i>Username</i>
-                    </div>
-
-                    <div class="inputBx">
-                      <input name = "password1" type="password" required>
-                      <i>Password</i>
-                    </div>
-                
-                    <div class="inputBx">
-                      <input name = "password2" type="password" required>
-                      <i>Repeat Password</i>
-                    </div>
-
-                    <div class="links">
-                      <a href=""></a>
-                      <a href="{% url 'login' %} "> Login </a>
-                    </div>
-
-                    <div class="inputBx">
-                      <button type="submit"> Create An Account  </button>
-                    </div>
-                </form>
-            </div>
-            <p style = "display: {{ pdisplay }};"> Incorrect Password </p>                
-
-        </div>
-
-        
-      </section>
-</body>
-</html> 
+</html>

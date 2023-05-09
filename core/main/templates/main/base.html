@@ -1,0 +1,78 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="{% static 'main/css/dop/header/style.css'%}">
+    <link rel="stylesheet" href="{% static 'main/css/dop/set_menu/style.css' %}">
+
+    {% block css %} {% endblock %}
+
+    <title> {% block title %} {% endblock %} </title>
+</head>
+<body>
+
+    
+    <!-- HEADER START  -->
+    <header>
+        <div onclick="OpenSettingsWindow()">
+            <img src=" {% static 'main/img/default_avatar.png' %}" alt="User Avatar">
+            <h1> {{ user.username }} </h1>
+            <div>
+                <h1> 1 </h1>
+            </div>
+        </div>
+        
+        <div>
+            <p>43 px</p>
+            <div>
+                <div style = "width: 43%;" ></div>
+            </div>
+        </div>
+        
+        <div>
+            <input type="text" placeholder="Search...  #id / @username / word">
+        </div>
+        
+        <div>
+            <h1> SmartChat </h1>
+        </div>
+    
+    </header>
+    <!-- HEADER END -->
+
+    {% block main %} {% endblock %}
+
+    <!-- SETTINGS MENU START -->
+    <div id = "settings_menu" class = "menu_left">
+        <ul>
+            <li><h3> Signed in as <span> Suro299 </span> </h3></li>
+            <hr>
+            <li><a href="{% url 'user_profile' %}" > <img src="{% static 'main/icon/user.svg' %}" alt=""> My Profile </a></li>
+            <hr>
+            <li><a href="{% url 'posts' %}" > <img src="{% static 'main/icon/posts.svg'  %}" alt=""> Go To Posts </a></li>
+            <li><a href="{% url 'ftf' %}" > <img src="{% static 'main/icon/message.svg' %}" alt=""> Go To Chats </a></li>
+            <hr>
+            <li><a href="{% url 'profil_settings' %}"> <img src="{% static 'main/icon/user_settings.svg' %}" alt=""> Profile Settings</a></li>
+            <li><a href="{% url 'ftf' %}"> <img src="{% static 'main/icon/settings.svg' %}" alt=""> Site Settings </a></li>
+            <hr>
+            <li><a href="{% url 'contact_us' %}"> <img src="{% static 'main/icon/contact-us.svg' %}" alt=""> Contact Us </a></li>
+            <li><a href=" {% url 'about_us' %}"> <img src="{% static 'main/icon/about-us.svg' %}" alt=""> About Us </a></li>
+            <li><a href="{% url 'lastest_update' %}"> <img src="{% static 'main/icon/refresh-cw.svg' %}" alt=""> Latest update </a></li>
+            <hr>
+            <li><a href = "{% url 'ftf' %}" > <img src="{% static 'main/icon/log-out.svg' %}" alt="">  Log-out </a></li>
+        </ul>
+    </div>
+    <!-- SETTINGS MENU END -->
+
+
+    <!-- START JS -->
+    <script src="{% static 'main/js/dop.js' %}"></script>
+    {% block js %} {% endblock %}
+    <!-- END JS -->
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="./css/dop/header/style.css">
+    <link rel="stylesheet" href="./css/dop/set_menu/style.css">
+    <link rel="stylesheet" href="./css/confid_settings/style.css">
+
+    <title> Smart Chat | Settings </title>
+</head>
+<body>
+    <!-- HEADER START  -->
+    <header>
+        <div onclick="OpenSettingsWindow()">
+            <img src="img/default_avatar.png" id = "avatar">
+            <h1> Suro299 </h1>
+            <div>
+                <h1> 1 </h1>
+            </div>
+        </div>
+        
+        <div>
+            <p>43 px</p>
+            <div>
+                <div style = "width: 43%;" ></div>
+            </div>
+        </div>
+        
+        <div>
+            <input type="text" placeholder="Search...  #id / @username / word">
+        </div>
+        
+        <div>
+            <h1> SmartChat </h1>
+        </div>
+    
+    </header>
+    <!-- HEADER END -->
+
+
+
+    <main>
+
+        <section>
+            <h1> Title </h1>
+            
+            <div>
+                <div>
+                    <h1>Show latest activity</h1>
+
+                    <span id = "activity_polz" onclick = "ShowActivity()">
+                        <span id = "activity_circ"></span>
+                    </span>
+
+                    <input id = "show_activity" name = "show_act" type="hidden" value = "0">
+
+                </div>
+            </div>
+
+        </section>
+
+
+        <section>
+            <button onclick = "SumbitProfileForm()"> Save </button>
+        </section>
+
+    </main>
+
+
+    <menu>
+        <h1> User settings </h1>
+
+        <ul>
+            <li class = ""> 
+                <img src="./icon/user.svg" alt=""> 
+                <a href="./profil_settings.html"> Profile </a> 
+            </li>
+
+            <li class = "active" >
+                <img src="./icon/shield.svg" alt="">
+                <a href="./404.html"> Confidentiality </a> 
+            </li>
+        </ul>
+
+        <h1> Site settings </h1>
+
+        <ul>
+            <li class = ""> 
+                <img src="./icon/settings.svg" alt=""> 
+                <a href="./404.html"> Settings </a> 
+            </li>
+        </ul>
+
+
+    </menu>
+
+
+
+    <!-- SETTINGS MENU START -->
+    <div id = "settings_menu" class = "menu_left">
+        <ul>
+            <li><h3> Signed in as <span> Suro299 </span> </h3></li>
+            <hr>
+            <li><a href="./user_profile.html" > <img src="icon/user.svg" alt=""> My Profile </a></li>
+            <hr>
+            <li><a href="./posts.html" > <img src="icon/posts.svg" alt=""> Go To Posts </a></li>
+            <li><a href="./404.html" > <img src="icon/message.svg" alt=""> Go To Chats </a></li>
+            <hr>
+            <li><a href="./profil_settings.html"> <img src="./icon/user_settings.svg" alt=""> Profile Settings</a></li>
+            <li><a href="./404.html"> <img src="./icon/settings.svg" alt=""> Site Settings </a></li>
+            <hr>
+            <li><a href="./contact_us.html"> <img src="./icon/contact-us.svg" alt=""> Contact Us </a></li>
+            <li><a href="./about_us.html"> <img src="./icon/about-us.svg" alt=""> About Us </a></li>
+            <li><a href="./lastest_update.html"> <img src="./icon/refresh-cw.svg" alt=""> Latest update </a></li>
+            <hr>
+            <li><a href = "./404.html" > <img src="./icon/log-out.svg" alt="">  Log-out </a></li>
+        </ul>
+    </div>
+    <!-- SETTINGS MENU END -->
+
+
+    <!-- START JS -->
+    <script src="./js/dop.js"></script>
+    <!-- END JS -->
+</body>
+</html>
