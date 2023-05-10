@@ -1,8 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from users.models import CustomUser
 from users.models import CustomUser as User
-
+from .models import PostsModel
 
 class NewUserForm(UserCreationForm):
 	email = forms.EmailField(max_length=200, help_text='Required')
@@ -17,3 +16,15 @@ class NewUserForm(UserCreationForm):
 		if commit:
 			user.save()
 		return user
+
+
+class NewPostModelForm(forms.ModelForm):
+    class Meta:
+        model = PostsModel
+        fields = ["post_title", "post_text", "post_image"]
+        
+        
+        
+		
+
+

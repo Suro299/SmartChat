@@ -20,16 +20,16 @@
             <div>
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <input typego to youre mother="text" name="username" placeholder = "Post Title*">
-                    <input type="text" name="tags" placeholder = "Tags >> #tag_1 #tag_2..">
+                    <input type="text" name="post_title" placeholder = "Post Title*">
+                    <input type="text" name="post_tags" placeholder = "Tags >> #tag_1 #tag_2..">
 
-                    <textarea name="description" maxlength = "1000" placeholder = "Descrition*" ></textarea>
+                    <textarea name="post_text" maxlength = "1000" placeholder = "Descrition*" ></textarea>
                     
                     <div class="file-upload">
                         <div class="file-select">
                             <div class="file-select-button" id="fileName">Choose File</div>
                             <div class="file-select-name" id="noFile">No file chosen...</div> 
-                            <input type="file" name="img" onchange="ChangeInputLable()">
+                            <input type="file" name="post_image" onchange="ChangeInputLable()">
                         </div>
                     </div>
 

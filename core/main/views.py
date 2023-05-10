@@ -5,61 +5,154 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.http import HttpResponse  
 from django.contrib.sites.shortcuts import get_current_site  
 from django.utils.encoding import force_bytes, force_str  
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
 from django.template.loader import render_to_string  
 from .tokens import account_activation_token  
-from django.contrib.auth.models import User  
 from django.core.mail import EmailMessage  
 from django.contrib.auth import get_user_model
-from .forms import NewUserForm
 from users.models import CustomUser as User
 
-
-
-def posts(reuqest):
-    return render(reuqest, "main/posts.html")
-
-
-def about_us(reuqest):
-    return render(reuqest, "main/about_us.html")
-
-def contact_us(reuqest):
-    return render(reuqest, "main/contact_us.html")
+from .forms import NewUserForm, NewPostModelForm
+from .models import PostsModel, Tag
 
 
 
+def posts(request):
+    if not(request.user.is_authenticated):
+        return redirect("login")
+    
+    
+    if request.method == "POST":
 
-def confid_settings(reuqest):
-    return render(reuqest, "main/confid_settings.html")
+        btn_l = request.POST.get("btn_l")    
+        btn_d = request.POST.get("btn_d") 
+        btn_c = request.POST.get("btn_c") 
+        btn_f = request.POST.get("btn_f") 
+        
+        
+        user = User.objects.get(username = request.user.username)
+        
+      
+        if btn_l:
+            prod = PostsModel.objects.get(id = btn_l)
+            
+            if request.user in prod.likers.all():
+                prod.likers.remove(request.user)
+            else:
+                prod.likers.add(request.user)
+                if request.user in prod.dislikers.all():
+                    prod.dislikers.remove(request.user)
+                    
+        elif btn_d:    
+            prod = PostsModel.objects.get(id = btn_d)
+            
+            if request.user in prod.dislikers.all():
+                prod.dislikers.remove(request.user)
+            else:
+                prod.dislikers.add(request.user)
+                
+                if request.user in prod.likers.all():
+                    prod.likers.remove(request.user)
+        elif btn_c:
+            return redirect("post_page")
+        
+        elif btn_f:
+            prod = PostsModel.objects.get(id = btn_f)
+            
+            if prod in user.favorites.all():
+                user.favorites.remove(prod)
+            else:
+                user.favorites.add(prod)
+                
+        prod.save()  
+        user.save()
+    
+    posts_list = PostsModel.objects.all()[::-1]
+    return render(request, "main/posts.html", context = {
+        "posts_list": posts_list,
+    })
+    
 
 
-def confirm_delete(reuqest):
-    return render(reuqest, "main/confirm_delete.html")
+def about_us(request):
+    return render(request, "main/about_us.html")
 
-
-
-def create_post(reuqest):
-    return render(reuqest, "main/create_post.html")
-
-
-
-
-def lastest_update(reuqest):
-    return render(reuqest, "main/lastest_update.html")
+def contact_us(request):
+    return render(request, "main/contact_us.html")
 
 
 
 
+def confid_settings(request):
+    return render(request, "main/confid_settings.html")
 
-def post_page(reuqest):
-    return render(reuqest, "main/post_page.html")
+
+def confirm_delete(request):
+    return render(request, "main/confirm_delete.html")
 
 
-def profil_settings(reuqest):
-    return render(reuqest, "main/profil_settings.html")
+
+def create_post(request):
+    
+    if request.method == "POST":
+        
+        post_tags = request.POST.get("post_tags")
+
+        form = NewPostModelForm(request.POST, request.FILES)
+        
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = request.user
+            message.save()
+            
+            if post_tags:
+                tags = post_tags.split(" ")
+
+                for i in tags:
+                    i = i.strip()
+
+                    if i != "" and i != "#" and i[0] == "#":
+                        tag_instance, _ = Tag.objects.get_or_create(name = i[1:])
+                        message.post_tags.add(tag_instance) 
+            
+            user = User.objects.get(username=request.user.username)
+            user.posts_posted += 1
+            user.exp += 4
+    
+            if user.exp >= 100:
+                user.exp -= 100
+                user.level += 1
+
+            user.save()
+
+            return redirect("posts")
+        else:
+            print("AAAAAAAAAAAAAAAAAAAAAa")
+    else:
+        form = NewPostModelForm()
+    
+    return render(request, "main/create_post.html", context = {
+        "form": form
+    })
+
+
+
+
+def lastest_update(request):
+    return render(request, "main/lastest_update.html")
+
+
+
+
+
+def post_page(request):
+    return render(request, "main/post_page.html")
+
+
+def profil_settings(request):
+    return render(request, "main/profil_settings.html")
 
 
 
@@ -133,29 +226,29 @@ def logout_request(request):
 
 
 
-def user_more(reuqest):
-    return render(reuqest, "main/user_more.html")
+def user_more(request):
+    return render(request, "main/user_more.html")
 
 
-def user_profile(reuqest):
-    return render(reuqest, "main/user_profile.html")
-
-
-
+def user_profile(request):
+    return render(request, "main/user_profile.html")
 
 
 
-def verif_email(reuqest):
-    return render(reuqest, "main/verif_email.html")
-
-def pls_check_email(reuqest):
-    return render(reuqest, "main/pls_check_email.html")
-
-def invalid_link(reuqest):
-    return render(reuqest, "main/invalid_link.html")
 
 
 
-def ftf(reuqest):
-    return render(reuqest, "main/404.html")
+def verif_email(request):
+    return render(request, "main/verif_email.html")
+
+def pls_check_email(request):
+    return render(request, "main/pls_check_email.html")
+
+def invalid_link(request):
+    return render(request, "main/invalid_link.html")
+
+
+
+def ftf(request):
+    return render(request, "main/404.html")
 

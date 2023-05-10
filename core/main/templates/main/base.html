@@ -20,17 +20,33 @@
     <!-- HEADER START  -->
     <header>
         <div onclick="OpenSettingsWindow()">
-            <img src=" {% static 'main/img/default_avatar.png' %}" alt="User Avatar">
+            <img src="{{ user.avatar.url }}" alt="User Avatar">
             <h1> {{ user.username }} </h1>
-            <div>
-                <h1> 1 </h1>
-            </div>
+
+            {% if user.level < 10 %}
+                <div style = "border-color: green;">
+                    <h1> {{ user.level }} </h1>
+                </div>
+            {% else %}
+                {% if user.level < 50 and user.level >= 10 %}
+                    <div style = "border-color: gold;">
+                        <h1> {{ user.level }} </h1>
+                    </div>
+                {% else %}
+                    {% if user.level > 50 %}
+                    <div style = "border-color: red;">
+                        <h1> {{ user.level }} </h1>
+                    </div>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            
         </div>
         
         <div>
-            <p>43 px</p>
+            <p>{{ user.exp }} exp</p>
             <div>
-                <div style = "width: 43%;" ></div>
+                <div style = "width: {{ user.exp }}%;" ></div>
             </div>
         </div>
         
@@ -64,7 +80,7 @@
             <li><a href=" {% url 'about_us' %}"> <img src="{% static 'main/icon/about-us.svg' %}" alt=""> About Us </a></li>
             <li><a href="{% url 'lastest_update' %}"> <img src="{% static 'main/icon/refresh-cw.svg' %}" alt=""> Latest update </a></li>
             <hr>
-            <li><a href = "{% url 'ftf' %}" > <img src="{% static 'main/icon/log-out.svg' %}" alt="">  Log-out </a></li>
+            <li><a href = "{% url 'logout' %}" > <img src="{% static 'main/icon/log-out.svg' %}" alt="">  Log-out </a></li>
         </ul>
     </div>
     <!-- SETTINGS MENU END -->
