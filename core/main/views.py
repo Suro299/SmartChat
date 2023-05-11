@@ -13,6 +13,8 @@ from .tokens import account_activation_token
 from django.core.mail import EmailMessage  
 from django.contrib.auth import get_user_model
 from users.models import CustomUser as User
+from django.core.mail import EmailMultiAlternatives
+from django.utils.html import strip_tags
 
 from .forms import NewUserForm, NewPostModelForm
 from .models import PostsModel, Tag
@@ -158,9 +160,11 @@ def profil_settings(request):
 
 
 
-def signup(request):  
+# def signup(request):  
     if request.method == 'POST':  
         form = NewUserForm(request.POST)  
+        user_email = request.POST.get("email")
+        
         if form.is_valid():  
             user = form.save(commit=False)  
             user.is_active = False  
@@ -174,14 +178,54 @@ def signup(request):
                 'token':account_activation_token.make_token(user),  
             })  
             to_email = form.cleaned_data.get('email')  
+            
             email = EmailMessage(  
-                        mail_subject, message, to=[to_email]  
-            )  
+                    mail_subject, message, to=[to_email]  
+            ) 
+             
             email.send()  
-            return render(request, "main/pls_check_email.html")
+            return render(request, "main/pls_check_email.html", context = {
+                "user_email": user_email
+            })
     else:  
         form = NewUserForm()  
     return render(request, 'main/register.html', {'form': form})  
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = NewUserForm(request.POST)
+        user_email = request.POST.get("email")
+
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            current_site = get_current_site(request)
+            mail_subject = 'Activation link has been sent to your email id'
+            message = render_to_string('main/acc_active_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user),
+            })
+            to_email = form.cleaned_data.get('email')
+
+            email = EmailMessage(
+                mail_subject,
+                message,
+                to=[to_email],
+                from_email='SmartChat <your_email@example.com>', # указываете имя и email отправителя
+            )
+            
+            email.content_subtype = 'html'
+            email.send()
+
+            return render(request, "main/pls_check_email.html", context={"user_email": user_email})
+    else:
+        form = NewUserForm()
+
+    return render(request, 'main/register.html', {'form': form})
 
 
 def activate(request, uidb64, token):  
