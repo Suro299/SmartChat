@@ -65,8 +65,7 @@ menu {
         font-size: 2rem;
         color: white; }
         menu > ul > li > a > img {
-          width: 2.4rem;
-          margin-right: 1rem; }
+          width: 2.4rem; }
       menu > ul > li:hover {
         opacity: 100%; }
 
@@ -273,7 +272,7 @@ main {
         justify-content: flex-end;
         align-items: center;
         bottom: 1rem; }
-        main > section:nth-child(2) .post .post-actions button {
+        main > section:nth-child(2) .post .post-actions button, main > section:nth-child(2) .post .post-actions a {
           background-color: transparent;
           border: none;
           border-radius: 30px;
@@ -282,8 +281,10 @@ main {
           margin-left: 20px;
           transition: background-color 0.2s ease;
           display: flex;
-          align-items: center; }
-          main > section:nth-child(2) .post .post-actions button > h3 {
+          align-items: center;
+          flex-direction: row;
+          color: whitesmoke; }
+          main > section:nth-child(2) .post .post-actions button > h3, main > section:nth-child(2) .post .post-actions a > h3 {
             margin-left: 1rem;
             color: whitesmoke; }
         main > section:nth-child(2) .post .post-actions > .like > svg {

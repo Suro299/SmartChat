@@ -30,9 +30,7 @@ def posts(request):
 
         btn_l = request.POST.get("btn_l")    
         btn_d = request.POST.get("btn_d") 
-        btn_c = request.POST.get("btn_c") 
         btn_f = request.POST.get("btn_f") 
-        
         
         user = User.objects.get(username = request.user.username)
         
@@ -57,8 +55,6 @@ def posts(request):
                 
                 if request.user in prod.likers.all():
                     prod.likers.remove(request.user)
-        elif btn_c:
-            return redirect("post_page")
         
         elif btn_f:
             prod = PostsModel.objects.get(id = btn_f)
@@ -67,10 +63,13 @@ def posts(request):
                 user.favorites.remove(prod)
             else:
                 user.favorites.add(prod)
-                
-        prod.save()  
-        user.save()
-    
+        
+        try:
+            prod.save()  
+            user.save()
+        except:
+            pass
+        
     posts_list = PostsModel.objects.all()[::-1]
     return render(request, "main/posts.html", context = {
         "posts_list": posts_list,
@@ -149,8 +148,13 @@ def lastest_update(request):
 
 
 
-def post_page(request):
-    return render(request, "main/post_page.html")
+def post_page(request, id):
+    print(id)
+    post = PostsModel.objects.get(pk = id)
+    
+    return render(request, "main/post_page.html", context = {
+        "post": post
+    })
 
 
 def profil_settings(request):
