@@ -17,15 +17,24 @@ class PostsModel(models.Model):
     post_text = models.TextField("Post Content")
     post_image = models.ImageField("Post Image", blank = True)
     post_tags = models.CharField("Post Title", max_length = 100, blank = True)
-    comments = models.PositiveBigIntegerField("Comments Count", blank = True, default = 0)
     timestamp = models.DateTimeField(auto_now_add = True)
-
     post_tags = models.ManyToManyField("Tag", blank = True)
     likers = models.ManyToManyField(CustomUser, related_name = "likers", blank = True)
     dislikers = models.ManyToManyField(CustomUser, related_name = "dislikers", blank = True)
     date_created = models.DateTimeField("Data Created", auto_created = True, default = timezone.now)
-
+    comments = models.ManyToManyField("Comment")
     
     def __str__(self) -> str:
         return f"{self.post_title}"
 
+
+
+class Comment(models.Model):
+    com_sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
+    text = models.TextField("Comment Text")
+    date_created = models.DateTimeField("Data Created", auto_created = True, default = timezone.now)
+    likers = models.ManyToManyField(CustomUser, related_name = "com_likers", blank = True)
+    dislikers = models.ManyToManyField(CustomUser, related_name = "com_dislikers", blank = True)
+
+    def __str__(self) -> str:
+        return f"{self.com_sender}"

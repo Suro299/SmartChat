@@ -14,7 +14,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     points = models.PositiveBigIntegerField(_("points"), blank=True, default=0)
     level = models.PositiveIntegerField("User level", default=1)
     exp = models.PositiveIntegerField("User Exp", default=0)
-    favorites = models.ManyToManyField('main.PostsModel')
+    favorites = models.ManyToManyField('main.PostsModel', blank = True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(auto_created=True, default=timezone.now)

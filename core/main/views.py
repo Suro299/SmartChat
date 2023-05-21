@@ -16,8 +16,8 @@ from users.models import CustomUser as User
 from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags
 
-from .forms import NewUserForm, NewPostModelForm
-from .models import PostsModel, Tag
+from .forms import NewUserForm, NewPostModelForm, NewComment
+from .models import PostsModel, Tag, Comment
 
 
 
@@ -130,7 +130,7 @@ def create_post(request):
 
             return redirect("posts")
         else:
-            print("AAAAAAAAAAAAAAAAAAAAAa")
+            print("!!! Post Creation Validation !!! ")
     else:
         form = NewPostModelForm()
     
@@ -152,9 +152,50 @@ def post_page(request, id):
     print(id)
     post = PostsModel.objects.get(pk = id)
     
+    if request.method == "POST":
+        btn_l = request.POST.get("btn_l")    
+        btn_d = request.POST.get("btn_d") 
+        post_comment = request.POST.get("post_comment") 
+        print(btn_l, btn_d, post_comment)
+        if btn_l:
+            comment_ex = Comment.objects.get(id = btn_l)
+            
+            if request.user in comment_ex.likers.all():
+                comment_ex.likers.remove(request.user)
+            else:
+                comment_ex.likers.add(request.user)
+                if request.user in comment_ex.dislikers.all():
+                    comment_ex.dislikers.remove(request.user)
+                    
+        elif btn_d:    
+            comment_ex = Comment.objects.get(id = btn_d)
+            
+            if request.user in comment_ex.dislikers.all():
+                comment_ex.dislikers.remove(request.user)
+            else:
+                comment_ex.dislikers.add(request.user)
+                
+                if request.user in comment_ex.likers.all():
+                    comment_ex.likers.remove(request.user)
+        
+        elif post_comment:
+            form = NewComment(request.POST)
+            
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.com_sender = request.user
+                comment.save()
+                post.comments.add(comment)
+                
+    else:
+        form = NewComment()
+    
     return render(request, "main/post_page.html", context = {
         "post": post
     })
+
+
+
 
 
 def profil_settings(request):

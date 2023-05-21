@@ -9,7 +9,7 @@
 
 {% block main %} 
 
-    <button onclick="history.back()"> Go Back </button>
+    <a href="{% url 'posts' %}"> <button> Post Page </button> </a>
 
     <main>
 
@@ -31,6 +31,7 @@
             </div>
 
             <div>
+                {% if post.sender.id == user.id %}
                 <button onclick="OpenPostMoreWindow()" > 
                     <img src="{% static 'main/icon/more-vertical.svg' %}" alt="">    
                 </button>
@@ -41,8 +42,9 @@
                         <li> <a href="{% static 'main/confirm_delete.html' %}"> Delete </a> </li>
                     </ul>
                 </span>
-
+                {% endif %}
             </div>
+
         </section>
 
         <section>
@@ -127,37 +129,34 @@
             <div>
                 <form method="post">
                     {% csrf_token %}
-                    <textarea name="" cols="10" rows="5" placeholder = "Message..." ></textarea>
-                    <button type = "submit">
+                    <textarea name = "text" cols="10" rows="5" placeholder = "Message..." ></textarea>
+                    <button name = "post_comment" value = "post_comment" type = "submit">
                         <img src="{% static 'main/icon/send.svg' %}" alt="">
                     </button>
                 </form>
             </div>
         </section>
 
+        
+        {% for i in post.comments.all %}
         <section class = "comment">
             <div>
                 <menu>
                     <a href="./user_profile.html">
-        
-                        <img src="./img/default_avatar.png" alt="">
-                        <h1> Suro299 </h1>
-        
-                        <!-- START || ETE ADMIN A -->
+
+                        <img src="{{ i.com_sender.avatar.url }}" alt="">
+                        <h1> {{ i.com_sender.username }} </h1>
+    
+                        {% if  i.com_sender.is_staff%}
                             <div class = "admin">
                                 <h1> Admin </h1>
                             </div>
-                        <!-- END || ETE ADMIN A -->
-                        
-                        <!-- =========================================== -->
-        
-                        
-                        <!-- END || ETE USER A -->
-                            <!-- <div class = "user">
+                        {% else %}
+                            <div class = "user">
                                 <h1> user </h1>
-                            </div> -->
-                        <!-- END || ETE USER A -->
-        
+                            </div>
+                        {% endif %}
+    
                         <span>
                             <dl>
                                 <dt> Registration: </dt>
@@ -184,10 +183,7 @@
     
                 <span>
                     <p>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint eligendi modi dignissimos. Ullam, voluptas maiores fugit impedit aliquid consectetur quibusdam delectus tempora molestias placeat enim expedita. In ab optio repudiandae.
-                        Vel, atque! Officiis vitae consequuntur ipsam sunt nihil quos eius eos animi. Fugiat, non consectetur doloremque suscipit dicta officiis iste et mollitia repellat odio repellendus distinctio eos expedita id sunt?
-                        Maxime ratione exercitationem, nostrum rem veritatis sint asperiores officia totam deserunt ut id eum praesentium mollitia numquam, quaerat aperiam aut facilis laboriosam nihil consectetur. Beatae porro odio quis quo exercitationem.
-                        Laudantium error quisquam earum fugit, fugiat nemo sunt labore vero ducimus! Quidem ea sequi obcaecati voluptatum laborum expedita, atque adipisci ab nobis. Magnam quia amet temporibus, maiores nihil possimus veritatis?
+                        {{ i.text }}
                     </p>
                 </span>
             </div>
@@ -197,35 +193,42 @@
                     <div>
                         <a href="./user_profile.html">
                             <img src="{% static 'main/icon/user.svg' %}" alt="">
-                            <h3> Suro299 </h3>
+                            <h3> {{ i.com_sender.username }} </h3>
                         </a>
                     </div>
                     <div>
                         <img src="{% static 'main/icon/clock.svg' %}" alt="">
-                        <h3> 06/05/2023 </h3>
+                        <h3> {{ i.date_created }} </h3>
                     </div>
                 </span>
 
                 <span>
-    
-                    <!-- CHMORANAS METHODY POST TAS -->
-                    <form method="post">
-                        <button type="submit">
+                    <form method=  "post">
+                        {% csrf_token %}
+                        <button name = "btn_l" value = "{{ i.id }}"  type="submit">
                             <dl>
                                 <dt>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                    {% if user in i.likers.all %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#238925" stroke="#1ca31e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                    {% else %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                    {% endif %}
                                 </dt>
-                                <dd> 0 </dd>
+                                <dd> {{ i.likers.count }} </dd>
                             </dl>
                         </button>
 
 
-                        <button type="submit">
+                        <button name = "btn_d" value = "{{ i.id }}"  type="submit">
                             <dl>
                                 <dt>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="Whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-down"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+                                    {% if user in i.dislikers.all %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#E32636" stroke="#ff2b3d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-down"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+                                    {% else %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="Whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-down"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+                                    {% endif %}
                                 </dt>
-                                <dd> 0 </dd>
+                                <dd> {{ i.dislikers.count }} </dd>
                             </dl>
                         </button>
                     </form>
@@ -233,101 +236,7 @@
                 </span>
             </div>
         </section>
-
-        <section class = "comment">
-            <div>
-                <menu>
-                    <a href="./user_profile.html">
-        
-                        <img src="./img/default_avatar.png" alt="">
-                        <h1> Chgitemov </h1>
-        
-                        <!-- START || ETE ADMIN A -->
-                            <!-- <div class = "admin">
-                                <h1> Admin </h1>
-                            </div> -->
-                        <!-- END || ETE ADMIN A -->
-                        
-                        <!-- =========================================== -->
-        
-                        
-                        <!-- END || ETE USER A -->
-                            <div class = "user">
-                                <h1> user </h1>
-                            </div>
-                        <!-- END || ETE USER A -->
-        
-                        <span>
-                            <dl>
-                                <dt> Registration: </dt>
-                                <dd> 05/05/2023 </dd>
-                            </dl>
-                        
-                            <dl>
-                                <dt> Posts: </dt>
-                                <dd> 0 </dd>
-                            </dl>
-                        
-                            <dl>
-                                <dt> Reactions: </dt>
-                                <dd> 0 </dd>
-                            </dl>
-                        
-                            <dl>
-                                <dt> Points: </dt>
-                                <dd> 0 </dd>
-                            </dl>
-                        </span>
-                    </a>
-                </menu>
-    
-                <span>
-                    <p>
-                        lav ape
-                    </p>
-                </span>
-            </div>
-
-            <div>
-                <span>
-                    <div>
-                        <a href="./user_profile.html">
-                            <img src="./icon/user.svg" alt="">
-                            <h3> Chgitemov </h3>
-                        </a>
-                    </div>
-                    <div>
-                        <img src="./icon/clock.svg" alt="">
-                        <h3> 06/05/2023 </h3>
-                    </div>
-                </span>
-
-                <span>
-                    <form action="">
-                        <button type="submit">
-                            <dl>
-                                <dt>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
-                                </dt>
-                                <dd> 0 </dd>
-                            </dl>
-                        </button>
-
-
-                        <button type="submit">
-                            <dl>
-                                <dt>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="Whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-down"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
-                                </dt>
-                                <dd> 0 </dd>
-                            </dl>
-                        </button>
-                    </form>
-                    
-                </span>
-            </div>
-        </section>
-
+        {% endfor %}
 
     </main>
     {% block js %} <script src="{% static 'main/js/post_more.js' %}"></script> {% endblock %}

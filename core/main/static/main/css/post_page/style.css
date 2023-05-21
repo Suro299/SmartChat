@@ -28,7 +28,7 @@ body {
   grid-template-rows: 0.4fr repeat(5, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px; }
-  body > button {
+  body > a > button {
     left: 2rem;
     top: 9rem;
     color: #1f1f1f;
@@ -44,7 +44,7 @@ body {
     border: none;
     z-index: 1;
     font-size: 1.6rem; }
-    body > button::after {
+    body > a > button::after {
       position: absolute;
       content: "";
       width: 0;
@@ -54,12 +54,12 @@ body {
       z-index: -1;
       background-color: #ff3d3d;
       transition: all 0.3s ease; }
-    body > button:hover {
+    body > a > button:hover {
       color: #000000; }
-      body > button:hover:after {
+      body > a > button:hover:after {
         left: 0;
         width: 100%; }
-    body > button:active {
+    body > a > button:active {
       top: 9.5rem; }
 
 menu {
@@ -427,13 +427,13 @@ main {
                   width: 2.4rem;
                   height: 2.4rem;
                   transition: 0.3s; }
-                main .comment > div:nth-child(2) > span:nth-child(2) > form > button:nth-child(1):hover {
-                  cursor: pointer; }
-                  main .comment > div:nth-child(2) > span:nth-child(2) > form > button:nth-child(1):hover svg {
-                    stroke: #38ac3a; }
                 main .comment > div:nth-child(2) > span:nth-child(2) > form > button:nth-child(2):hover {
                   cursor: pointer; }
                   main .comment > div:nth-child(2) > span:nth-child(2) > form > button:nth-child(2):hover svg {
+                    stroke: #38ac3a; }
+                main .comment > div:nth-child(2) > span:nth-child(2) > form > button:nth-child(3):hover {
+                  cursor: pointer; }
+                  main .comment > div:nth-child(2) > span:nth-child(2) > form > button:nth-child(3):hover svg {
                     stroke: #ac1616; }
                 main .comment > div:nth-child(2) > span:nth-child(2) > form > button svg {
                   margin-right: 0.5rem; }

@@ -19,7 +19,7 @@ $ava_border: 1px solid rgba(138, 138, 138, 0.794);
         transition: 0.3s;
     }
 
-    &:nth-child(1) {
+    &:nth-child(2) {
         &:hover {
             cursor: pointer;
 
@@ -29,7 +29,7 @@ $ava_border: 1px solid rgba(138, 138, 138, 0.794);
         }
     }
 
-    &:nth-child(2) {
+    &:nth-child(3) {
         &:hover {
             cursor: pointer;
             svg {
@@ -75,7 +75,7 @@ body {
     grid-column-gap: 0px;
     grid-row-gap: 0px;
 
-    & > button {
+    & > a > button {
         left: 2rem;
         top: 9rem;    
         color: #1f1f1f;
