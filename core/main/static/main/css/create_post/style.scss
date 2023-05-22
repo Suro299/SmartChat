@@ -49,12 +49,21 @@ body {
 }
 
 main {
+    margin-top: 4rem;
     grid-area: 2 / 1 / 7 / 7; 
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 
-    & > button {
+    & > p {
+        margin-top: 2rem;
+        font-size: 1.8rem;
+        color: rgb(223, 56, 56);
+        text-shadow: rgb(255, 1, 1) 1px 0 20px;
+    }
+
+    & > a > button {
         left: 2rem;
         top: 9rem;    
         color: #1f1f1f;

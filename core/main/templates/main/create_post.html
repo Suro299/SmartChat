@@ -9,7 +9,7 @@
 
 {% block main %} 
     <main>
-        <button onclick="history.back()">Go Back</button>
+        <a href="{% url 'posts' %}"> <button> Post Page </button> </a>
 
         <div>
 
@@ -39,6 +39,8 @@
             
     
         </div>
+
+        <p> {{ message }} </p>
     </main>
 
 

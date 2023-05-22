@@ -1,73 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/user_profile/style.css">
-    <link rel="stylesheet" href="./css/dop/header/style.css">
-    <link rel="stylesheet" href="./css/dop/set_menu/style.css">
-    <title> SmartChat | Suro299 </title>
-</head>
-<body>
-    <!-- HEADER START  -->
-    <header>
-        <div onclick="OpenSettingsWindow()">
-            <img src="img/default_avatar.png" alt="User Avatar">
-            <h1> Suro299 </h1>
-            <div>
-                <h1> 1 </h1>
-            </div>
-        </div>
-        
-        <div>
-            <p>43 px</p>
-            <div>
-                <div style = "width: 43%;" ></div>
-            </div>
-        </div>
-        
-        <div>
-            <input type="text" placeholder="Search...  #id / @username / word">
-        </div>
-        
-        <div>
-            <h1> SmartChat </h1>
-        </div>
-    
-    </header>
-    <!-- HEADER END -->
+{% extends 'main/base.html' %}
+{% load static %}
 
-    <button class = "goBack" onclick="history.back()"> Go Back </button>
+{% block css %} 
+    <link rel="stylesheet" href="{% static 'main/css/user_profile/style.css' %}">
+{% endblock %}
+
+{% block title %} SmartChat | {{ one_user.username }} {% endblock %}
+
+{% block main %} 
+    <a href="{% url 'posts' %}"> <button class = "goBack"> Post Page </button> </a>
 
     <main>
 
         <section>
             <div>
                 <div>
-                    <img src="./img/default_avatar.png" alt="">
+                    <img src="{{ one_user.avatar.url }}" alt="">
                 </div>
 
                 <div>
                     <div>
-                        <h1> Suro299 <a href="./user_more.html"> (More...)</a> </h1>
+                        <h1> {{ one_user.username }} <a href="{% url 'user_more' %}"> (More...)</a> </h1>
                         
-                        <h3> User Description </h3>
+                        <h3> {{ one_user.description }} </h3>
 
                         <div>
-                            <a href=""> 100 subscribers </a>
-                            <a href=""> 100 subscription </a>
+                            <a href=""> {{ one_user.subscribers_set.count }} subscribers </a>
+                            <a href=""> {{ one_user.subscription_set.count }} subscription </a>
                         </div>
                     </div>
                     
                     <div>
                         <h1> Languages / Frameworks </h1>
                         <div>
-                            <img src="./img/django_icon.png" alt="">
-                            <img src="./img/js.png" alt="">
-                            <img src="./img/sql.png" alt="">
+                            <img src="{% static 'main/img/django_icon.png' %}" alt="">
+                            <img src="{% static 'main/img/js.png' %}" alt="">
+                            <img src="{% static 'main/img/sql.png' %}" alt="">
 
-                            <h1> <a href="./user_more.html"> +2 </a> </h1>
+                            <h1> <a href="{% url 'user_more' %}"> +2 </a> </h1>
                         </div>
                     </div>
                 </div>
@@ -78,38 +48,44 @@
                     <h1> Level </h1>
 
                     <div>
-                        <h3> 1 LVL </h3>
-                        <div> <div></div> </div>
-                        <h3> 2 LVL </h3>
+                        <h3> {{ one_user.level}} LVL </h3>
+                        <div> <div style = "width: {{ one_user.exp }}%;"></div> </div>
+                        <h3> {{ next_level }} LVL </h3>
                     </div>
                 </div>
 
                 <div>
 
                     <!-- CHMORANAS POST SARQES -->
-                    <form>
+                    <form method="post">
+                        {% csrf_token %}
+                        {% if one_user == user %}
+                            <a href="{% url 'ftf' %}">
+                                <button class = "edit_profile" value = "" name = "send_message"> 
+                                <img src="{% static 'main/icon/edit.svg' %}" alt="">
+                                   Edit Profilee
+                                </button>
+                            </a>
+                        {% else %}
+                            {% if user in one_user.subscribers_set.all %}
+                            
+                                <button class = "unfollow" type = "sumbit" value = "unfollow" name = "unfollow"> 
+                                    <img src="{% static 'main/icon/user-check.svg' %}" alt="">
+                                    Unfollow
+                                </button>
+                            {% else %}
+                                <button class = "follow" type = "sumbit" value = "follow" name = "follow"> 
+                                    <img src="{% static 'main/icon/user-plus.svg' %}" alt="">
+                                    Follow
+                                </button>
+                            {% endif %}
 
-                        <!-- <button class = "follow" type = "sumbit" value = "" name = "follow"> 
-                            <img src="./icon/user-plus.svg" alt="">
-                            Follow
-                        </button> -->
-
-                        <!-- <button class = "unfollow" type = "sumbit" value = "" name = "follow"> 
-                            <img src="./icon/user-check.svg" alt="">
-                            Unfollow
-                        </button> -->
-                     
-                        <!-- <button class = "send_message" type = "sumbit" value = "" name = "send_message"> 
-                            <img src="./icon/send.svg" alt="">
-                            Send Message 
-                        </button> -->
-
-                        <a href="./404.html">
-                            <button class = "edit_profile" value = "" name = "send_message"> 
-                            <img src="./icon/edit.svg" alt="">
-                               Edit Profilee
+                            <button class = "send_message" type = "sumbit" value = "send_msg" name = "send_message"> 
+                                <img src="{% static 'main/icon/send.svg' %}" alt="">
+                                Send Message 
                             </button>
-                        </a>
+                        {% endif %}
+                       
 
                     </form>
                 </div>
@@ -120,265 +96,164 @@
 
         <section>
             <span>
-                <h1> LAST POSTS</h1>
+                <h1> LAST POSTS </h1>
             </span>
             
             <span>
-                <!-- ETE NKAR KA -->
-                <div href = "" class = "img-post">
-                    <div>
-                        <a href="" onclick="alert('!! Hly patrast chi !!');" >
-                            <img src="./img/load_imgae.jpeg" alt="">
-                        </a>
-                    </div>
-
-                    <div>
+                {% for i in last_posts%}
+                    {% if i.post_image %}
+                    <div class="post">
                         <div>
-                            <a onclick="alert('!! Hly patrast chi !!');" href="">
-                                <h1> Title<span> (#id) </span> </h1>
-                                <div>
-                                    <p>#Python</p>
-                                    <p>#django</p>
-                                    <p>#JavaScript</p>
+                            <div class="post-header">
+                                <img class="avatar" src="{{ i.sender.avatar.url }}" alt="User Avatar">
+                                <div class="user-info">
+                                    <h2 class="username">{{ i.sender.username }}</h2>
+                                    <p class="post-date">{{ i.date_created }}</p>
                                 </div>
-                                <h3> s simply dummy text of the printing </h3>
-                            </a>
-                        </div>   
-
-                        <div>
-                            <div>
-                                <a href="/user_profile.html">
-                                    <img src="img/default_avatar.png" alt="">
-                                    <h2> Suro299 </h2>
-                                </a>
                             </div>
 
-                            <div>
-                            <!-- CHMORANAS METHODY POST TAS -->
-                            <form>
-                                <button type = "submit" onclick="alert('!! Hly patrast chi !!');"> 
+                        
+                            <div class="post-content">
+                                {% if i.post_title|length > 20  %}
+                                <h3 class="post-title"> {{ i.post_title|slice:":20" }}... </h3>
+                                {% else %}
+                                <h3 class="post-title"> {{ i.post_title }} </h3>
+                                {% endif %}
+                            
+                                <div class = "post_image_div">
+                                    <img class="post_image" src="{{ i.post_image.url }}" alt="Post Image">
+                                </div>
+                            
+                                {% if i.post_text|length > 76  %}
+                                <p class="post-text"> {{ i.post_text|slice:":76" }}... </p>
+                                {% else %}
+                                <p class="post-text"> {{ i.post_text }} </p>
+                                {% endif %}
+
+                                <div class="post-tags">
+                                    {% for tag in i.post_tags.all|slice:":3" %}
+                                    <span class="tag"> #{{ tag }} </span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <form method="post" class="post-actions">
+                            {% csrf_token %}
+                            <button name = "btn_l" value = "{{ i.id }}" type="submit" class="like"> 
+                                {% if user in i.likers.all %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#238925" stroke="#1ca31e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                {% else %}
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
-                                    0 
-                                </button>
+                                {% endif %}
 
-                                <button type = "submit" onclick="alert('!! Hly patrast chi !!');"> 
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 24" fill="none" stroke="Whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-down"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+                                <h3> {{ i.likers.count }} </h3>
+                            </button>
+                        
+                            <button name = "btn_d" value = "{{ i.id }}" type="submit" class="dislike"> 
+                                {% if user in i.dislikers.all %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#E32636" stroke="#ff2b3d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-down"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+                                {% else %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="Whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-down"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+                                {% endif %}
 
-                                    0 
-                                </button>
 
-                                <button onclick="alert('!! Hly patrast chi !!');"> 
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>                                   
-                                    0 
-                                </button>
-                            </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                <h3> {{ i.dislikers.count }} </h3>
 
-                <!-- ETE NKAR CHKA -->
-                <div class = "simple-post">
-                    <div>
-                        <a href="" onclick="alert('!! Hly patrast chi !!');" >
-                            <h1> Title <span> (#id) </span> </h1>
-
-                            <div>
-                                <p>#Python</p>
-                                <p>#django</p>
-                                <p>#JavaScript</p>
-                            </div>
-
-                            <h3> 
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                                when an unknown printer took a galley of type and scrambled it to make a type 
-                                specimen book. It has survived not only five centuries, but also the leap 
-                                into electronic typesetting, remaining essentially unchanged. It was 
-                                popularised in the 1960s with the release of Letraset sheets containing 
-                                Lorem Ipsum passages, and more recently with desktop publishing software 
-                                like Aldus PageMaker including versions of Lorem Ipsum. 
-                            </h3>
-                        </a>
-                    </div>
-
-                    <div>
-                        <div>
-                            <a href="./user_profile.html">
-                                <img src="img/default_avatar.png" alt="">
-                                <h2> Suro299 </h2>
+                            </button>
+                        
+                            <a href="{% url 'post_page' i.id %}" class="comments"> 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                <h3> {{ i.comments.count }} </h3>
                             </a>
-                        </div>
-
-                        <div>
-                            <!-- CHMORANAS METHODY POST TAS -->
-                            <form>
-                                <button type = "submit" onclick="alert('!! Hly patrast chi !!');"> 
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
-                                    0 
-                                </button>
-
-                                <button type = "submit" onclick="alert('!! Hly patrast chi !!');"> 
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 24" fill="none" stroke="Whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-down"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
-
-                                    0 
-                                </button>
-
-                                <button onclick="alert('!! Hly patrast chi !!');"> 
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>                                   
-                                    0 
-                                </button>
-                            </form>
-                        </div>
+                        
+                        
+                            <button name = "btn_f" value = "{{ i.id }}" type="submit" class="favorite"> 
+                                {% if i in user.favorites.all %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="gold" stroke="gold" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                {% else %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                {% endif %} 
+                            </button>
+                        </form>
                     </div>
-
-                </div>
-
-                <!-- ETE NKAR CHKA -->
-                <div class = "simple-post">
-                    <div>
-                        <a href="" onclick="alert('!! Hly patrast chi !!');" >
-                            <h1> Title <span> (#id) </span> </h1>
-
-                            <div>
-                                <p>#Python</p>
-                                <p>#django</p>
-                                <p>#JavaScript</p>
+                    {% else %}
+                    <div class="post">
+                        <div>
+                            <div class="post-header">
+                                <img class="avatar" src="{{ i.sender.avatar.url }}" alt="User Avatar">
+                                <div class="user-info">
+                                    <h2 class="username">{{ i.sender.username }}</h2>
+                                    <p class="post-date">{{ i.date_created }}</p>
+                                </div>
                             </div>
+                            <div class="post-content">
+                                {% if i.post_title|length > 20  %}
+                                <h3 class="post-title"> {{ i.post_title|slice:":20" }}... </h3>
+                                {% else %}
+                                <h3 class="post-title"> {{ i.post_title }} </h3>
+                                {% endif %}
 
-                            <h3> 
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                                when an unknown printer took a galley of type and scrambled it to make a type 
-                                specimen book. It has survived not only five centuries, but also the leap 
-                                into electronic typesetting, remaining essentially unchanged. It was 
-                                popularised in the 1960s with the release of Letraset sheets containing 
-                                Lorem Ipsum passages, and more recently with desktop publishing software 
-                                like Aldus PageMaker including versions of Lorem Ipsum. 
-                            </h3>
-                        </a>
-                    </div>
 
-                    <div>
-                        <div>
-                            <a href="./user_profile.html">
-                                <img src="img/default_avatar.png" alt="">
-                                <h2> Suro299 </h2>
-                            </a>
-                        </div>
+                                {% if i.post_text|length > 465  %}
+                                <p class="post-text"> {{ i.post_text|slice:":465" }}... </p>
+                                {% else %}
+                                <p class="post-text"> {{ i.post_text }} </p>
+                                {% endif %}
 
-                        <div>
-                            <!-- CHMORANAS METHODY POST TAS -->
-                            <form>
-                                <button type = "submit" onclick="alert('!! Hly patrast chi !!');"> 
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
-                                    0 
-                                </button>
-
-                                <button type = "submit" onclick="alert('!! Hly patrast chi !!');"> 
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 24" fill="none" stroke="Whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-down"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
-
-                                    0 
-                                </button>
-
-                                <button onclick="alert('!! Hly patrast chi !!');"> 
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>                                   
-                                    0 
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- ETE NKAR CHKA -->
-                <div class = "simple-post">
-                    <div>
-                        <a href="" onclick="alert('!! Hly patrast chi !!');" >
-                            <h1> Title <span> (#id) </span> </h1>
-
-                            <div>
-                                <p>#Python</p>
-                                <p>#django</p>
-                                <p>#JavaScript</p>
+                                <div class="post-tags">
+                                    {% for tag in i.post_tags.all|slice:":3" %}
+                                    <span class="tag"> #{{ tag }} </span>
+                                    {% endfor %}
+                                </div>
                             </div>
-
-                            <h3> 
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                                when an unknown printer took a galley of type and scrambled it to make a type 
-                                specimen book. It has survived not only five centuries, but also the leap 
-                                into electronic typesetting, remaining essentially unchanged. It was 
-                                popularised in the 1960s with the release of Letraset sheets containing 
-                                Lorem Ipsum passages, and more recently with desktop publishing software 
-                                like Aldus PageMaker including versions of Lorem Ipsum. 
-                            </h3>
-                        </a>
-                    </div>
-
-                    <div>
-                        <div>
-                            <a href="./user_profile.html">
-                                <img src="img/default_avatar.png" alt="">
-                                <h2> Suro299 </h2>
-                            </a>
                         </div>
-
-                        <div>
-                            <!-- CHMORANAS METHODY POST TAS -->
-                            <form>
-                                <button type = "submit" onclick="alert('!! Hly patrast chi !!');"> 
+                    
+                    
+                        <form method="post" class="post-actions">
+                            {% csrf_token %}
+                            <button name = "btn_l" value = "{{ i.id }}" type="submit" class="like"> 
+                                {% if user in i.likers.all %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#238925" stroke="#1ca31e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                {% else %}
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
-                                    0 
-                                </button>
+                                {% endif %}
+                                <h3> {{ i.likers.count }} </h3>
+                            </button>
+                        
+                            <button name = "btn_d" value = "{{ i.id }}" type="submit" class="dislike"> 
+                                {% if user in i.dislikers.all %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#E32636" stroke="#ff2b3d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-down"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+                                {% else %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="Whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-down"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+                                {% endif %}
 
-                                <button type = "submit" onclick="alert('!! Hly patrast chi !!');"> 
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 24" fill="none" stroke="Whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-down"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
 
-                                    0 
-                                </button>
+                                <h3> {{ i.dislikers.count }} </h3>
 
-                                <button onclick="alert('!! Hly patrast chi !!');"> 
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>                                   
-                                    0 
-                                </button>
-                            </form>
-                        </div>
+                            </button>
+                        
+                        
+                            <a href="{% url 'post_page' i.id %}" class="comments"> 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                <h3> {{ i.comments.count }} </h3>
+                            </a>
+                        
+                        
+                            <button name = "btn_f" value = "{{ i.id }}" type="submit" class="favorite"> 
+                                {% if i in user.favorites.all %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="gold" stroke="gold" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                {% else %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                {% endif %} 
+                            </button>
+                        </form>
                     </div>
-
-                </div>
+                    {% endif %}
+                {% endfor %}
 
             </span>
         </section>
     </main>
 
-    
-    <!-- SETTINGS MENU START -->
-    <div id = "settings_menu" class = "menu_left">
-        <ul>
-            <li><h3> Signed in as <span> Suro299 </span> </h3></li>
-            <hr>
-            <li><a href="./user_profile.html" > <img src="icon/user.svg" alt=""> My Profile </a></li>
-            <hr>
-            <li><a href="./posts.html" > <img src="icon/posts.svg" alt=""> Go To Posts </a></li>
-            <li><a href="./404.html" > <img src="icon/message.svg" alt=""> Go To Chats </a></li>
-            <hr>
-            <li><a href="./profil_settings.html"> <img src="./icon/user_settings.svg" alt=""> Profile Settings</a></li>
-            <li><a href="./404.html"> <img src="./icon/settings.svg" alt=""> Site Settings </a></li>
-            <hr>
-            <li><a href="./contact_us.html"> <img src="./icon/contact-us.svg" alt=""> Contact Us </a></li>
-            <li><a href="./about_us.html"> <img src="./icon/about-us.svg" alt=""> About Us </a></li>
-            <li><a href="./lastest_update.html"> <img src="./icon/refresh-cw.svg" alt=""> Latest update </a></li>
-            <hr>
-            <li><a href = "./404.html" > <img src="./icon/log-out.svg" alt="">  Log-out </a></li>
-        </ul>
-    </div>
-    <!-- SETTINGS MENU END -->
-
-
-    <!-- START JS -->
-    <script src="./js/dop.js"></script>
-    <!-- END JS -->
-</body>
-</html>
-
+{% endblock %}

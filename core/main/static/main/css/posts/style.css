@@ -177,6 +177,24 @@ main {
         flex-direction: column;
         flex-wrap: nowrap;
         align-items: center; } }
+    main > section:nth-child(2) > span:nth-child(1) {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-evenly; }
+      @media screen and (max-width: 800px) {
+        main > section:nth-child(2) > span:nth-child(1) {
+          margin-top: 2rem; } }
+    main > section:nth-child(2) > span:nth-child(2) {
+      margin: 5rem 0 2rem 0;
+      text-align: center;
+      display: flex; }
+      main > section:nth-child(2) > span:nth-child(2) > h1 {
+        font-size: 3.5rem;
+        color: rgba(245, 245, 245, 0.519); }
+        @media screen and (max-width: 800px) {
+          main > section:nth-child(2) > span:nth-child(2) > h1 {
+            font-size: 2.4rem; } }
     main > section:nth-child(2) .post {
       display: flex;
       flex-direction: column;

@@ -30,11 +30,18 @@ body {
   grid-row-gap: 0px; }
 
 main {
+  margin-top: 4rem;
   grid-area: 2 / 1 / 7 / 7;
   display: flex;
   justify-content: center;
-  align-items: center; }
-  main > button {
+  align-items: center;
+  flex-direction: column; }
+  main > p {
+    margin-top: 2rem;
+    font-size: 1.8rem;
+    color: #df3838;
+    text-shadow: #ff0101 1px 0 20px; }
+  main > a > button {
     left: 2rem;
     top: 9rem;
     color: #1f1f1f;
@@ -50,7 +57,7 @@ main {
     border: none;
     z-index: 1;
     font-size: 1.6rem; }
-    main > button::after {
+    main > a > button::after {
       position: absolute;
       content: "";
       width: 0;
@@ -60,12 +67,12 @@ main {
       z-index: -1;
       background-color: #ff3d3d;
       transition: all 0.3s ease; }
-    main > button:hover {
+    main > a > button:hover {
       color: #000000; }
-      main > button:hover:after {
+      main > a > button:hover:after {
         left: 0;
         width: 100%; }
-    main > button:active {
+    main > a > button:active {
       top: 9.5rem; }
   main > div {
     -webkit-box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.308);

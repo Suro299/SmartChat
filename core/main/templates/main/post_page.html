@@ -18,7 +18,7 @@
                 <h1> {{ post.post_title }} </h1>
                 <span>
                     <div>
-                        <a href="{% url 'user_profile' %}">
+                        <a href="{% url 'user_profile' post.sender.id %}">
                             <img src="{% static 'main/icon/user.svg' %}" alt="">
                             <h3> {{ post.sender.username }} </h3>
                         </a>
@@ -50,7 +50,7 @@
         <section>
 
             <menu>
-                <a href="./user_profile.html">
+                <a href="{% url 'user_profile' post.sender.id %}">
 
                     <img src="{{ post.sender.avatar.url }}" alt="">
                     <h1> {{ post.sender.username }} </h1>
@@ -68,22 +68,24 @@
                     <span>
                         <dl>
                             <dt> Registration: </dt>
-                            <dd> 05/05/2023 </dd>
+                            {{ post.sender.date_joined.year}} /
+                            {{ post.sender.date_joined.month}} / 
+                            {{ post.sender.date_joined.day}}
                         </dl>
                     
                         <dl>
                             <dt> Posts: </dt>
-                            <dd> 0 </dd>
+                            <dd> {{ post.sender.posts_posted}} </dd>
                         </dl>
                     
                         <dl>
                             <dt> Reactions: </dt>
-                            <dd> 0 </dd>
+                            <dd> {{ post.sender.reactions }} </dd>
                         </dl>
                     
                         <dl>
                             <dt> Points: </dt>
-                            <dd> 0 </dd>
+                            <dd> {{ post.sender.points }} </dd>
                         </dl>
                     </span>
                 </a>
@@ -93,14 +95,14 @@
                 <div>
                     <span>
                         <div>
-                            <img src="./icon/clock.svg" alt="">
-                            <h3>06/05/2023</h3>
+                            <img src="{% static 'main/icon/clock.svg' %}" alt="">
+                            <h3> {{ post.date_created }} </h3>
                         </div>
     
                         <div>
                             
-                            <img src="./icon/share.svg" alt="">
-                            <h3> #1 </h3>
+                            <img src="{% static 'main/icon/share.svg' %}" alt="">
+                            <h3> # {{ post.id }}</h3>
                         </div>
                     </span>
     
@@ -138,11 +140,11 @@
         </section>
 
         
-        {% for i in post.comments.all %}
+        {% for i in comments %}
         <section class = "comment">
             <div>
                 <menu>
-                    <a href="./user_profile.html">
+                    <a href="{% url 'user_profile' i.com_sender.id %}">
 
                         <img src="{{ i.com_sender.avatar.url }}" alt="">
                         <h1> {{ i.com_sender.username }} </h1>
@@ -160,22 +162,26 @@
                         <span>
                             <dl>
                                 <dt> Registration: </dt>
-                                <dd> 05/05/2023 </dd>
+                                <dd> 
+                                    {{ i.com_sender.date_joined.year}} /
+                                    {{ i.com_sender.date_joined.month}} / 
+                                    {{ i.com_sender.date_joined.day}}
+                                </dd>
                             </dl>
                         
                             <dl>
                                 <dt> Posts: </dt>
-                                <dd> 0 </dd>
+                                <dd> {{ i.com_sender.posts_posted}} </dd>
                             </dl>
                         
                             <dl>
                                 <dt> Reactions: </dt>
-                                <dd> 0 </dd>
+                                <dd> {{ i.com_sender.reactions }} </dd>
                             </dl>
                         
                             <dl>
                                 <dt> Points: </dt>
-                                <dd> 0 </dd>
+                                <dd> {{ i.com_sender.points }} </dd>
                             </dl>
                         </span>
                     </a>
@@ -191,7 +197,7 @@
             <div>
                 <span>
                     <div>
-                        <a href="./user_profile.html">
+                        <a href="{% url 'user_profile'  i.com_sender.id %}">
                             <img src="{% static 'main/icon/user.svg' %}" alt="">
                             <h3> {{ i.com_sender.username }} </h3>
                         </a>
@@ -200,6 +206,7 @@
                         <img src="{% static 'main/icon/clock.svg' %}" alt="">
                         <h3> {{ i.date_created }} </h3>
                     </div>
+
                 </span>
 
                 <span>
