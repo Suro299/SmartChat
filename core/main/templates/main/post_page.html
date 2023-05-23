@@ -39,7 +39,7 @@
 
                 <span id = "post_dop">
                     <ul>
-                        <li> <a href="{% static 'main/confirm_delete.html' %}"> Delete </a> </li>
+                        <li> <a href="{% url 'confirm_delete' post.id %}"> Delete </a> </li>
                     </ul>
                 </span>
                 {% endif %}

@@ -6,6 +6,8 @@ const show_activity = document.getElementById("show_activity")
 
 let settings_menu_is_open = false;
 
+
+
 function OpenSettingsWindow() {
   if (settings_menu_is_open == false) {
     settings_menu.style.display = "flex"

@@ -34,37 +34,43 @@
                     <div class="post">
                         <div>
                             <div class="post-header">
-                                <img class="avatar" src="{{ i.sender.avatar.url }}" alt="User Avatar">
+                                <a href="{% url 'user_profile' i.sender.id %}">
+                                    <img class="avatar" src="{{ i.sender.avatar.url }}" alt="User Avatar">
+                                </a>
+
                                 <div class="user-info">
-                                    <h2 class="username">{{ i.sender.username }}</h2>
+                                    <a href="{% url 'user_profile' i.sender.id %}">
+                                        <h2 class="username">{{ i.sender.username }}</h2>
+                                    </a>
                                     <p class="post-date">{{ i.date_created }}</p>
                                 </div>
                             </div>
 
-                        
-                            <div class="post-content">
-                                {% if i.post_title|length > 20  %}
-                                <h3 class="post-title"> {{ i.post_title|slice:":20" }}... </h3>
-                                {% else %}
-                                <h3 class="post-title"> {{ i.post_title }} </h3>
-                                {% endif %}
-                            
-                                <div class = "post_image_div">
-                                    <img class="post_image" src="{{ i.post_image.url }}" alt="Post Image">
-                                </div>
-                            
-                                {% if i.post_text|length > 76  %}
-                                <p class="post-text"> {{ i.post_text|slice:":76" }}... </p>
-                                {% else %}
-                                <p class="post-text"> {{ i.post_text }} </p>
-                                {% endif %}
+                            <a style = "color:whitesmoke;" href="{% url 'post_page' i.id %}">
+                                <div class="post-content">
+                                    {% if i.post_title|length > 20  %}
+                                    <h3 class="post-title"> {{ i.post_title|slice:":20" }}... </h3>
+                                    {% else %}
+                                    <h3 class="post-title"> {{ i.post_title }} </h3>
+                                    {% endif %}
+                                
+                                    <div class = "post_image_div">
+                                        <img class="post_image" src="{{ i.post_image.url }}" alt="Post Image">
+                                    </div>
+                                
+                                    {% if i.post_text|length > 76  %}
+                                    <p class="post-text"> {{ i.post_text|slice:":76" }}... </p>
+                                    {% else %}
+                                    <p class="post-text"> {{ i.post_text }} </p>
+                                    {% endif %}
 
-                                <div class="post-tags">
-                                    {% for tag in i.post_tags.all|slice:":3" %}
-                                    <span class="tag"> #{{ tag }} </span>
-                                    {% endfor %}
+                                    <div class="post-tags">
+                                        {% for tag in i.post_tags.all|slice:":3" %}
+                                        <span class="tag"> #{{ tag }} </span>
+                                        {% endfor %}
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     
                         <form method="post" class="post-actions">
@@ -110,38 +116,46 @@
                     <div class="post">
                         <div>
                             <div class="post-header">
-                                <img class="avatar" src="{{ i.sender.avatar.url }}" alt="User Avatar">
+                                <a href="{% url 'user_profile' i.sender.id %}">
+                                    <img class="avatar" src="{{ i.sender.avatar.url }}" alt="User Avatar">
+                                </a>
+                                
                                 <div class="user-info">
+                                    <a href="{% url 'user_profile' i.sender.id %}">
                                     <h2 class="username">{{ i.sender.username }}</h2>
+                                </a>
                                     <p class="post-date">{{ i.date_created }}</p>
                                 </div>
                             </div>
-                            <div class="post-content">
-                                {% if i.post_title|length > 20  %}
-                                <h3 class="post-title"> {{ i.post_title|slice:":20" }}... </h3>
-                                {% else %}
-                                <h3 class="post-title"> {{ i.post_title }} </h3>
-                                {% endif %}
+
+                            <a style = "color:whitesmoke;" href="{% url 'post_page' i.id %}">
+                                <div class="post-content">
+                                    {% if i.post_title|length > 20  %}
+                                    <h3 class="post-title"> {{ i.post_title|slice:":20" }}... </h3>
+                                    {% else %}
+                                    <h3 class="post-title"> {{ i.post_title }} </h3>
+                                    {% endif %}
 
 
-                                {% if i.post_text|length > 465  %}
-                                <p class="post-text"> {{ i.post_text|slice:":465" }}... </p>
-                                {% else %}
-                                <p class="post-text"> {{ i.post_text }} </p>
-                                {% endif %}
+                                    {% if i.post_text|length > 465  %}
+                                    <p class="post-text"> {{ i.post_text|slice:":465" }}... </p>
+                                    {% else %}
+                                    <p class="post-text"> {{ i.post_text }} </p>
+                                    {% endif %}
 
-                                <div class="post-tags">
-                                    {% for tag in i.post_tags.all|slice:":3" %}
-                                    <span class="tag"> #{{ tag }} </span>
-                                    {% endfor %}
+                                    <div class="post-tags">
+                                        {% for tag in i.post_tags.all|slice:":3" %}
+                                        <span class="tag"> #{{ tag }} </span>
+                                        {% endfor %}
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     
                     
                         <form method="post" class="post-actions">
                             {% csrf_token %}
-                            <button name = "btn_l" value = "{{ i.id }}" type="submit" class="like"> 
+                            <button name = "btn_l" value = "{{ i.id }}" type="submit" class="like" id="like-btn-{{ i.id }}"> 
                                 {% if user in i.likers.all %}
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#238925" stroke="#1ca31e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
                                 {% else %}
@@ -150,7 +164,7 @@
                                 <h3> {{ i.likers.count }} </h3>
                             </button>
                         
-                            <button name = "btn_d" value = "{{ i.id }}" type="submit" class="dislike"> 
+                            <button name = "btn_d" value = "{{ i.id }}" type="submit" class="dislike" id="вшыlike-btn-{{ i.id }}"> 
                                 {% if user in i.dislikers.all %}
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#E32636" stroke="#ff2b3d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-down"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
                                 {% else %}
@@ -214,3 +228,4 @@
         </ul>
     </nav>
 {% endblock %}
+

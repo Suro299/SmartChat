@@ -222,17 +222,22 @@ main {
         height: 50px;
         border-radius: 50%;
         overflow: hidden;
-        margin-right: 1rem; }
-        main > section:nth-child(2) .post .avatar > img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover; }
+        margin-right: 1rem;
+        object-fit: cover;
+        opacity: 70%;
+        transition: 0.2s; }
+        main > section:nth-child(2) .post .avatar:hover {
+          opacity: 100%; }
       main > section:nth-child(2) .post .user-info {
         text-align: end; }
-        main > section:nth-child(2) .post .user-info > h2 {
+        main > section:nth-child(2) .post .user-info > a > h2 {
+          color: #c7c7c7;
           font-size: 1.8rem;
           margin: 0;
-          margin-bottom: 0.5rem; }
+          margin-bottom: 0.5rem;
+          transition: 0.2s; }
+          main > section:nth-child(2) .post .user-info > a > h2:hover {
+            color: whitesmoke; }
       main > section:nth-child(2) .post .post-date {
         font-size: 14px;
         color: #999; }

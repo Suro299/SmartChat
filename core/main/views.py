@@ -25,27 +25,34 @@ def posts(request):
         return redirect("login")
 
     if request.method == "POST":
+        if not (request.user.is_authenticated):
+            return redirect("login")
+        
         btn_l = request.POST.get("btn_l")
         btn_d = request.POST.get("btn_d")
         btn_f = request.POST.get("btn_f")
-
         user = User.objects.get(username=request.user.username)
-
+        
         if btn_l:
             prod = PostsModel.objects.get(id=btn_l)
-
+            post_sender = User.objects.get(id = prod.sender.id)
+            
             if request.user in prod.likers.all():
                 prod.likers.remove(request.user)
+                post_sender.exp -= 1
             else:
                 prod.likers.add(request.user)
+                post_sender.exp += 1
+                
                 if request.user in prod.dislikers.all():
                     prod.dislikers.remove(request.user)
-
+            post_sender.save()
+                
         elif btn_d:
             prod = PostsModel.objects.get(id=btn_d)
-
             if request.user in prod.dislikers.all():
                 prod.dislikers.remove(request.user)
+                
             else:
                 prod.dislikers.add(request.user)
 
@@ -57,14 +64,23 @@ def posts(request):
 
             if prod in user.favorites.all():
                 user.favorites.remove(prod)
+                
             else:
                 user.favorites.add(prod)
+        try: 
+            prod = PostsModel.objects.get(id = btn_l if btn_l else btn_d)
+            post_sender = User.objects.get(id = prod.sender.id)
 
-        try:
-            prod.save()
-            user.save()
+            if post_sender.exp >= 100:
+                post_sender.exp -= 100
+                post_sender.level += 1
+            post_sender.save()
         except:
             pass
+        
+        prod.save()
+        user.save()
+    
 
     posts_list = PostsModel.objects.all()[::-1]
 
@@ -78,22 +94,51 @@ def posts(request):
 
 
 def about_us(request):
+    if not (request.user.is_authenticated):
+        return redirect("login")
+    
     return render(request, "main/about_us.html")
 
 
 def contact_us(request):
+    if not (request.user.is_authenticated):
+        return redirect("login")
+    
     return render(request, "main/contact_us.html")
 
 
 def confid_settings(request):
+    if not (request.user.is_authenticated):
+        return redirect("login")
+    
     return render(request, "main/confid_settings.html")
 
 
-def confirm_delete(request):
-    return render(request, "main/confirm_delete.html")
+def confirm_delete(request, id):
+    if not (request.user.is_authenticated):
+        return redirect("login")
+    
+    post = PostsModel.objects.get(pk=id)
+    
+    if request.user == post.sender:
+        if request.method == "POST":
+            post.delete()
+            return redirect("posts")
+
+        return render(request, "main/confirm_delete.html", context = {
+            "post": post
+        })
+        
+    return redirect(f"/post_page/{id}")
+
+        
+        
 
 
 def create_post(request):
+    if not (request.user.is_authenticated):
+        return redirect("login")
+    
     message = ""
     if request.method == "POST":
         post_tags = request.POST.get("post_tags")
@@ -122,6 +167,7 @@ def create_post(request):
             )
 
         form = NewPostModelForm(request.POST, request.FILES)
+        
         if form.is_valid():
             message = form.save(commit=False)
             message.sender = request.user
@@ -170,13 +216,22 @@ def create_post(request):
 
 
 def lastest_update(request):
+    if not (request.user.is_authenticated):
+        return redirect("login")
+    
     return render(request, "main/lastest_update.html")
 
 
 def post_page(request, id):
+    if not (request.user.is_authenticated):
+        return redirect("login")
+    
     post = PostsModel.objects.get(pk=id)
 
     if request.method == "POST":
+        if not (request.user.is_authenticated):
+            return redirect("login")
+        
         btn_l = request.POST.get("btn_l")
         btn_d = request.POST.get("btn_d")
         post_comment = request.POST.get("post_comment")
@@ -206,6 +261,10 @@ def post_page(request, id):
                         sender.points -= 1
                         user.reactions -= 1
 
+            if sender.exp >= 100:
+                sender.exp -= 100
+                sender.level += 1
+                
             sender.save()
             user.save()
 
@@ -227,6 +286,7 @@ def post_page(request, id):
 
                 if sender.id != request.user.id:
                     sender.points += 1
+                    sender.exp += 1
                     user.reactions += 1
 
                 if request.user in comment_ex.likers.all():
@@ -234,6 +294,11 @@ def post_page(request, id):
                         comment_ex.likers.remove(request.user)
                         sender.points -= 1
                         user.reactions -= 1
+                        
+            if sender.exp >= 100:
+                sender.exp -= 100
+                sender.level += 1
+                
 
             sender.save()
             user.save()
@@ -242,14 +307,24 @@ def post_page(request, id):
             form = NewComment(request.POST)
 
             if form.is_valid():
+                
                 comment = form.save(commit=False)
                 comment.com_sender = request.user
                 comment.save()
                 post.comments.add(comment)
+                sender = User.objects.get(id = post.sender.id)
+                
+                sender.exp += 4
+                if sender.exp >= 100:
+                    sender.exp -= 100
+                    sender.level += 1
+                
+                sender.save()
+
 
     else:
         form = NewComment()
-
+        
     comments = list(post.comments.all())
     comments.reverse()
 
@@ -259,6 +334,9 @@ def post_page(request, id):
 
 
 def profil_settings(request):
+    if not (request.user.is_authenticated):
+        return redirect("login")
+    
     return render(request, "main/profil_settings.html")
 
 
@@ -346,10 +424,16 @@ def logout_request(request):
 
 
 def user_more(request):
+    if not (request.user.is_authenticated):
+        return redirect("login")
+    
     return render(request, "main/user_more.html")
 
 
 def user_profile(request, id):
+    if not (request.user.is_authenticated):
+        return redirect("login")
+    
     one_user = User.objects.get(pk=id)
     next_level = one_user.level + 1
 
@@ -363,25 +447,29 @@ def user_profile(request, id):
         user = User.objects.get(id=request.user.id)
 
         if follow:
+            print("asd")
             one_user.subscribers_set.add(request.user)
             user.subscription_set.add(one_user)
+            one_user.exp += 10
 
-            if (user in one_user.subscribers_set.all()) and (
-                one_user in user.subscribers_set.all()
-            ):
+            if (user in one_user.subscribers_set.all()) and (one_user in user.subscribers_set.all()):
                 user.friends_set.add(one_user)
                 one_user.friends_set.add(user)
 
         if unfollow:
-            if (user in one_user.subscribers_set.all()) and (
-                one_user in user.subscribers_set.all()
-            ):
+            one_user.exp -= 10
+            if (user in one_user.subscribers_set.all()) and (one_user in user.subscribers_set.all()):
                 user.friends_set.remove(one_user)
                 one_user.friends_set.remove(user)
 
             one_user.subscribers_set.remove(request.user)
             user.subscription_set.remove(one_user)
-
+        
+        if one_user.exp >= 100:
+            one_user.exp -= 100
+            one_user.level += 1
+            
+        one_user.save()
         return redirect(f"/user_profile/{id}")
 
     return render(

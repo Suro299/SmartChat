@@ -67,18 +67,31 @@
                                 </button>
                             </a>
                         {% else %}
-                            {% if user in one_user.subscribers_set.all %}
-                            
+                            {% if  one_user in user.friends_set.all  %}
                                 <button class = "unfollow" type = "sumbit" value = "unfollow" name = "unfollow"> 
                                     <img src="{% static 'main/icon/user-check.svg' %}" alt="">
-                                    Unfollow
-                                </button>
+                                    You Are Friends
+                                </button>                    
                             {% else %}
-                                <button class = "follow" type = "sumbit" value = "follow" name = "follow"> 
-                                    <img src="{% static 'main/icon/user-plus.svg' %}" alt="">
-                                    Follow
-                                </button>
-                            {% endif %}
+                                {% if user in one_user.subscribers_set.all %}
+                                    <button class = "unfollow" type = "sumbit" value = "unfollow" name = "unfollow"> 
+                                        <img src="{% static 'main/icon/user-check.svg' %}" alt="">
+                                         Unfollow
+                                    </button>  
+                                {% else %}
+                                    {% if one_user in user.subscribers_set.all %}
+                                        <button class = "follow" type = "sumbit" value = "follow" name = "follow"> 
+                                            <img src="{% static 'main/icon/user-plus.svg' %}" alt="">
+                                            Add to answer
+                                        </button>
+                                    {% else%}
+                                        <button class = "follow" type = "sumbit" value = "follow" name = "follow"> 
+                                            <img src="{% static 'main/icon/user-plus.svg' %}" alt="">
+                                            Follow
+                                        </button>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %} 
 
                             <button class = "send_message" type = "sumbit" value = "send_msg" name = "send_message"> 
                                 <img src="{% static 'main/icon/send.svg' %}" alt="">
@@ -112,30 +125,31 @@
                                 </div>
                             </div>
 
-                        
-                            <div class="post-content">
-                                {% if i.post_title|length > 20  %}
-                                <h3 class="post-title"> {{ i.post_title|slice:":20" }}... </h3>
-                                {% else %}
-                                <h3 class="post-title"> {{ i.post_title }} </h3>
-                                {% endif %}
-                            
-                                <div class = "post_image_div">
-                                    <img class="post_image" src="{{ i.post_image.url }}" alt="Post Image">
-                                </div>
-                            
-                                {% if i.post_text|length > 76  %}
-                                <p class="post-text"> {{ i.post_text|slice:":76" }}... </p>
-                                {% else %}
-                                <p class="post-text"> {{ i.post_text }} </p>
-                                {% endif %}
+                            <a style = "color:whitesmoke;" href="{% url 'post_page' i.id %}">
+                                <div class="post-content">
+                                    {% if i.post_title|length > 20  %}
+                                    <h3 class="post-title"> {{ i.post_title|slice:":20" }}... </h3>
+                                    {% else %}
+                                    <h3 class="post-title"> {{ i.post_title }} </h3>
+                                    {% endif %}
+                                
+                                    <div class = "post_image_div">
+                                        <img class="post_image" src="{{ i.post_image.url }}" alt="Post Image">
+                                    </div>
+                                
+                                    {% if i.post_text|length > 76  %}
+                                    <p class="post-text"> {{ i.post_text|slice:":76" }}... </p>
+                                    {% else %}
+                                    <p class="post-text"> {{ i.post_text }} </p>
+                                    {% endif %}
 
-                                <div class="post-tags">
-                                    {% for tag in i.post_tags.all|slice:":3" %}
-                                    <span class="tag"> #{{ tag }} </span>
-                                    {% endfor %}
+                                    <div class="post-tags">
+                                        {% for tag in i.post_tags.all|slice:":3" %}
+                                        <span class="tag"> #{{ tag }} </span>
+                                        {% endfor %}
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     
                         <form method="post" class="post-actions">
@@ -187,26 +201,29 @@
                                     <p class="post-date">{{ i.date_created }}</p>
                                 </div>
                             </div>
-                            <div class="post-content">
-                                {% if i.post_title|length > 20  %}
-                                <h3 class="post-title"> {{ i.post_title|slice:":20" }}... </h3>
-                                {% else %}
-                                <h3 class="post-title"> {{ i.post_title }} </h3>
-                                {% endif %}
+
+                            <a style = "color:whitesmoke;" href="{% url 'post_page' i.id %}"> 
+                                <div class="post-content">
+                                    {% if i.post_title|length > 20  %}
+                                    <h3 class="post-title"> {{ i.post_title|slice:":20" }}... </h3>
+                                    {% else %}
+                                    <h3 class="post-title"> {{ i.post_title }} </h3>
+                                    {% endif %}
 
 
-                                {% if i.post_text|length > 465  %}
-                                <p class="post-text"> {{ i.post_text|slice:":465" }}... </p>
-                                {% else %}
-                                <p class="post-text"> {{ i.post_text }} </p>
-                                {% endif %}
+                                    {% if i.post_text|length > 465  %}
+                                    <p class="post-text"> {{ i.post_text|slice:":465" }}... </p>
+                                    {% else %}
+                                    <p class="post-text"> {{ i.post_text }} </p>
+                                    {% endif %}
 
-                                <div class="post-tags">
-                                    {% for tag in i.post_tags.all|slice:":3" %}
-                                    <span class="tag"> #{{ tag }} </span>
-                                    {% endfor %}
+                                    <div class="post-tags">
+                                        {% for tag in i.post_tags.all|slice:":3" %}
+                                        <span class="tag"> #{{ tag }} </span>
+                                        {% endfor %}
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     
                     
