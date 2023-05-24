@@ -56,12 +56,11 @@
 
                 <div>
 
-                    <!-- CHMORANAS POST SARQES -->
                     <form method="post">
                         {% csrf_token %}
                         {% if one_user == user %}
-                            <a href="{% url 'ftf' %}">
-                                <button class = "edit_profile" value = "" name = "send_message"> 
+                            <a href="">
+                                <button class = "edit_profile" value = "edit_profile" name = "edit_profile"> 
                                 <img src="{% static 'main/icon/edit.svg' %}" alt="">
                                    Edit Profilee
                                 </button>

@@ -91,58 +91,62 @@ main {
   align-items: start;
   flex-direction: column;
   padding: 5rem; }
-  main > section:nth-child(1) {
+  main > form {
+    width: 100%;
+    height: 100%; }
+  main > form > section:nth-child(1) {
     display: flex;
     align-items: center; }
-    main > section:nth-child(1) > div {
+    main > form > section:nth-child(1) > div {
       border-radius: 50%; }
-      main > section:nth-child(1) > div:nth-child(1) {
+      main > form > section:nth-child(1) > div:nth-child(1) {
         border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center; }
-        main > section:nth-child(1) > div:nth-child(1) > img {
+        main > form > section:nth-child(1) > div:nth-child(1) > img {
           width: 20rem;
           height: 20rem;
           border-radius: 50%;
           transition: 0.2s; }
-          main > section:nth-child(1) > div:nth-child(1) > img:nth-child(2) {
+          main > form > section:nth-child(1) > div:nth-child(1) > img:nth-child(2) {
             position: absolute;
             z-index: 1;
             width: 10rem;
             border-radius: 0; }
-          main > section:nth-child(1) > div:nth-child(1) > img:nth-child(1) {
+          main > form > section:nth-child(1) > div:nth-child(1) > img:nth-child(1) {
+            border: 2px solid silver;
             opacity: 60%; }
-        main > section:nth-child(1) > div:nth-child(1):hover {
+        main > form > section:nth-child(1) > div:nth-child(1):hover {
           cursor: pointer; }
-          main > section:nth-child(1) > div:nth-child(1):hover > img:nth-child(1) {
+          main > form > section:nth-child(1) > div:nth-child(1):hover > img:nth-child(1) {
             opacity: 70%; }
-      main > section:nth-child(1) > div:nth-child(2) {
+      main > form > section:nth-child(1) > div:nth-child(2) {
         margin-left: 5rem; }
-        main > section:nth-child(1) > div:nth-child(2) > h1 {
+        main > form > section:nth-child(1) > div:nth-child(2) > h1 {
           font-size: 4rem; }
-        main > section:nth-child(1) > div:nth-child(2) > h3 {
+        main > form > section:nth-child(1) > div:nth-child(2) > h3 {
           color: #a7a7a7;
           font-size: 1.4rem; }
-  main > section:nth-child(2) {
+  main > form > section:nth-child(2) {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column; }
-    main > section:nth-child(2) > form {
+    main > form > section:nth-child(2) {
       overflow-x: hidden;
       overflow-y: auto;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column; }
-      main > section:nth-child(2) > form > span {
+      main > form > section:nth-child(2) > span {
         display: flex;
         align-items: center;
         justify-content: center;
         margin-bottom: 2rem; }
-        main > section:nth-child(2) > form > span > div {
+        main > form > section:nth-child(2) > span > div {
           width: 90%;
           height: 4rem;
           margin-bottom: 3rem;
@@ -151,14 +155,14 @@ main {
           justify-content: center;
           align-items: center;
           opacity: 50%; }
-          main > section:nth-child(2) > form > span > div:first-child {
+          main > form > section:nth-child(2) > span > div:first-child {
             margin-right: 20rem; }
-          main > section:nth-child(2) > form > span > div > img {
+          main > form > section:nth-child(2) > span > div > img {
             user-select: none;
             margin: 0 0.5rem;
             width: 2.4rem;
             transition: 0.2s; }
-          main > section:nth-child(2) > form > span > div > input {
+          main > form > section:nth-child(2) > span > div > input {
             width: 100%;
             height: 100%;
             border: none;
@@ -167,29 +171,29 @@ main {
             color: whitesmoke;
             padding-left: 0.5rem;
             font-size: 1.5rem; }
-            main > section:nth-child(2) > form > span > div > input::placeholder {
+            main > form > section:nth-child(2) > span > div > input::placeholder {
               color: whitesmoke; }
-          main > section:nth-child(2) > form > span > div:focus-within {
+          main > form > section:nth-child(2) > span > div:focus-within {
             opacity: 100%; }
-      main > section:nth-child(2) > form > textarea {
-        width: 97%;
+      main > form > section:nth-child(2) > textarea {
+        width: 50%;
         height: 20rem;
         resize: none;
         outline: none;
         background-color: #181818;
-        border: 1px solid si;
+        border: 1px solid silver;
         margin-bottom: 2rem;
         padding: 2rem;
         color: whitesmoke;
         border-radius: 5px; }
-      main > section:nth-child(2) > form > button {
+      main > form > section:nth-child(2) > button {
         display: none; }
-  main > section:nth-child(3) {
+  main > form > section:nth-child(3) {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center; }
-    main > section:nth-child(3) > button {
+    main > form > section:nth-child(3) > button {
       width: 60%;
       height: 5rem;
       color: #1f1f1f;
@@ -205,7 +209,7 @@ main {
       z-index: 1;
       font-size: 2rem;
       margin-top: 2rem; }
-      main > section:nth-child(3) > button::after {
+      main > form > section:nth-child(3) > button::after {
         position: absolute;
         content: "";
         width: 0;
@@ -215,12 +219,12 @@ main {
         z-index: -1;
         background-color: #ffef3d;
         transition: all 0.3s ease; }
-      main > section:nth-child(3) > button:hover {
+      main > form > section:nth-child(3) > button:hover {
         color: #000000; }
-        main > section:nth-child(3) > button:hover:after {
+        main > form > section:nth-child(3) > button:hover:after {
           left: 0;
           width: 100%; }
-      main > section:nth-child(3) > button:active {
+      main > form > section:nth-child(3) > button:active {
         top: 0.2rem; }
 
 /*# sourceMappingURL=style.css.map */

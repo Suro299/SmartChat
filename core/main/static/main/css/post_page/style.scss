@@ -614,18 +614,18 @@ main {
                     display: flex;
                     justify-content: space-evenly;
                     align-items: center;
+
                     &:nth-child(1) {
                         & > div {
                             opacity: 50%;
                         }
         
-                        & > div, & > div > a  {
+                        & > div, & > div > a, & > div > form  {
                             display: flex;
                             align-items: center;
                             justify-content: space-evenly;
                             color: whitesmoke;
                             transition: 0.2s;
-        
                             & > img {
                                 width: 2rem;
                                 margin-right: 0.5rem;
@@ -639,6 +639,38 @@ main {
                                 margin-left: 3rem;
                             }
                         }
+
+                        & > div {
+                            &:nth-child(3) {
+                                cursor: pointer;
+                                & > form {
+                                    padding: 0.6rem 1.5rem 0.8rem 1.5rem;
+                                    border-radius: 5px;
+                                    
+                                    & > svg {
+                                        margin-right: 0.5rem;
+                                        width: 20px;
+                                        height: 20px;
+                                    }
+                                    
+                                    & > button {
+                                        background-color: transparent;
+                                        color: white;
+                                        border: none;
+                                        outline: none;
+                                        font-size: 1.1rem;
+                                    }
+                                }
+
+                                &:hover {
+                                    opacity: 100%;
+
+                                    & > form {
+                                        background-color: #ac1616a2;
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     &:nth-child(2) {
@@ -647,7 +679,6 @@ main {
                             display: flex;
                             justify-content: space-between;
                             align-items: center;
-                        
                             & > button {
                                 background-color: transparent;
                                 border: none;
@@ -657,7 +688,6 @@ main {
                                 align-items: center;
                                 color: $txt_cl_1;
                                 margin-left: 1rem;
-
                                 @include likes_mix;        
                                 
                                 svg {

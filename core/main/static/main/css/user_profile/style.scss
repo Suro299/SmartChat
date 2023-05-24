@@ -199,12 +199,20 @@ main {
                 &:nth-child(1) {
                     & > div {
                         height: 20rem;
+
                         &:nth-child(1) {
-                            // border: 1px solid red;
+                            width: 20rem;
+                            height: 20rem;
+                            border-radius: 50%;
+                            border: 3px solid;
+                            border-color: $ava_border;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            overflow: hidden;
                             & > img {
-                                width: 20rem;
-                                border: 3px solid;
-                                border-color: $ava_border;
+                                height: 20rem;
+                          
                                 border-radius: 50%;
 
                                 @media screen and (max-width: 1000px) {

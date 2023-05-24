@@ -7,6 +7,9 @@ from .manager import CustomUserManager
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(_("User name"), max_length=255, unique=True)
+    
+    first_name = models.CharField(_("User First Name"), max_length = 100, blank = True)
+    last_name = models.CharField(_("User Last Name"), max_length = 100, blank = True)
     email = models.EmailField(_("email address"), blank=True, default="",)
     avatar = models.ImageField(_("User avatar"), blank=True, default="default_avatar.png",)
     description = models.TextField(_("User Description"), blank = True, default = "No BIO")

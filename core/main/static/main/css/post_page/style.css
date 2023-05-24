@@ -395,19 +395,38 @@ main {
           align-items: center; }
           main .comment > div:nth-child(2) > span:nth-child(1) > div {
             opacity: 50%; }
-          main .comment > div:nth-child(2) > span:nth-child(1) > div, main .comment > div:nth-child(2) > span:nth-child(1) > div > a {
+          main .comment > div:nth-child(2) > span:nth-child(1) > div, main .comment > div:nth-child(2) > span:nth-child(1) > div > a, main .comment > div:nth-child(2) > span:nth-child(1) > div > form {
             display: flex;
             align-items: center;
             justify-content: space-evenly;
             color: whitesmoke;
             transition: 0.2s; }
-            main .comment > div:nth-child(2) > span:nth-child(1) > div > img, main .comment > div:nth-child(2) > span:nth-child(1) > div > a > img {
+            main .comment > div:nth-child(2) > span:nth-child(1) > div > img, main .comment > div:nth-child(2) > span:nth-child(1) > div > a > img, main .comment > div:nth-child(2) > span:nth-child(1) > div > form > img {
               width: 2rem;
               margin-right: 0.5rem; }
-            main .comment > div:nth-child(2) > span:nth-child(1) > div:nth-child(1):hover, main .comment > div:nth-child(2) > span:nth-child(1) > div > a:nth-child(1):hover {
+            main .comment > div:nth-child(2) > span:nth-child(1) > div:nth-child(1):hover, main .comment > div:nth-child(2) > span:nth-child(1) > div > a:nth-child(1):hover, main .comment > div:nth-child(2) > span:nth-child(1) > div > form:nth-child(1):hover {
               opacity: 100%; }
-            main .comment > div:nth-child(2) > span:nth-child(1) > div:not(:nth-child(1)), main .comment > div:nth-child(2) > span:nth-child(1) > div > a:not(:nth-child(1)) {
+            main .comment > div:nth-child(2) > span:nth-child(1) > div:not(:nth-child(1)), main .comment > div:nth-child(2) > span:nth-child(1) > div > a:not(:nth-child(1)), main .comment > div:nth-child(2) > span:nth-child(1) > div > form:not(:nth-child(1)) {
               margin-left: 3rem; }
+          main .comment > div:nth-child(2) > span:nth-child(1) > div:nth-child(3) {
+            cursor: pointer; }
+            main .comment > div:nth-child(2) > span:nth-child(1) > div:nth-child(3) > form {
+              padding: 0.6rem 1.5rem 0.8rem 1.5rem;
+              border-radius: 5px; }
+              main .comment > div:nth-child(2) > span:nth-child(1) > div:nth-child(3) > form > svg {
+                margin-right: 0.5rem;
+                width: 20px;
+                height: 20px; }
+              main .comment > div:nth-child(2) > span:nth-child(1) > div:nth-child(3) > form > button {
+                background-color: transparent;
+                color: white;
+                border: none;
+                outline: none;
+                font-size: 1.1rem; }
+            main .comment > div:nth-child(2) > span:nth-child(1) > div:nth-child(3):hover {
+              opacity: 100%; }
+              main .comment > div:nth-child(2) > span:nth-child(1) > div:nth-child(3):hover > form {
+                background-color: #ac1616a2; }
           main .comment > div:nth-child(2) > span:nth-child(2) {
             margin-top: 0.5rem; }
             main .comment > div:nth-child(2) > span:nth-child(2) > form {

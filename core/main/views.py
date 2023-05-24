@@ -13,8 +13,10 @@ from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.contrib.auth import get_user_model
 from users.models import CustomUser as User
-from django.core.mail import EmailMultiAlternatives
-from django.utils.html import strip_tags
+from PIL import Image
+from django.core.validators import EmailValidator
+from django.core.exceptions import ValidationError
+
 
 from .forms import NewUserForm, NewPostModelForm, NewComment
 from .models import PostsModel, Tag, Comment
@@ -235,7 +237,8 @@ def post_page(request, id):
         btn_l = request.POST.get("btn_l")
         btn_d = request.POST.get("btn_d")
         post_comment = request.POST.get("post_comment")
-
+        com_del = request.POST.get("com_del")
+        
         if btn_l:
             comment_ex = Comment.objects.get(id=btn_l)
             sender = User.objects.get(id=comment_ex.com_sender.id)
@@ -320,7 +323,10 @@ def post_page(request, id):
                     sender.level += 1
                 
                 sender.save()
-
+        elif com_del:
+            comment = Comment.objects.get(id = com_del)
+            if comment.com_sender == request.user:
+                comment.delete()
 
     else:
         form = NewComment()
@@ -329,15 +335,70 @@ def post_page(request, id):
     comments.reverse()
 
     return render(
-        request, "main/post_page.html", context={"post": post, "comments": comments}
+        request, "main/post_page.html", context={
+            "post": post, 
+            "comments": comments
+            }
     )
 
 
-def profil_settings(request):
+def profil_settings(request, id):
     if not (request.user.is_authenticated):
         return redirect("login")
     
-    return render(request, "main/profil_settings.html")
+    one_user = User.objects.get(pk = id)
+    
+    if one_user != request.user:
+        return redirect(f"/user_profile/{id}")
+    
+    
+    if request.method == "POST":
+        user_img = request.FILES.get("user_img")
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        bio = request.POST.get("bio")
+
+        
+        if user_img and user_img != one_user.avatar:
+            try:
+                img = Image.open(user_img)
+                img.verify()  
+            except:
+                return redirect(f"/profile_settings/{id}")
+
+            one_user.avatar = user_img
+            
+        if username and username != one_user.username:
+            if len(username) < 30 and  not(username in User.objects.values_list('username', flat=True)):
+                one_user.username = username
+                
+        if email and email != one_user.email:
+            validator = EmailValidator()
+            try:
+                validator(email) 
+             
+                one_user.email = email
+            except ValidationError as e:
+                pass
+
+        if first_name and first_name != one_user.first_name:
+            if len(first_name) < 50:
+                one_user.first_name = first_name
+            
+        if last_name and last_name != one_user.last_name:
+            if len(last_name) < 50:
+                one_user.last_name = last_name
+            
+        if bio and bio != one_user.description:
+            one_user.description = bio
+                
+        one_user.save()
+        return redirect(f"/profil_settings/{id}")
+    return render(request, "main/profil_settings.html", context = {
+       "one_user":  one_user
+    })
 
 
 def signup(request):
@@ -438,14 +499,15 @@ def user_profile(request, id):
     next_level = one_user.level + 1
 
     last_posts = PostsModel.objects.filter(sender=one_user)[::-1]
-    last_posts = last_posts[:6:]
+    last_posts = last_posts[:4:]
 
     if request.method == "POST":
         follow = request.POST.get("follow")
         unfollow = request.POST.get("unfollow")
         send_message = request.POST.get("send_message")
         user = User.objects.get(id=request.user.id)
-
+        edit_profile = request.POST.get("edit_profile")
+        
         if follow:
             print("asd")
             one_user.subscribers_set.add(request.user)
@@ -456,7 +518,7 @@ def user_profile(request, id):
                 user.friends_set.add(one_user)
                 one_user.friends_set.add(user)
 
-        if unfollow:
+        elif unfollow:
             one_user.exp -= 10
             if (user in one_user.subscribers_set.all()) and (one_user in user.subscribers_set.all()):
                 user.friends_set.remove(one_user)
@@ -464,6 +526,12 @@ def user_profile(request, id):
 
             one_user.subscribers_set.remove(request.user)
             user.subscription_set.remove(one_user)
+            
+        elif edit_profile:
+            if one_user == request.user:
+                return redirect(f"/profil_settings/{id}")
+        
+        
         
         if one_user.exp >= 100:
             one_user.exp -= 100

@@ -120,14 +120,22 @@ main {
             align-items: center; } }
         main > section:nth-child(1) > div:nth-child(1) > div {
           height: 20rem; }
-          main > section:nth-child(1) > div:nth-child(1) > div:nth-child(1) > img {
+          main > section:nth-child(1) > div:nth-child(1) > div:nth-child(1) {
             width: 20rem;
+            height: 20rem;
+            border-radius: 50%;
             border: 3px solid;
             border-color: 1px solid rgba(137, 137, 137, 0.794);
-            border-radius: 50%; }
-            @media screen and (max-width: 1000px) {
-              main > section:nth-child(1) > div:nth-child(1) > div:nth-child(1) > img {
-                width: 10rem; } }
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; }
+            main > section:nth-child(1) > div:nth-child(1) > div:nth-child(1) > img {
+              height: 20rem;
+              border-radius: 50%; }
+              @media screen and (max-width: 1000px) {
+                main > section:nth-child(1) > div:nth-child(1) > div:nth-child(1) > img {
+                  width: 10rem; } }
           main > section:nth-child(1) > div:nth-child(1) > div:nth-child(2) {
             margin-left: 3rem;
             display: flex;
