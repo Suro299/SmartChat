@@ -102,11 +102,6 @@ def about_us(request):
     return render(request, "main/about_us.html")
 
 
-def contact_us(request):
-    if not (request.user.is_authenticated):
-        return redirect("login")
-    
-    return render(request, "main/contact_us.html")
 
 
 def confid_settings(request):
@@ -251,7 +246,12 @@ def post_page(request, id):
                     user.reactions -= 1
 
             else:
+                if request.user in comment_ex.dislikers.all():
+                    comment_ex.dislikers.remove(request.user)
+                    
                 comment_ex.likers.add(request.user)
+                
+                    
 
                 if sender.id != request.user.id:
                     sender.exp += 2
@@ -285,6 +285,9 @@ def post_page(request, id):
                     user.reactions -= 1
 
             else:
+                if request.user in comment_ex.likers.all():
+                    comment_ex.likers.remove(request.user)
+                    
                 comment_ex.dislikers.add(request.user)
 
                 if sender.id != request.user.id:

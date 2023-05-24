@@ -10,7 +10,6 @@ urlpatterns = [
     path("about_us/", views.about_us, name = "about_us"),
     path("confid_settings/", views.confid_settings, name = "confid_settings"),
     path("confirm_delete/<int:id>", views.confirm_delete, name = "confirm_delete"),
-    path("contact_us/", views.contact_us, name = "contact_us"),
     path("create_post/", views.create_post, name = "create_post"),
     path("lastest_update/", views.lastest_update, name = "lastest_update"),
     path("profil_settings/<int:id>", views.profil_settings, name = "profil_settings"),
