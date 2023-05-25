@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block css %} 
+    <link rel="stylesheet" href="{% static 'about_us/css/lastest_update/style.css' %}">
+{% endblock %}
+{% block title %} SmartChat | Updates {% endblock %}
+{% block main %} 
+
+    <button onclick="history.back()"> Go Back </button>
+
+    <main>
+    
+        {% for i in lastest_update %}
+        <section>
+            <div>
+                <h1>#{{ i.id }}</h1>
+                <span></span>
+                <h1> {{ i.date }} </h1>
+            </div>
+
+            <div>
+                <h1> {{ i.title }} </h1>
+
+                <p> 
+                    {{ i.text }}
+                </p>
+            </div>
+        </section>
+        {% endfor %}
+        
+    </main>
+{% endblock %}

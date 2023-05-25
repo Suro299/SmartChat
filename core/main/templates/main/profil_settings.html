@@ -75,31 +75,8 @@
         </form>
     </main>
 
-
-    <menu>
-        <h1> User settings </h1>
-
-        <ul>
-            <li class = "active"> 
-                <img src="{% static 'main/icon/user.svg' %}" alt=""> 
-                <a href="{% url 'profil_settings' one_user.id %}"> Profile </a> 
-            </li>
-
-            <li class = "" >
-                <img src="{% static 'main/icon/shield.svg' %}" alt="">
-                <a href="{% url 'confid_settings' %}"> Confidentiality </a> 
-            </li>
-        </ul>
-
-        <h1> Site settings </h1>
-
-        <ul>
-            <li class = ""> 
-                <img src="{% static 'main/icon/settings.svg' %}" alt=""> 
-                <a href="{% url 'ftf' %}"> Settings </a> 
-            </li>
-        </ul>
+    {% include 'main/inc/settings_menu.html' %}
 
 
-    </menu>
+  
 {% endblock %}

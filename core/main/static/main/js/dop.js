@@ -33,22 +33,3 @@ function ChangeAvatar() {
   image.src = URL.createObjectURL(input.files[0])
   
 }
-
-
-function SumbitProfileForm() {
-  document.getElementById('submit_button').click();
-}
-
-
-function ShowActivity() {
-  console.log()
-  if (show_activity.value == "0") {
-    activity_polz.style.justifyContent = "end";
-    show_activity.value = "1"
-    document.getElementById("activity_circ").style.backgroundColor = "green"
-  } else {
-    activity_polz.style.justifyContent = "start";
-    show_activity.value = "0"
-    document.getElementById("activity_circ").style.backgroundColor = "#ac1616"
-  }
-}

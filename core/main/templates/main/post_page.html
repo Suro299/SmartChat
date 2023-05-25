@@ -146,7 +146,16 @@
                 <menu>
                     <a href="{% url 'user_profile' i.com_sender.id %}">
 
-                        <img src="{{ i.com_sender.avatar.url }}" alt="">
+                        {% if i.com_sender.avatar_visibility == "all" or i.com_sender == user %}
+                            <img class="avatar" src="{{ i.com_sender.avatar.url }}" alt="User Avatar">
+                        {% else %}
+                            {% if i.com_sender.avatar_visibility == "friends" and user in i.com_sender.friends_set.all %}
+                                <img class="avatar" src="{{ i.com_sender.avatar.url }}" alt="User Avatar">
+                            {% else %}
+                                <img class="avatar" src="{% static 'main/img/default_avatar.png' %}" alt="User Avatar">
+                            {% endif %}
+                        {% endif %}
+
                         <h1> {{ i.com_sender.username }} </h1>
     
                         {% if  i.com_sender.is_staff%}

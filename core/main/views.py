@@ -21,11 +21,19 @@ from django.core.exceptions import ValidationError
 from .forms import NewUserForm, NewPostModelForm, NewComment
 from .models import PostsModel, Tag, Comment
 
+def upd_login(request):
+    user_ = User.objects.get(id = request.user.id )
+    user_.update_last_login(user_)
+    user_.save()
+
+
 
 def posts(request):
     if not (request.user.is_authenticated):
         return redirect("login")
-
+    
+    upd_login(request)
+    
     if request.method == "POST":
         if not (request.user.is_authenticated):
             return redirect("login")
@@ -94,26 +102,10 @@ def posts(request):
         },
     )
 
-
-def about_us(request):
-    if not (request.user.is_authenticated):
-        return redirect("login")
-    
-    return render(request, "main/about_us.html")
-
-
-
-
-def confid_settings(request):
-    if not (request.user.is_authenticated):
-        return redirect("login")
-    
-    return render(request, "main/confid_settings.html")
-
-
 def confirm_delete(request, id):
     if not (request.user.is_authenticated):
         return redirect("login")
+    
     
     post = PostsModel.objects.get(pk=id)
     
@@ -212,11 +204,6 @@ def create_post(request):
     )
 
 
-def lastest_update(request):
-    if not (request.user.is_authenticated):
-        return redirect("login")
-    
-    return render(request, "main/lastest_update.html")
 
 
 def post_page(request, id):
@@ -224,7 +211,7 @@ def post_page(request, id):
         return redirect("login")
     
     post = PostsModel.objects.get(pk=id)
-
+    
     if request.method == "POST":
         if not (request.user.is_authenticated):
             return redirect("login")
@@ -254,7 +241,7 @@ def post_page(request, id):
                     
 
                 if sender.id != request.user.id:
-                    sender.exp += 2
+                    sender.exp += 1
                     sender.points += 1
                     user.reactions += 1
 
@@ -319,8 +306,8 @@ def post_page(request, id):
                 comment.save()
                 post.comments.add(comment)
                 sender = User.objects.get(id = post.sender.id)
-                
                 sender.exp += 4
+                
                 if sender.exp >= 100:
                     sender.exp -= 100
                     sender.level += 1
@@ -343,16 +330,45 @@ def post_page(request, id):
             "comments": comments
             }
     )
+    
+    
+def confid_settings(request):
+    if not (request.user.is_authenticated):
+        return redirect("login")
+    one_user = User.objects.get(id = request.user.id)
+    
+    
+    if request.method == "POST":
+        avatar_visibility = request.POST.get("avatar_visibility")
+        activity_visibility = request.POST.get("activity_visibility")
+       
+         
+        
+        if avatar_visibility != one_user.avatar_visibility:
+            one_user.avatar_visibility = avatar_visibility
+            
+        if activity_visibility != one_user.activity_visibility:
+            one_user.activity_visibility = activity_visibility
+            
+        one_user.save()
+        return redirect("confid_settings")
+    
+    return render(request, "main/confid_settings.html", context = {
+        "active": "confid",
+        "one_user": one_user
+    })
 
 
-def profil_settings(request, id):
+
+
+def profil_settings(request):
     if not (request.user.is_authenticated):
         return redirect("login")
     
-    one_user = User.objects.get(pk = id)
+    one_user = User.objects.get(pk = request.user.id)
     
     if one_user != request.user:
-        return redirect(f"/user_profile/{id}")
+        return redirect(f"/user_profile")
     
     
     if request.method == "POST":
@@ -363,13 +379,12 @@ def profil_settings(request, id):
         last_name = request.POST.get("last_name")
         bio = request.POST.get("bio")
 
-        
         if user_img and user_img != one_user.avatar:
             try:
                 img = Image.open(user_img)
                 img.verify()  
             except:
-                return redirect(f"/profile_settings/{id}")
+                return redirect(f"/profile_settings")
 
             one_user.avatar = user_img
             
@@ -398,9 +413,10 @@ def profil_settings(request, id):
             one_user.description = bio
                 
         one_user.save()
-        return redirect(f"/profil_settings/{id}")
+        return redirect(f"/profil_settings")
     return render(request, "main/profil_settings.html", context = {
-       "one_user":  one_user
+       "one_user":  one_user,
+       "active": "profile"
     })
 
 

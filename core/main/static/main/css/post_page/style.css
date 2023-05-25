@@ -150,28 +150,30 @@ main {
       flex-direction: row;
       align-items: center;
       justify-content: space-between; }
-      main > section:nth-child(1) > div:nth-child(1) > h1 {
-        font-size: 4rem;
-        margin-bottom: 3rem; }
-      main > section:nth-child(1) > div:nth-child(1) > span {
-        display: flex;
-        justify-content: center;
-        align-items: center; }
-        main > section:nth-child(1) > div:nth-child(1) > span > div {
-          opacity: 50%; }
-        main > section:nth-child(1) > div:nth-child(1) > span > div, main > section:nth-child(1) > div:nth-child(1) > span > div > a {
+      main > section:nth-child(1) > div:nth-child(1) {
+        text-align: start; }
+        main > section:nth-child(1) > div:nth-child(1) > h1 {
+          font-size: 4rem;
+          margin-bottom: 3rem; }
+        main > section:nth-child(1) > div:nth-child(1) > span {
           display: flex;
-          align-items: center;
-          justify-content: space-evenly;
-          color: whitesmoke;
-          transition: 0.2s; }
-          main > section:nth-child(1) > div:nth-child(1) > span > div > img, main > section:nth-child(1) > div:nth-child(1) > span > div > a > img {
-            width: 2rem;
-            margin-right: 0.5rem; }
-          main > section:nth-child(1) > div:nth-child(1) > span > div:nth-child(1):hover, main > section:nth-child(1) > div:nth-child(1) > span > div > a:nth-child(1):hover {
-            opacity: 100%; }
-          main > section:nth-child(1) > div:nth-child(1) > span > div:not(:nth-child(1)), main > section:nth-child(1) > div:nth-child(1) > span > div > a:not(:nth-child(1)) {
-            margin-left: 3rem; }
+          justify-content: center;
+          align-items: center; }
+          main > section:nth-child(1) > div:nth-child(1) > span > div {
+            opacity: 50%; }
+          main > section:nth-child(1) > div:nth-child(1) > span > div, main > section:nth-child(1) > div:nth-child(1) > span > div > a {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            color: whitesmoke;
+            transition: 0.2s; }
+            main > section:nth-child(1) > div:nth-child(1) > span > div > img, main > section:nth-child(1) > div:nth-child(1) > span > div > a > img {
+              width: 2rem;
+              margin-right: 0.5rem; }
+            main > section:nth-child(1) > div:nth-child(1) > span > div:nth-child(1):hover, main > section:nth-child(1) > div:nth-child(1) > span > div > a:nth-child(1):hover {
+              opacity: 100%; }
+            main > section:nth-child(1) > div:nth-child(1) > span > div:not(:nth-child(1)), main > section:nth-child(1) > div:nth-child(1) > span > div > a:not(:nth-child(1)) {
+              margin-left: 3rem; }
       @media (max-width: 700px) {
         main > section:nth-child(1) > div:nth-child(2) {
           display: none; } }
@@ -190,7 +192,6 @@ main {
           opacity: 100%; }
       main > section:nth-child(1) > div:nth-child(2) > span {
         width: 15rem;
-        border: 1px solid red;
         position: fixed;
         margin-left: -18rem;
         margin-top: -7rem;
@@ -287,6 +288,7 @@ main {
                       opacity: 100%;
                       cursor: pointer; }
           main > section:nth-child(2) > span > div:nth-child(2) {
+            border: none;
             padding: 3rem; }
             @media (max-width: 1033px) {
               main > section:nth-child(2) > span > div:nth-child(2) {

@@ -6,15 +6,21 @@ from .models import CustomUser
 
 
 class CustomUserAdmin(UserAdmin):
+    
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
     list_display = ("username", "email", "level", "exp", "is_staff", "is_active", "avatar")
     list_filter = ("username", "email", "level", "exp","is_staff", "is_active", "subscribers_set", "subscription_set", "friends_set")
+    
     fieldsets = (
-        (None, {"fields": ("username", "email", "password", "avatar", "friends_set", "subscribers_set", "subscription_set",  "level", "exp", "favorites", "posts_posted", "reactions", "points" )}),
+        ("Basic Information", {"fields": ("username", "first_name", "last_name", "email", "description", "avatar")}),
+        ("More Info", {"fields": ("date_joined", "level", "exp", "posts_posted", "reactions", "points", "favorites", "subscribers_set","subscription_set", "friends_set")}),
+        ("Confidentiality Info", {"fields": ("activity_visibility", "avatar_visibility")}),
+
         ("Permissions", {"fields": ("is_staff", "is_active", "groups", "user_permissions")}),
     )
+    
     add_fieldsets = (
         (None, {
             "classes": ("wide",),

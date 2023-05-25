@@ -1,0 +1,26 @@
+{% load static %}
+
+<menu>
+    <h1> User settings </h1>
+
+    <ul>
+        <li class = "{% if active == 'profile' %} active {% endif %}"> 
+            <img src="{% static 'main/icon/user.svg' %}" alt=""> 
+            <a href="{% url 'profil_settings' %}"> Profile </a> 
+        </li>
+
+        <li class = "{% if active == 'confid' %} active {% endif %}" >
+            <img src="{% static 'main/icon/shield.svg' %}" alt="">
+            <a href="{% url 'confid_settings' %}"> Confidentiality </a> 
+        </li>
+    </ul>
+
+    <h1> Site settings </h1>
+
+    <ul>
+        <li class = "{% if active == 'settings' %} active {% endif %}"> 
+            <img src="{% static 'main/icon/settings.svg' %}" alt=""> 
+            <a href="{% url 'ftf' %}"> Settings </a> 
+        </li>
+    </ul>
+</menu>

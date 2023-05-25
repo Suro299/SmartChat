@@ -1,6 +1,6 @@
 $bgc_1: #101010;
 $bgc_2: #181818;
-$post_bgc: #1e1e1e;
+$post_bgc: #cc1919;
 
 $txt_cl_1: whitesmoke;
 $txt_cl_2: rgb(167, 167, 167);
@@ -210,9 +210,9 @@ main {
                             justify-content: center;
                             align-items: center;
                             overflow: hidden;
+
                             & > img {
                                 height: 20rem;
-                          
                                 border-radius: 50%;
 
                                 @media screen and (max-width: 1000px) {

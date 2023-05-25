@@ -233,7 +233,7 @@ main {
 
             & > div {
                 &:nth-child(1) {
-                
+                    text-align: start;
                     & > h1 {
                         font-size: 4rem;
                         margin-bottom: 3rem;
@@ -298,7 +298,6 @@ main {
 
                     & > span {
                         width: 15rem;
-                        border: 1px solid red;
                         position: fixed;
                         margin-left: -18rem;
                         margin-top: -7rem;
@@ -399,7 +398,6 @@ main {
                     width: 100%;
     
                     &:nth-child(1) {
-                        
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
@@ -455,7 +453,7 @@ main {
                     }
     
                     &:nth-child(2) {
-    
+                        border: none;
                         padding: 3rem;
                         
                         @media (max-width: 1033px) {

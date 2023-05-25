@@ -15,7 +15,15 @@
         <section>
             <div>
                 <div>
-                    <img src="{{ one_user.avatar.url }}" alt="">
+                    {% if one_user.avatar_visibility == "all" or one_user == user %}
+                        <img class="avatar" src="{{ one_user.avatar.url }}" alt="User Avatar">
+                    {% else %}
+                        {% if one_user.avatar_visibility == "friends" and user in one_user.friends_set.all %}
+                            <img class="avatar" src="{{ one_user.avatar.url }}" alt="User Avatar">
+                        {% else %}
+                            <img class="avatar" src="{% static 'main/img/default_avatar.png' %}" alt="User Avatar">
+                        {% endif %}
+                    {% endif %}
                 </div>
 
                 <div>
@@ -117,7 +125,18 @@
                     <div class="post">
                         <div>
                             <div class="post-header">
-                                <img class="avatar" src="{{ i.sender.avatar.url }}" alt="User Avatar">
+
+                                {% if i.sender.avatar_visibility == "all" or i.sender == user %}
+                                    <img class="avatar" src="{{ i.sender.avatar.url }}" alt="User Avatar">
+                                {% else %}
+                                    {% if i.sender.avatar_visibility == "friends" and user in i.sender.friends_set.all %}
+                                        <img class="avatar" src="{{ i.sender.avatar.url }}" alt="User Avatar">
+                                    {% else %}
+                                        <img class="avatar" src="{% static 'main/img/default_avatar.png' %}" alt="User Avatar">
+                                    {% endif %}
+                                {% endif %}
+                                
+                                
                                 <div class="user-info">
                                     <h2 class="username">{{ i.sender.username }}</h2>
                                     <p class="post-date">{{ i.date_created }}</p>
@@ -194,7 +213,17 @@
                     <div class="post">
                         <div>
                             <div class="post-header">
-                                <img class="avatar" src="{{ i.sender.avatar.url }}" alt="User Avatar">
+                                
+                                {% if i.sender.avatar_visibility == "all" or i.sender == user %}
+                                    <img class="avatar" src="{{ i.sender.avatar.url }}" alt="User Avatar">
+                                {% else %}
+                                    {% if i.sender.avatar_visibility == "friends" and user in i.sender.friends_set.all %}
+                                        <img class="avatar" src="{{ i.sender.avatar.url }}" alt="User Avatar">
+                                    {% else %}
+                                        <img class="avatar" src="{% static 'main/img/default_avatar.png' %}" alt="User Avatar">
+                                    {% endif %}
+                                {% endif %}
+                                
                                 <div class="user-info">
                                     <h2 class="username">{{ i.sender.username }}</h2>
                                     <p class="post-date">{{ i.date_created }}</p>
