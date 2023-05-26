@@ -192,7 +192,11 @@ nav {
                 color: $txt_cl_1;
                 & > img {
                     width: 4rem;
+                    height: 4rem;
                     margin-right: 1rem;
+                    border-radius: 50%;
+                    border: 2px solid;
+                    border-color: $ava_border;
                 }
 
                 & > div {

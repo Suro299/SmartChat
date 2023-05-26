@@ -103,7 +103,11 @@ nav {
         color: whitesmoke; }
         nav > ul > li > a > img {
           width: 4rem;
-          margin-right: 1rem; }
+          height: 4rem;
+          margin-right: 1rem;
+          border-radius: 50%;
+          border: 2px solid;
+          border-color: 1px solid rgba(138, 138, 138, 0.794); }
         nav > ul > li > a > div {
           display: flex;
           flex-direction: column;

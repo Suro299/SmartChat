@@ -503,11 +503,24 @@ def logout_request(request):
     return redirect("posts")
 
 
-def user_more(request):
+def user_more(request, act):
     if not (request.user.is_authenticated):
         return redirect("login")
     
-    return render(request, "main/user_more.html")
+    user = User.objects.get(id = request.user.id)
+    
+    if act == "fov":
+        posts = user.favorites.all()    
+    elif act == "likes":
+        posts = PostsModel.objects.filter(likers = user)
+    elif act == "dislikes":
+        posts = PostsModel.objects.filter(dislikers = user)
+    else:
+        return redirect("ftf")
+    
+    return render(request, "main/user_more.html", context = {
+        "posts": posts
+    })
 
 
 def user_profile(request, id):
