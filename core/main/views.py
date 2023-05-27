@@ -16,7 +16,7 @@ from users.models import CustomUser as User
 from PIL import Image
 from django.core.validators import EmailValidator
 from django.core.exceptions import ValidationError
-
+from django.db.models import Q
 
 from .forms import NewUserForm, NewPostModelForm, NewComment
 from .models import PostsModel, Tag, Comment
@@ -33,6 +33,23 @@ def posts(request):
         return redirect("login")
     
     upd_login(request)
+    search_post = request.GET.get("search")
+    posts_list = PostsModel.objects.all()
+    
+    if search_post:
+        search_post = search_post.strip()
+        if search_post[0] == "$":
+            posts_list = posts_list.filter(Q(id__icontains = search_post[1:]))
+        elif search_post[0] == "@":
+            posts_list = posts_list.filter(Q(sender__username__icontains = search_post[1:]))
+        elif search_post[0] == "#":
+            posts_list = posts_list.filter(Q(post_tags__name__icontains = search_post[1:]))
+        else:
+            posts_list = posts_list.filter(Q(post_title__icontains = search_post) | Q(post_text__icontains = search_post))
+        posts_list = posts_list[::-1]
+    else:
+        posts_list = PostsModel.objects.all()[::-1]
+            
     
     if request.method == "POST":
         if not (request.user.is_authenticated):
@@ -41,6 +58,7 @@ def posts(request):
         btn_l = request.POST.get("btn_l")
         btn_d = request.POST.get("btn_d")
         btn_f = request.POST.get("btn_f")
+        
         user = User.objects.get(username=request.user.username)
         
         if btn_l:
@@ -77,6 +95,13 @@ def posts(request):
                 
             else:
                 user.favorites.add(prod)
+
+            return render(request, "main/posts.html",
+                context={
+                    "posts_list": posts_list,
+                },
+            )
+            
         try: 
             prod = PostsModel.objects.get(id = btn_l if btn_l else btn_d)
             post_sender = User.objects.get(id = prod.sender.id)
@@ -92,11 +117,8 @@ def posts(request):
         user.save()
     
 
-    posts_list = PostsModel.objects.all()[::-1]
 
-    return render(
-        request,
-        "main/posts.html",
+    return render(request, "main/posts.html",
         context={
             "posts_list": posts_list,
         },
@@ -561,7 +583,7 @@ def user_profile(request, id):
             
         elif edit_profile:
             if one_user == request.user:
-                return redirect(f"/profil_settings/{id}")
+                return redirect(f"/profil_settings")
         
         
         
@@ -597,3 +619,5 @@ def invalid_link(request):
 
 def ftf(request):
     return render(request, "main/404.html")
+
+

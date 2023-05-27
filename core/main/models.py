@@ -17,7 +17,6 @@ class PostsModel(models.Model):
     post_title = models.CharField("Post Title", max_length = 100)
     post_text = models.TextField("Post Content")
     post_image = models.ImageField("Post Image", blank = True)
-    post_tags = models.CharField("Post Title", max_length = 255, blank = True)
     timestamp = models.DateTimeField(auto_now_add = True)
     post_tags = models.ManyToManyField("Tag", blank = True)
     likers = models.ManyToManyField(CustomUser, related_name = "likers", blank = True)

@@ -107,23 +107,62 @@ header {
         }
 
         // SEARCH
-        &:nth-child(3) {
+        &:nth-child(3){
             height: 100%;
             flex-grow: 1;
             margin: 0 10rem;
             display: flex;
             justify-content: start;
             align-items: center;
-    
-            & > input {
+            
+            & > form {
                 width: 50%;
                 height: 60%;
-                padding: 1rem;
-                border: none;
-                border-radius: 5px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
                 background-color: $bgc_1 + #1f1f1f;
-                outline: none;
-                color: $txt_cl_1;
+                border-radius: 5px;
+                padding: 0.5rem;
+
+                & > input {
+                    background-color: $bgc_1 + #1f1f1f;
+                    width: 94%;
+                    height: 100%;
+                    border: none;
+                    outline: none;
+                    color: $txt_cl_1;
+                    padding-left: 1rem;
+                }
+
+                & > button {
+                    width: 6%;
+                    height: 100%;
+                    background-color: transparent;
+                    border: none;
+                    outline: none;
+                    display: flex;
+                    padding-top: 0.3rem;
+                    display: flex;
+                    justify-content: center;
+                    align-content: center;
+                    border-left: 1px solid silver;
+                    cursor: pointer;
+
+                    & > img {
+                        width: 20px;
+                        opacity: .7;
+                        transition: 0.2s;
+                    }
+
+                    &:hover {
+                        & > img {
+                            opacity: 1;
+                        }
+                    }
+
+
+                }
             }
 
             @media screen and (max-width: 800px) {
@@ -136,6 +175,7 @@ header {
             height: 5rem;
             display: flex;
             margin-right: 2rem;
+            
             & > h1 {
                 display: flex;
                 align-items: center;
@@ -148,3 +188,4 @@ header {
         }
     }
 }
+
