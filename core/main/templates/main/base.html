@@ -6,13 +6,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <link rel="icon" type="image/x-icon" href="{% static 'main/img/smart_chat_icon.webp' %}">
     <link rel="stylesheet" href="{% static 'main/css/dop/header/style.css'%}" />
     <link
       rel="stylesheet"
       href="{% static 'main/css/dop/set_menu/style.css' %}"
     />
-
     {% block css %} {% endblock %}
 
     <title>{% block title %} {% endblock %}</title>
@@ -85,28 +84,29 @@
         </li>
         <li>
           <a href="{% url 'ftf' %}">
-            <img src="{% static 'main/icon/message.svg' %}" alt="" /> Go To
-            Chats
+            <img src="{% static 'main/icon/message.svg' %}" alt="" /> Go To Chats
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'sponsor' %}">
+            <img src="{% static 'main/icon/film.svg' %}" alt="" /> Sponsor
           </a>
         </li>
         <hr />
         <li>
           <a href="{% url 'profil_settings' %}">
-            <img src="{% static 'main/icon/user_settings.svg' %}" alt="" /> User
-            Settings</a
-          >
+            <img src="{% static 'main/icon/user_settings.svg' %}" alt="" /> User Settings
+          </a>
         </li>
         <li>
           <a href="{% url 'ftf' %}">
-            <img src="{% static 'main/icon/settings.svg' %}" alt="" /> Site
-            Settings
+            <img src="{% static 'main/icon/settings.svg' %}" alt="" /> Site Settings
           </a>
         </li>
         <hr />
         <li>
           <a href="{% url 'contact_us' %}">
-            <img src="{% static 'main/icon/contact-us.svg' %}" alt="" /> Contact
-            Us
+            <img src="{% static 'main/icon/contact-us.svg' %}" alt="" /> Contact Us
           </a>
         </li>
         <li>
@@ -116,8 +116,7 @@
         </li>
         <li>
           <a href="{% url 'lastest_update' %}">
-            <img src="{% static 'main/icon/refresh-cw.svg' %}" alt="" /> Latest
-            update
+            <img src="{% static 'main/icon/refresh-cw.svg' %}" alt="" /> Latest update
           </a>
         </li>
         <hr />

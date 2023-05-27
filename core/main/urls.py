@@ -13,6 +13,7 @@ urlpatterns = [
     path("profil_settings/", views.profil_settings, name = "profil_settings"),
     path("user_more/<str:act>", views.user_more, name = "user_more"),
     path("user_profile/<int:id>/", views.user_profile, name = "user_profile"),
+    path("sponsor/", views.sponsor, name = "sponsor"),
     path("pls_check_email/", views.pls_check_email, name = "pls_check_email"),
     path("verif_email/", views.verif_email, name = "verif_email"),
     path("invalid_link/", views.invalid_link, name = "invalid_link"),

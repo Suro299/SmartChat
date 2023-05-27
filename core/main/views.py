@@ -610,6 +610,9 @@ def user_profile(request, id):
             "last_posts": last_posts,
         },
     )
+    
+def sponsor(request):
+    return render(request, "main/sponsor.html")
 
 
 def verif_email(request):
