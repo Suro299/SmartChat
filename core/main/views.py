@@ -25,7 +25,70 @@ def upd_login(request):
     user_ = User.objects.get(id = request.user.id )
     user_.update_last_login(user_)
     user_.save()
+    
 
+def reac(request):
+    """
+    Likes / Dislikes / Comments
+    
+    """
+
+    btn_l = request.POST.get("btn_l")
+    btn_d = request.POST.get("btn_d")
+    btn_f = request.POST.get("btn_f")
+    
+    user = User.objects.get(username=request.user.username)
+    
+    if btn_l:
+        prod = PostsModel.objects.get(id=btn_l)
+        post_sender = User.objects.get(id = prod.sender.id)
+        
+        if request.user in prod.likers.all():
+            prod.likers.remove(request.user)
+            post_sender.exp -= 1
+        else:
+            prod.likers.add(request.user)
+            post_sender.exp += 1
+            
+            if request.user in prod.dislikers.all():
+                prod.dislikers.remove(request.user)
+        post_sender.save()
+            
+    elif btn_d:
+        prod = PostsModel.objects.get(id=btn_d)
+        if request.user in prod.dislikers.all():
+            prod.dislikers.remove(request.user)
+            
+        else:
+            prod.dislikers.add(request.user)
+
+            if request.user in prod.likers.all():
+                prod.likers.remove(request.user)
+
+    elif btn_f:
+        prod = PostsModel.objects.get(id=btn_f)
+
+        if prod in user.favorites.all():
+            user.favorites.remove(prod)
+            
+        else:
+            user.favorites.add(prod)
+
+        return redirect("posts")
+        
+    try: 
+        prod = PostsModel.objects.get(id = btn_l if btn_l else btn_d)
+        post_sender = User.objects.get(id = prod.sender.id)
+
+        if post_sender.exp >= 100:
+            post_sender.exp -= 100
+            post_sender.level += 1
+        post_sender.save()
+    except:
+        pass
+    
+    prod.save()
+    user.save()
 
 
 def posts(request):
@@ -55,68 +118,7 @@ def posts(request):
         if not (request.user.is_authenticated):
             return redirect("login")
         
-        btn_l = request.POST.get("btn_l")
-        btn_d = request.POST.get("btn_d")
-        btn_f = request.POST.get("btn_f")
-        
-        user = User.objects.get(username=request.user.username)
-        
-        if btn_l:
-            prod = PostsModel.objects.get(id=btn_l)
-            post_sender = User.objects.get(id = prod.sender.id)
-            
-            if request.user in prod.likers.all():
-                prod.likers.remove(request.user)
-                post_sender.exp -= 1
-            else:
-                prod.likers.add(request.user)
-                post_sender.exp += 1
-                
-                if request.user in prod.dislikers.all():
-                    prod.dislikers.remove(request.user)
-            post_sender.save()
-                
-        elif btn_d:
-            prod = PostsModel.objects.get(id=btn_d)
-            if request.user in prod.dislikers.all():
-                prod.dislikers.remove(request.user)
-                
-            else:
-                prod.dislikers.add(request.user)
-
-                if request.user in prod.likers.all():
-                    prod.likers.remove(request.user)
-
-        elif btn_f:
-            prod = PostsModel.objects.get(id=btn_f)
-
-            if prod in user.favorites.all():
-                user.favorites.remove(prod)
-                
-            else:
-                user.favorites.add(prod)
-
-            return render(request, "main/posts.html",
-                context={
-                    "posts_list": posts_list,
-                },
-            )
-            
-        try: 
-            prod = PostsModel.objects.get(id = btn_l if btn_l else btn_d)
-            post_sender = User.objects.get(id = prod.sender.id)
-
-            if post_sender.exp >= 100:
-                post_sender.exp -= 100
-                post_sender.level += 1
-            post_sender.save()
-        except:
-            pass
-        
-        prod.save()
-        user.save()
-    
-
+        reac(request)
 
     return render(request, "main/posts.html",
         context={
@@ -532,13 +534,16 @@ def user_more(request, act):
     user = User.objects.get(id = request.user.id)
     
     if act == "fov":
-        posts = user.favorites.all()    
+        posts = user.favorites.all()[::-1] 
     elif act == "likes":
-        posts = PostsModel.objects.filter(likers = user)
+        posts = PostsModel.objects.filter(likers = user)[::-1]
     elif act == "dislikes":
-        posts = PostsModel.objects.filter(dislikers = user)
+        posts = PostsModel.objects.filter(dislikers = user)[::-1]
     else:
         return redirect("ftf")
+    
+    if request.method == "POST":
+        reac(request)
     
     return render(request, "main/user_more.html", context = {
         "posts": posts
@@ -584,6 +589,8 @@ def user_profile(request, id):
         elif edit_profile:
             if one_user == request.user:
                 return redirect(f"/profil_settings")
+        else:
+            reac(request)
         
         
         
