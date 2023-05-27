@@ -126,6 +126,7 @@ def posts(request):
     return render(request, "main/posts.html",
         context={
             "posts_list": posts_list,
+            "test": User.objects.all()
         },
     )
 

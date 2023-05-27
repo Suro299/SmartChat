@@ -229,16 +229,20 @@
                     <div>
                         <h1> {{ i.username }} </h1> 
                         
-                        {% if i.activity_visibility == "all" or i.activity_visibility == "friends" %}
+                        {% if i.activity_visibility == "all"%}
                         <h3> was {{ i.date_joined }} </h3>
                         {% else %}
-                        <h3> was recently </h3>
+                            {% if  i.activity_visibility == "friends" and i in user.friends_set.all %}
+                            <h3> was {{ i.date_joined }} </h3>
+                            {% else %}
+                            <h3> was recently </h3>
+                            {% endif %}
                         {% endif %}
-
                     </div>
                 </a>
             </li>
             {% endfor %}
+
 
             
         </ul>
