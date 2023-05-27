@@ -87,9 +87,12 @@ def reac(request):
     except:
         pass
     
-    prod.save()
-    user.save()
-
+    
+    try:
+        prod.save()
+        user.save()
+    except:
+        pass
 
 def posts(request):
     if not (request.user.is_authenticated):
