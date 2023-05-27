@@ -71,7 +71,7 @@ header {
         height: 100%;
         background: linear-gradient(90deg, #4568dc, #b06ab3);
         transition: width 0.5s ease-in-out; }
-    @media screen and (max-width: 800px) {
+    @media screen and (max-width: 1250px) {
       header > div:nth-child(2) {
         display: none; } }
   header > div:nth-child(3) {
@@ -117,7 +117,7 @@ header {
           transition: 0.2s; }
         header > div:nth-child(3) > form > button:hover > img {
           opacity: 1; }
-    @media screen and (max-width: 800px) {
+    @media screen and (max-width: 1250px) {
       header > div:nth-child(3) {
         display: none; } }
   header > div:nth-child(4) {

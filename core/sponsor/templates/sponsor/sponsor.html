@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block css %} 
+    <link rel="stylesheet" href="{% static 'sponsor/style.css'%}">
+{% endblock %}
+
+{% block title %} SmartChat | Sponsor {% endblock %}
+
+{% block main %} 
+    
+    <a href="{% url 'posts' %}">  <button class="goBack"> Post Page </button> </a>
+    <main>
+       {% for i in films %}
+        <a target="_blank" href = "{{ i.href }}">
+            <h1> {{ i.title }} </h1>
+            <img src="{{ i.img }}" alt="">
+            <h3> {{ i.year}}, {{ i.genre }} </h3>
+        </a>
+       {% endfor %}
+    </main>
+{% endblock %}

@@ -611,9 +611,6 @@ def user_profile(request, id):
         },
     )
     
-def sponsor(request):
-    return render(request, "main/sponsor.html")
-
 
 def verif_email(request):
     return render(request, "main/verif_email.html")
