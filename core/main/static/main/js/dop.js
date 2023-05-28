@@ -33,3 +33,6 @@ function ChangeAvatar() {
   image.src = URL.createObjectURL(input.files[0])
   
 }
+
+
+

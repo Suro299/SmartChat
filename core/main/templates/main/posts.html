@@ -29,7 +29,7 @@
             <a href="{% url 'create_post' %}"> <button> <span> + </span> Create </button> </a>
         </section>
 
-        <section>
+        <section id = "scrol_section">
             <span>
                 {% for i in posts_list%}
                     {% if i.post_image %}
@@ -220,7 +220,6 @@
         <h1> Frends </h1>
         <ul>
             
-            
             {% for i in user.friends_set.all %}
             <li>
                 <a href="{% url 'user_profile' i.id %}"> 
@@ -242,10 +241,9 @@
                 </a>
             </li>
             {% endfor %}
-
-
             
         </ul>
     </nav>
-{% endblock %}
 
+    {% block js %} <script src="{% static 'main/js/save_scroll.js' %}"></script> {% endblock %}
+{% endblock %}
