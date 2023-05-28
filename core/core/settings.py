@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'users',
     'main',
     'about_us',
-    'sponsor'
+    'sponsor',
+    'settings'
 ]
 
 MIDDLEWARE = [

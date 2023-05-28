@@ -1,3 +1,8 @@
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #101010 inset;
+  -webkit-text-fill-color: white !important;
+  font-size: 1.5rem !important; }
+
 ::-webkit-scrollbar {
   width: 1.5rem;
   border-radius: 0 1rem 1rem 0;

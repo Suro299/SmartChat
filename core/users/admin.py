@@ -16,10 +16,11 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         ("Basic Information", {"fields": ("username", "first_name", "last_name", "email", "description", "avatar")}),
         ("More Info", {"fields": ("date_joined", "level", "exp", "posts_posted", "reactions", "points", "favorites", "subscribers_set","subscription_set", "friends_set")}),
-        ("Confidentiality Info", {"fields": ("activity_visibility", "avatar_visibility")}),
-
+        ("Confidentiality Info", {"fields": ("activity_visibility", "avatar_visibility", "show_likes", "show_dislikes", "show_favorites")}),
         ("Permissions", {"fields": ("is_staff", "is_active", "groups", "user_permissions")}),
     )
+    
+
     
     add_fieldsets = (
         (None, {

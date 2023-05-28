@@ -13,9 +13,6 @@ from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.contrib.auth import get_user_model
 from users.models import CustomUser as User
-from PIL import Image
-from django.core.validators import EmailValidator
-from django.core.exceptions import ValidationError
 from django.db.models import Q
 
 from .forms import NewUserForm, NewPostModelForm, NewComment
@@ -359,93 +356,6 @@ def post_page(request, id):
             }
     )
     
-    
-def confid_settings(request):
-    if not (request.user.is_authenticated):
-        return redirect("login")
-    one_user = User.objects.get(id = request.user.id)
-    
-    
-    if request.method == "POST":
-        avatar_visibility = request.POST.get("avatar_visibility")
-        activity_visibility = request.POST.get("activity_visibility")
-       
-         
-        
-        if avatar_visibility != one_user.avatar_visibility:
-            one_user.avatar_visibility = avatar_visibility
-            
-        if activity_visibility != one_user.activity_visibility:
-            one_user.activity_visibility = activity_visibility
-            
-        one_user.save()
-        return redirect("confid_settings")
-    
-    return render(request, "main/confid_settings.html", context = {
-        "active": "confid",
-        "one_user": one_user
-    })
-
-
-
-
-def profil_settings(request):
-    if not (request.user.is_authenticated):
-        return redirect("login")
-    
-    one_user = User.objects.get(pk = request.user.id)
-    
-    if one_user != request.user:
-        return redirect(f"/user_profile")
-    
-    
-    if request.method == "POST":
-        user_img = request.FILES.get("user_img")
-        username = request.POST.get("username")
-        email = request.POST.get("email")
-        first_name = request.POST.get("first_name")
-        last_name = request.POST.get("last_name")
-        bio = request.POST.get("bio")
-
-        if user_img and user_img != one_user.avatar:
-            try:
-                img = Image.open(user_img)
-                img.verify()  
-            except:
-                return redirect(f"/profile_settings")
-
-            one_user.avatar = user_img
-            
-        if username and username != one_user.username:
-            if len(username) < 30 and  not(username in User.objects.values_list('username', flat=True)):
-                one_user.username = username
-                
-        if email and email != one_user.email:
-            validator = EmailValidator()
-            try:
-                validator(email) 
-             
-                one_user.email = email
-            except ValidationError as e:
-                pass
-
-        if first_name and first_name != one_user.first_name:
-            if len(first_name) < 50:
-                one_user.first_name = first_name
-            
-        if last_name and last_name != one_user.last_name:
-            if len(last_name) < 50:
-                one_user.last_name = last_name
-            
-        if bio and bio != one_user.description:
-            one_user.description = bio
-                
-        one_user.save()
-        return redirect(f"/profil_settings")
-    return render(request, "main/profil_settings.html", context = {
-       "one_user":  one_user,
-       "active": "profile"
-    })
 
 
 def signup(request):
@@ -531,17 +441,17 @@ def logout_request(request):
     return redirect("posts")
 
 
-def user_more(request, act):
+def user_more(request, act, id):
     if not (request.user.is_authenticated):
         return redirect("login")
     
-    user = User.objects.get(id = request.user.id)
+    user = User.objects.get(id = id)
     
-    if act == "fov":
+    if act == "fov" and user.show_favorites:
         posts = user.favorites.all()[::-1] 
-    elif act == "likes":
+    elif act == "likes" and user.show_likes:
         posts = PostsModel.objects.filter(likers = user)[::-1]
-    elif act == "dislikes":
+    elif act == "dislikes" and user.show_dislikes:
         posts = PostsModel.objects.filter(dislikers = user)[::-1]
     else:
         return redirect("ftf")

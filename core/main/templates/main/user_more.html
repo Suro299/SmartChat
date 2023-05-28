@@ -13,7 +13,7 @@
             <a style="width: 15rem;" href="{% url 'user_profile' user.id %}"> <button class = "goBack"> User Page </button> </a>
         </section>
 
-        <section>
+        <section id = "scrol_section" >
             <span>
                 {% for i in posts %}
                     {% if i.post_image %}
@@ -200,6 +200,7 @@
         </section>
     </main>
 
+    {% block js %} <script src="{% static 'main/js/save_scroll.js' %}"></script> {% endblock %}
    
 {% endblock %}
 

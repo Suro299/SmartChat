@@ -46,6 +46,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     #conf info
     avatar_visibility = models.CharField(max_length=7, choices= AVATAR_CHOICES, default='all')
     activity_visibility = models.CharField(max_length=7, choices= ACTIVITY_CHOICES, default='all')
+    show_likes = models.BooleanField("Show Likes", default = False) 
+    show_dislikes = models.BooleanField("Show Dislikes", default = False) 
+    show_favorites = models.BooleanField("Show Favorites", default = False)
 
     
     
