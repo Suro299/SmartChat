@@ -1,0 +1,535 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block css %} 
+    <link rel="stylesheet" href="{% static 'chat/css/chats/style.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/inc/left_menu/style.css' %}">
+
+{% endblock %}
+
+{% block title %} 
+    SmartChat | {% if companion %}  {{ companion.username }} {% else %} Chats {% endif %} 
+{% endblock %}
+
+{% block main %} 
+
+    {% include 'main/inc/left_menu.html' %}
+
+    <main >
+
+        <div class = "active_user_info">
+            <a class = "back_button" href="{% url 'empty_chat' %}"> 
+                <img src="{% static 'main/icon/arrow-left-circle.svg' %}" alt=""> 
+            </a>
+
+            <a href = "{% url 'user_profile' companion.id %}">
+                <span>
+                    <h1> {{ companion.username }}  </h1> 
+
+                    {% if companion.activity_visibility == "all"%}
+                        <h3> was {{ companion.date_joined }} </h3>
+                    {% else %}
+                        {% if  companion.activity_visibility == "friends" and companion in user.friends_set.all %}
+                            <h3> was {{ companion.date_joined }} </h3>
+                        {% else %}
+                            <h3> was recently </h3>
+                        {% endif %}
+                    {% endif %}
+                </span>
+            </a>
+
+            <a href="{% url 'user_profile' companion.id %}">
+                <img src="{{ companion.avatar.url }}" alt="">
+            </a>
+
+            
+        </div>
+
+        <div {% if not chat %} style="height: 100%;" {% endif %} id = "message_div" class = "messages_div" >
+            
+            {% for i in chat.messages.all %}
+            <div class = "message_block {% if i.sender == user %} user_message {% else %} companion_message {% endif %}" >
+                <div style="width: 0; opacity: 0" class = "message_context_menu" id = "message_context_menu_{{ i.id }}" >
+                    <form method = "post">
+                        {% csrf_token %} 
+
+                        {% if i.sender == user %}
+                        <button onclick="edit_text('{{ i.id }}')"  name = "edit_message" value="{{ i.id }}" > 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            Edit 
+                        </button>
+                        {% endif %}
+
+                        <button onclick="reply_msg('{{ i.id }}')" ontouchend = "reply_msg('{{ i.id }}')" name = "reply_message" value="{{ i.id }}"> 
+                            <svg fill="whitesmoke" height="26" width="26" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-76.84 -76.84 665.98 665.98" xml:space="preserve" stroke="whitesmoke" stroke-width="2" transform="matrix(-1, 0, 0, 1, 0, 0)rotate(0)"><g id="SVGRepo_bgCarrier" stroke-width="2"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="whitesmoke" stroke-width="2"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M506.049,230.4l-192-192c-13.439-13.439-36.418-3.921-36.418,15.085v85.431 c-122.191,5.079-229.968,88.278-264.124,206.683C2.101,385.123-0.745,417.65,0.154,452.659c0.113,4.11,0.142,5.296,0.142,6.159 c0,21.677,28.579,29.538,39.666,10.911c23.767-39.933,50.761-70.791,80.333-93.599c53.462-41.233,109.122-53.174,157.335-48.352 v109.707c0,19.006,22.979,28.524,36.418,15.085l192-192C514.38,252.239,514.38,238.731,506.049,230.4z M320.297,385.982v-76.497 c0-9.773-6.641-18.296-16.117-20.686c-2.596-0.655-6.908-1.513-12.758-2.331c-60.43-8.455-130.633,4.548-197.184,55.876 c-16.371,12.626-31.961,27.299-46.688,44.105l0.326-1.708c1.701-8.759,3.879-17.804,6.624-27.315 c30.45-105.558,130.034-178.409,240.312-176.032c1.864,0.033,2.552,0.048,3.415,0.078c12.063,0.416,22.069-9.25,22.069-21.321 v-55.163l140.497,140.497L320.297,385.982z"></path> </g> </g> </g></svg>
+                            Reply
+                        </button>
+                        
+                        <button onclick="copy_text('{{ i.id }}')" ontouchend = "copy_text('{{ i.id }}')" id = "copy_text_{{ i.id }}" name = "copy_message" value="{{ i.id }}" > 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="whitesmoke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            Copy text
+                        </button>
+
+                        <button name = "forward_message" onclick="forward('{{ i.id }}')" ontouchend = "forward('{{ i.id }}')" id = "forward_message_{{ i.id }}" value="{{ i.id }}"> 
+                            <svg fill="whitesmoke" height="26" width="26" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-76.84 -76.84 665.98 665.98" xml:space="preserve" stroke="whitesmoke"><g id="SVGRepo_bgCarrier" stroke-width="2"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="whitesmoke" stroke-width="2"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M506.049,230.4l-192-192c-13.439-13.439-36.418-3.921-36.418,15.085v85.431 c-122.191,5.079-229.968,88.278-264.124,206.683C2.101,385.123-0.745,417.65,0.154,452.659c0.113,4.11,0.142,5.296,0.142,6.159 c0,21.677,28.579,29.538,39.666,10.911c23.767-39.933,50.761-70.791,80.333-93.599c53.462-41.233,109.122-53.174,157.335-48.352 v109.707c0,19.006,22.979,28.524,36.418,15.085l192-192C514.38,252.239,514.38,238.731,506.049,230.4z M320.297,385.982v-76.497 c0-9.773-6.641-18.296-16.117-20.686c-2.596-0.655-6.908-1.513-12.758-2.331c-60.43-8.455-130.633,4.548-197.184,55.876 c-16.371,12.626-31.961,27.299-46.688,44.105l0.326-1.708c1.701-8.759,3.879-17.804,6.624-27.315 c30.45-105.558,130.034-178.409,240.312-176.032c1.864,0.033,2.552,0.048,3.415,0.078c12.063,0.416,22.069-9.25,22.069-21.321 v-55.163l140.497,140.497L320.297,385.982z"></path> </g> </g> </g></svg>
+                            Forward
+                        </button>
+
+
+                        {% if i.sender == user %}
+                        <button class = "delete_message" name = "delete_message" value="{{ i.id }}" type="submit"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgb(212, 40, 40)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                            Delete 
+                        </button>
+                        {% endif %}
+                    </form>
+                </div>
+                
+                
+                <div oncontextmenu="open_message_context_menu('message_context_menu_{{ i.id }}')" class = "message">
+                    <input type="hidden" value = "{{ i.sender.username }}" id = "message_sender_username_{{ i.id }}" >
+                    
+                    
+                    {% if i.reply_to %}
+                        <div class = "reply_message">
+                            <h1> {{ i.reply_to.sender.username }} </h1>
+                            <h4> {{ i.reply_to.message }} </h4>
+                        </div>
+                    {% endif %}
+
+                    {% if i.forwarding_to %}
+                        <a href = "{% url 'user_profile' i.forwarding_to.id %}" class="forwored_message">
+                            <h1> forwarded from </h1>
+                            <h1> {{ i.forwarding_to.username }} </h1>
+                        </a>
+                    {% endif%}
+
+
+                    <div class = "core_message">
+                        <h1 id = "message_text_{{ i.id }}" > {{ i.message }}  </h1>
+                       
+                        <span class = "message_more_info">
+                            <h3> {{ i.date_created|time:"H:i" }} </h3>
+
+                            <p>
+                                {% if i.sender.id == user.id %}
+                                    {% if i.viewed %}
+                                        <img src="{% static 'main/icon/double_check.svg' %}" alt="">
+                                    {% else %}
+                                        <img src="{% static 'main/icon/check.svg' %}" alt="">
+                                    {% endif %}
+                                {% endif %}
+                            </p>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+            
+        </div>
+
+        <div id = "user_for_forward" class = "user_for_forward">
+
+            <h1> Select a chat to forward </h1>
+            <form method = "post">  
+                {% csrf_token %}
+                <input type="hidden" name = "forwarding_id" value = "" id = "forwarding_id">
+                {% for i in user_chats%}
+                    {% if i.member_1 == user %}
+                        <button type="submit" value = "{{ i.member_2.id }}" name = "forward_to_users_id" >
+                            <img src="{{ i.member_2.avatar.url }}" alt="">
+                            <h1> {{ i.member_2.username }} </h1>
+                        </button>
+                    {% else %}
+                        <button type="submit" value="{{ i.member_1.id  }}" name = "forward_to_users_id" >
+                            <img src="{{ i.member_1.avatar.url }}" alt="">
+                            <h1> {{ i.member_1.username }} </h1>
+                        </button>
+                    {% endif %}
+
+                {% endfor %}
+            </form>
+
+            <button onclick="close_forward_window()" onrouchend = "close_forward_window()" class = "forward_section_cancel_btn"> Cancel </button>
+        </div>
+
+        {% if chat %}
+        <form method = "post" class = "send_div">
+            {% csrf_token %}
+
+            <div style="height: 0%; opacity: 0; display: none;" id = "reply_section" class = "reply_section">
+                <input id = "reply_message_id" name = "reply_message_id" type = "hidden" value = "">
+                <div class = "reply_svg" >
+                    <svg fill="whitesmoke" height="26" width="26" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-76.84 -76.84 665.98 665.98" xml:space="preserve" stroke="whitesmoke" stroke-width="2" transform="matrix(-1, 0, 0, 1, 0, 0)rotate(0)"><g id="SVGRepo_bgCarrier" stroke-width="2"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="whitesmoke" stroke-width="2"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M506.049,230.4l-192-192c-13.439-13.439-36.418-3.921-36.418,15.085v85.431 c-122.191,5.079-229.968,88.278-264.124,206.683C2.101,385.123-0.745,417.65,0.154,452.659c0.113,4.11,0.142,5.296,0.142,6.159 c0,21.677,28.579,29.538,39.666,10.911c23.767-39.933,50.761-70.791,80.333-93.599c53.462-41.233,109.122-53.174,157.335-48.352 v109.707c0,19.006,22.979,28.524,36.418,15.085l192-192C514.38,252.239,514.38,238.731,506.049,230.4z M320.297,385.982v-76.497 c0-9.773-6.641-18.296-16.117-20.686c-2.596-0.655-6.908-1.513-12.758-2.331c-60.43-8.455-130.633,4.548-197.184,55.876 c-16.371,12.626-31.961,27.299-46.688,44.105l0.326-1.708c1.701-8.759,3.879-17.804,6.624-27.315 c30.45-105.558,130.034-178.409,240.312-176.032c1.864,0.033,2.552,0.048,3.415,0.078c12.063,0.416,22.069-9.25,22.069-21.321 v-55.163l140.497,140.497L320.297,385.982z"></path> </g> </g> </g></svg>
+                </div>
+
+                <span class = "reply_info">
+                    <h1 id = "reply_username" > Username </h1>
+                    <h4 id = "reply_message"> Message </h4>
+                </span>
+
+                <button id = "reply_close_btn" class = "reply_close_btn">
+                    X
+                </button>
+            </div>
+
+
+
+            <div class = "core_inp">
+                <input name = "new_message" id = "send_message" class = "send_inp" type="text" placeholder = "Message... ">
+                <button id = "send_message_btn" type="submit" class = "send_btn" name = "chat_id" value = "{{ chat.id }}"> 
+                    <img src="{% static 'main/icon/send.svg' %}" alt="">    
+                </button>
+            </div>
+
+        </form>
+        {% endif %}
+    </main>
+
+    {% include "chat/inc/chats_nav.html" %}
+
+    <script>
+        window.onload = function() {
+            updateMessages();
+            UpdateChats();
+        };
+
+
+        function UpdateChats() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "{% url 'update_chats' %}", true);
+            xhr.onreadystatechange = function () {
+              if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                var container = document.getElementById("chats_div");
+                
+                container.innerHTML = "";
+
+                response.data.forEach(function (chat) {
+                    const UserLink = document.createElement("a");
+                    container.append(UserLink)
+
+                    const UserSpan = document.createElement("span")
+                    UserLink.append(UserSpan)
+
+
+                    const UserImage = document.createElement("img")
+                    UserSpan.append(UserImage)
+
+                    const UserUsername = document.createElement("h1")
+                    UserSpan.append(UserUsername)
+
+                    if (chat.unread_messages) {
+
+                        const UnreadMessages = document.createElement("span")
+                        UnreadMessages.setAttribute("class", "unread_message_div")
+                        UserLink.append(UnreadMessages)
+
+                        const UnreadMsgCount = document.createElement("h1")
+                        UnreadMsgCount.innerText = chat.unread_messages
+                        UnreadMessages.append(UnreadMsgCount)
+
+                    }
+
+                    if (chat.member_1.id == "{{ user.id }}"){
+                        if (chat.member_2.id == "{{ companion.id }}") {
+                            UserLink.setAttribute("class", "active")      
+                        }
+
+                        UserLink.setAttribute("href", "/chat/" + chat.member_2.id)
+                        UserImage.setAttribute("src", chat.member_2.avatar)
+                        UserUsername.innerText = chat.member_2.username
+
+                    } else {
+                        if (chat.member_1.id == "{{ companion.id }}") {
+                            UserLink.setAttribute("class", "active")      
+                        }
+
+                        UserLink.setAttribute("href", "/chat/" + chat.member_1.id)
+                        UserImage.setAttribute("src", chat.member_1.avatar)
+                        UserUsername.innerText = chat.member_1.username
+                    }
+                    
+                });
+              }
+            };
+            xhr.send();
+        }
+
+        function updateMessages() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "{% url 'update_messages' companion.id %}", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    var container = document.getElementById("message_div");
+
+                    container.innerHTML = "";
+
+                    response.data.forEach(function (message) {
+
+                        // -------------- MESSAGE BLOCK <START> -------------------
+                        const MessageBlock = document.createElement("div");
+
+                        if (message.sender.id == "{{ user.id }}") {
+                            MessageBlock.setAttribute("class", "message_block user_message");
+                        } else {                        
+                            MessageBlock.setAttribute("class", "message_block companion_message");
+                        }
+                        container.appendChild(MessageBlock);
+                        // -------------- MESSAGE BLOCK <END> -------------------
+
+
+
+                        // -------------- CONTEXT MENU BLOCK <START> -------------------
+                            // Div-y
+                        const ContextMenuDiv = document.createElement("div")
+                        ContextMenuDiv.style = "width: 0; opacity: 0; display: none;"
+                        ContextMenuDiv.class = "message_context_menu"
+                        ContextMenuDiv.id = "message_context_menu_" + message.id
+                        MessageBlock.append(ContextMenuDiv) 
+                        
+
+                            // Form-y
+                        const ContextMenuForm = document.createElement("form")
+                        ContextMenuForm.method = "post"
+                        ContextMenuDiv.append(ContextMenuForm)
+
+
+                            // CSRF_TOKEN 
+                        const CsrfTokenForm = document.createElement("input");
+                        CsrfTokenForm.type = "hidden";
+                        CsrfTokenForm.name = "csrfmiddlewaretoken";
+                        CsrfTokenForm.value = "{{ csrf_token }}";
+                        ContextMenuForm.appendChild(CsrfTokenForm);
+
+                            // Edite Message 
+                        if (message.sender.id == "{{ user.id }}") {
+                            const EditMessage = document.createElement("button")
+                            EditMessage.setAttribute("onclick", "edit_text('" + message.id + "')")
+                            EditMessage.setAttribute("ontouchend", "edit_text('" + message.id + "')")
+                            EditMessage.name = "edit_message"
+                            EditMessage.value = message.id
+                            ContextMenuForm.append(EditMessage)
+                        }
+
+
+                            // Reply To 
+                        const ReplyMessageContextMenu = document.createElement("button")
+                        ReplyMessageContextMenu.setAttribute("onclick", "reply_msg('" + message.id + "')")
+                        ReplyMessageContextMenu.setAttribute("ontouchend", "reply_msg('" + message.id + "')")
+                        ReplyMessageContextMenu.name = "reply_message"
+                        ReplyMessageContextMenu.value = message.id
+                        ContextMenuForm.append(ReplyMessageContextMenu)
+
+                            // Copy Message
+                        const CopyMessage = document.createElement("button")
+                        CopyMessage.setAttribute("onclick", "copy_text('" + message.id + "')")
+                        CopyMessage.setAttribute("ontouchend", "copy_text('" + message.id + "')")
+                        CopyMessage.name = "copy_message"
+                        CopyMessage.id = "copy_text_" + message.id
+                        CopyMessage.value = message.id
+                        ContextMenuForm.append(CopyMessage)
+
+                            // Forward Message
+                        const ForwardMessage = document.createElement("button")
+                        ForwardMessage.setAttribute("onclick", "forward('" + message.id + "')")
+                        ForwardMessage.setAttribute("ontouchend", "forward('" + message.id + "')")
+                        ForwardMessage.name = "forward_message"
+                        ForwardMessage.id = "forward_message_" + message.id
+                        ForwardMessage.value = message.id
+                        ContextMenuForm.append(ForwardMessage)
+
+
+                            // Delete Message 
+                        if (message.sender.id == "{{ user.id }}") {
+                            const DeleteMessage = document.createElement("button")
+                            DeleteMessage.class = "delete_message"
+                            DeleteMessage.name = "delete_message"
+                            DeleteMessage.value = message.id
+                            ContextMenuForm.append(DeleteMessage)
+                        }
+
+
+
+                        // -------------- CONTEXT MENU BLOCK <END> -------------------
+
+                        
+
+                        // -------------- MESSAGE <START> -------------------
+                        const MessageDiv = document.createElement("div");
+                        
+                        const open_message_context_menu = "message_context_menu_" + message.id
+                        MessageDiv.setAttribute("oncontextmenu", open_message_context_menu);
+                        MessageDiv.setAttribute("class", "message");                    
+                        MessageBlock.appendChild(MessageDiv);
+                        // -------------- MESSAGE <END> -------------------
+
+
+
+                        // -------------- SENDER USERNAME INPUT  <START> -------------------                    
+                        const MessageSenderUsernameInput = document.createElement("input")
+                        MessageSenderUsernameInput.setAttribute("type", "hidden")
+                        MessageSenderUsernameInput.setAttribute("value", message.sender.username)
+
+                        const message_sender_username_input_id = "message_sender_username_" + message.id
+                        MessageSenderUsernameInput.setAttribute("id", message_sender_username_input_id)
+                        MessageDiv.append(MessageSenderUsernameInput)
+                        // -------------- SENDER USERNAME INPUT <END> -------------------
+                        
+
+
+                        // -------------- REPLY MESSAGE BLOCK <START> -------------------                    
+                        if (message.reply_to) {
+                            // Reply-i Bloky sarqely
+                            const ReplyMessage = document.createElement("div")
+                            ReplyMessage.setAttribute("class", "reply_message")
+                            MessageDiv.append(ReplyMessage)
+
+                            // Reply-i meji username 
+                            const ReplyUsername = document.createElement("h1")
+                            ReplyUsername.innerText = message.reply_to.username
+                            ReplyMessage.append(ReplyUsername)
+
+                            // Reply-i meji Texty
+                            const ReplyText = document.createElement("h4")
+                            ReplyText.innerText = message.reply_to.message
+                            ReplyMessage.append(ReplyText)
+                        }
+                        // -------------- REPLY MESSAGE BLOCK <END> -------------------       
+                        
+
+
+
+                        // -------------- FORWARDED MESSAGE BLOCK <START> -------------------         
+                        if (message.forwarding_to) {
+                            const ForwardingMessage = document.createElement("a")
+                            href = "/sc/user_profile/" + message.forwarding_to.id + "/"
+                            ForwardingMessage.setAttribute("href", href)
+
+                            ForwardingMessage.setAttribute("class", "forwored_message")
+                            MessageDiv.append(ForwardingMessage)
+
+                            const ForwardingH1 = document.createElement("h1")
+                            ForwardingH1.innerText = "forwarded from"
+                            ForwardingMessage.append(ForwardingH1)
+
+                            const ForwardingUsername = document.createElement("h1")
+                            ForwardingUsername.innerText = message.forwarding_to.username
+                            ForwardingMessage.append(ForwardingUsername)
+                        }
+                        // -------------- FORWARDED MESSAGE BLOCK <END> -------------------       
+
+
+
+                        
+                        // -------------- CORE MESSAGE BLOCK <START> -------------------
+
+                        const CoreMessage = document.createElement("div")
+                        CoreMessage.setAttribute("class", "core_message")
+                        MessageDiv.append(CoreMessage)       
+
+                        // Texty  START
+                        const CoreMessageText = document.createElement("h1")
+                        core_message_text_id = "message_text_" + message.id
+                        CoreMessageText.setAttribute("id", core_message_text_id )
+                        CoreMessageText.innerText = message.message
+                        CoreMessage.append(CoreMessageText)
+                        // Texty  END
+
+
+
+                        // More Infon START
+                        const CoreMessageMore = document.createElement("span")
+                        CoreMessageMore.setAttribute("class", "message_more_info")
+                        CoreMessage.append(CoreMessageMore)
+
+                        const MoreInfoCratedDate = document.createElement("h3")
+                        MoreInfoCratedDate.innerText = message.date_created
+                        CoreMessageMore.append(MoreInfoCratedDate)
+
+
+                        const MoreInfoViewed = document.createElement("p")
+                        CoreMessageMore.append(MoreInfoViewed)
+                        
+                        if (message.sender.id == "{{ user.id }}") {
+
+                            const ViewedImage = document.createElement("img")
+
+                            if (message.viewed) {
+                                ViewedImage.setAttribute("src", "{% static 'main/icon/double_check.svg' %}")
+                                ViewedImage.setAttribute("alt", "+")
+                            } else {
+                                ViewedImage.setAttribute("src", "{% static 'main/icon/check.svg' %}")
+                                ViewedImage.setAttribute("alt", "-")
+                            }
+
+                            MoreInfoViewed.append(ViewedImage)
+                        } 
+                        // More Infon END
+
+                        // -------------- CORE MESSAGE BLOCK <END> -------------------       
+                        
+                    });
+                }
+
+                var element = document.getElementById("message_div");
+                element.scrollTop = element.scrollHeight;
+                
+
+            };
+            UpdateChats()
+            xhr.send();
+
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== "") {
+                    var cookies = document.cookie.split(";");
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === name + "=") {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            document.querySelector(".send_div").addEventListener("submit", function(event) {
+                event.preventDefault();
+              
+                var newMessageInput = document.getElementById("send_message").value;
+              
+                if (newMessageInput.trim() !== "") {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "{% url 'add_message' companion.id %}", true);
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+
+                            var response = JSON.parse(xhr.responseText);
+                            
+                            if (response.success) {
+                                updateMessages();
+                            } else {
+                                console.log("Ошибка при добавлении сообщения");
+                            }
+                        }
+                    };
+                    xhr.send("new_message=" + encodeURIComponent(newMessageInput) + "&chat_id=" + encodeURIComponent(event.target.elements["chat_id"].value));
+                    document.getElementById("send_message").value = "";
+                }
+            });
+
+            
+        }
+        setInterval(updateMessages, 2000);
+    </script>
+
+    {% block js %} 
+        <script src="{% static 'chat/js/chat.js' %}"></script>
+    {% endblock%}
+{% endblock %}

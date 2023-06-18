@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block css %} 
+    <link rel="stylesheet" href="{% static 'about_us/css/about_us/style.css' %}">
+{% endblock %}
+{% block title %} SmartChat | About Us {% endblock %}
+
+{% block main %} 
+    <main>
+        <button onclick="history.back()"> Go Back </button>
+
+        <h1> {{ about_us.title }} </h1>
+
+        
+        <p style="white-space: pre-wrap;" >
+            {{ about_us.text|safe }}
+        </p>
+        
+    
+        <div>
+            <h1> We are already {{ users_count }} </h1>
+            <h1> {{ posts_count }} posts have <br> already been posted </h1>
+        </div>
+
+    </main>
+{% endblock %}

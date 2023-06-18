@@ -1,0 +1,122 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block css %} 
+    <link rel="stylesheet" href="{% static 'chat/css/chat_list/style.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/inc/left_menu/style.css' %}">
+
+{% endblock %}
+
+{% block title %} 
+    SmartChat | {% if companion %}  {{ companion.username }} {% else %} Chats {% endif %} 
+{% endblock %}
+
+{% block main %} 
+{% include 'main/inc/left_menu.html' %}
+
+    <main>
+        <div id = "chats_div" class = "select_user">
+            {% for i in user_chats%}
+                {% if i.member_1 == user %}  
+                    <a class = "{% if i.member_2 == companion %} active {% endif %}" href="{% url 'chat' i.member_2.id %}">
+                        <span>
+                            <img src="{{ i.member_2.avatar.url }}" alt="">
+                            <span>
+                                <h1> {{ i.member_2.username }}  </h1> 
+                            </span>   
+                        </span>
+    
+                        {% if i.unread_messages %}
+                            <span class = "unread_message_div chatlist_urm ">
+                                <h1> {{ i.unread_messages }} </h1>
+                            </span>
+                        {% endif %}
+                    </a>
+                {% else %}
+                <a class = "{% if i.member_1 == companion %} active {% endif %}" href="{% url 'chat' i.member_1.id %}">
+                    <span>
+                        <img src="{{ i.member_1.avatar.url }}" alt="">
+                        <span>
+                            <h1> {{ i.member_1.username }}  </h1> 
+                        </span>   
+                    </span>
+    
+                    {% if i.unread_messages %}
+                        <span class = "unread_message_div chatlist_urm ">
+                            <h1> {{ i.unread_messages }} </h1>
+                        </span>
+                    {% endif %}
+                </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </main>
+
+    <script>
+        function UpdateChatsChatList() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "{% url 'update_chats' %}", true);
+            xhr.onreadystatechange = function () {
+              if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                var container = document.getElementById("chats_div");
+                
+                container.innerHTML = "";
+
+                response.data.forEach(function (chat) {
+                    const UserLink = document.createElement("a");
+                    container.append(UserLink)
+
+                    const UserSpan = document.createElement("span")
+                    UserLink.append(UserSpan)
+
+
+                    const UserImage = document.createElement("img")
+                    UserSpan.append(UserImage)
+
+                    const UserUsername = document.createElement("h1")
+                    UserSpan.append(UserUsername)
+                
+
+                    if (chat.unread_messages) {
+
+                        const UnreadMessages = document.createElement("span")
+                        UnreadMessages.setAttribute("class", "unread_message_div")
+                        UserLink.append(UnreadMessages)
+
+                        const UnreadMsgCount = document.createElement("h1")
+                        UnreadMsgCount.innerText = chat.unread_messages
+                        UnreadMessages.append(UnreadMsgCount)
+
+                    }
+
+
+                    
+                    if (chat.member_1.id == "{{ user.id }}"){
+                        if (chat.member_2.id == "{{ companion.id }}") {
+                            UserLink.setAttribute("class", "active")      
+                        }
+
+                        UserLink.setAttribute("href", "/chat/" + chat.member_2.id)
+                        UserImage.setAttribute("src", chat.member_2.avatar)
+                        UserUsername.innerText = chat.member_2.username
+
+                    } else {
+
+                        if (chat.member_1.id == "{{ companion.id }}") {
+                            UserLink.setAttribute("class", "active")      
+                        }
+
+                        UserLink.setAttribute("href", "/chat/" + chat.member_1.id)
+                        UserImage.setAttribute("src", chat.member_1.avatar)
+                        UserUsername.innerText = chat.member_1.username
+                    }
+                    
+                });
+              }
+            };
+            xhr.send();
+        }
+        setInterval(UpdateChatsChatList, 2000)
+    </script>
+{% endblock %}

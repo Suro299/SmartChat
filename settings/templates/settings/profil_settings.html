@@ -1,0 +1,83 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block css %} 
+    <link rel="stylesheet" href="{% static 'settings/css/profile_settings/style.css' %}">
+    <link rel="stylesheet" href="{% static 'settings/css/inc/style.css'%}">
+{% endblock %}
+
+{% block title %} SmartChat | Settings {% endblock %}
+
+{% block main %}
+
+    <main>
+        <form method = "post" enctype="multipart/form-data">
+            <section>
+                <div class="">
+                    <img src="{{ one_user.avatar.url }}" id="user_avatar" onclick="OpenFileSelect()">
+                    <img src="{% static 'main/icon/edit.svg' %}" onclick="OpenFileSelect()">
+                </div>
+            
+            
+                <div>
+                    <h1> {{ one_user.username }} </h1>
+                    <h3> {{ one_user.first_name}} {{ one_user.last_name }} </h3>
+                </div>
+
+                <input id="avatar_input" style="display: none;" name = "user_img" onchange="ChangeAvatar()" type="file">
+            </section>
+
+
+            <section>
+                <span>
+                    <div>
+                        <img src="{% static 'main/icon/user.svg' %}" alt="">
+                        <input type="text" name = "username" placeholder = "Username" value="{{ one_user.username }}">
+                    </div>
+
+                    <div>
+                        <img src="{% static 'main/icon/mail.svg' %}" alt="">
+                        <input type="email" name = "email" placeholder = "Email@exemple.com" value = "{{ one_user.email }}">
+                    </div>
+                </span>
+
+
+                <span>
+                    <div>
+                        <img src="{% static 'main/icon/user.svg' %}" alt="">
+                        <input type="text" name = "first_name" placeholder = "First Name" value = "{{ one_user.first_name }}">
+                    </div>  
+
+                    <div>
+                        <img src="{% static 'main/icon/user.svg' %}" alt="">
+                        <input type="text" name = "last_name" placeholder = "Last Name" value = "{{ one_user.last_name }}">
+                    </div>
+                </span>
+
+                <span>
+                    <div>
+                        <img src="{% static 'main/icon/link.svg' %}" alt="">
+                        <input type="text" name = "personal_link" placeholder = "Personal Link">
+                    </div>  
+
+                    <div>
+                        <img src="{% static 'main/icon/hash.svg' %}" alt="">
+                        <input type="text" name = "personal_link_title" placeholder = "Link Title">
+                    </div>
+                </span>
+
+                <textarea name = "bio" cols="82" rows="5" placeholder=" BIO " value = "{{ one_user.description }}"></textarea>
+            </section>
+
+            <section>
+                {% csrf_token %}
+                <button type = "submit"> Save </button>
+            </section>
+        </form>
+    </main>
+
+    {% include 'settings/inc/settings_menu.html' %}
+
+
+  
+{% endblock %}

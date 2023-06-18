@@ -1,0 +1,703 @@
+$bgc_1: #101010;
+$bgc_2: #181818;
+$post_bgc: #1e1e1e;
+
+$border_color: rgb(65, 65, 65);
+
+$txt_cl_1: whitesmoke;
+$txt_cl_2: rgb(167, 167, 167);
+$txt_cl_3: rgba(245, 245, 245, 0.519);
+
+::-webkit-scrollbar {
+    width: 1.5rem;
+    border-radius: 0 1rem 1rem 0;
+    background-color: #1f1f1f; 
+}
+  
+::-webkit-scrollbar-thumb {
+    border-radius:1rem;
+    background-color: #7b7b7b;
+    border: 0.5rem solid #1f1f1f;
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}   
+
+html {
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: $txt_cl_1;
+}
+
+body {
+    background-color: $bgc_1;
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 0.8fr repeat(4, 1fr) 0.8fr;
+    grid-template-rows: 0.4fr repeat(5, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    overflow: hidden;
+
+	@media screen and (max-width: 800px) {
+		padding-bottom: 9rem;
+	}
+}
+
+.unread_message_div {
+	aspect-ratio: 1/1;
+	width: 3rem;
+	height: 3rem;
+	margin-right: 2rem;
+	padding: 0.3rem 0.5rem 0.5rem 0.5rem;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: rgb(118,106,200);
+	background: -moz-linear-gradient(142deg, rgba(118,106,200,1) 0%, rgba(97,82,200,1) 100%);
+	& > h1 {
+		font-size: 1.5rem;
+		color: $txt_cl_1;
+	}
+}
+
+
+.chat_list {
+    grid-area: 2 / 6 / 7 / 7;
+	background-color: $bgc_2;
+	padding: 2rem 0 0 0;
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	flex-direction: column;
+	-webkit-box-shadow: -13px 0px 20px 0px rgba(0, 0, 0, 0.308);
+    -moz-box-shadow: -13px 0px 20px 0px rgba(0, 0, 0, 0.308);
+    box-shadow: -13px 0px 20px 0px rgba(0, 0, 0, 0.308);
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	@media screen and (max-width: 1290px) {
+		display: none;
+	}
+
+    & > h1 {
+		font-size: 3rem;
+	}
+	
+    & > div {
+		margin-top: 2rem;
+		width: 100%;
+		display: flex;
+		justify-content: start;
+		align-items: center;
+		flex-direction: column;
+		padding: 1rem;
+		
+		
+        & > a {
+			font-size: 2rem;
+			text-decoration: none;
+			color: black;
+			margin-bottom: 1.4rem;
+			border: 1px solid $border_color;
+			border-radius: 14px;
+			padding: 0.5rem 1rem;
+			width: 100%;
+			text-align: center;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			overflow: hidden;
+			transition: 0.2s;
+			
+			&:hover {
+				cursor: pointer;
+
+				&:not(.active) {
+					background-color: #c0972f;
+				}
+			}
+
+			& > span {
+				display: flex;
+				align-items: center;
+				&:nth-child(1) {
+					& > img {
+						width: 4rem;
+						height: 4rem;
+						border-radius: 50%;
+						border: 1px solid $border_color;
+					}
+		
+					& > h1 {
+						color: $txt_cl_1;
+						margin-left: 1rem;
+						font-size: 1.8rem;
+					}
+				}
+				
+			}
+
+		}
+
+
+		& > .active {
+			background-color: #daa51e;
+		}
+	}
+}
+
+main {
+	@media screen and (max-width: 1290px) {
+    	grid-area:  2 / 1 / 7 / 7;
+	}
+	grid-area: 2 / 2 / 7 / 6;
+
+	font-size: 3rem;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	@media screen and (max-width: 1290px) {
+    	grid-area:  2 / 1 / 7 / 7;
+	}
+
+		
+
+}
+
+.active_user_info {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.5rem 1rem;
+	background-color: $bgc_2;
+	border-left: 1px solid $border_color;
+	border-right: 1px solid $border_color;
+
+	.back_button {
+		& > img {
+			width: 4rem;
+			height: 4rem;
+			
+			@media screen and (max-width: 800px) {
+				width: 3.4rem;
+				height: 3.4rem;
+			}
+		}
+	}
+
+	& > a {
+		width: auto;
+		padding: 0.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+		text-decoration: none;
+		color: $txt_cl_1;
+		opacity: 0.8;
+		transition: 0.2s;
+		text-align: center;
+		&:hover {
+			cursor: pointer;
+			opacity: 1;
+		}
+
+		
+		& > img {
+			width: 5rem;
+			height: 5rem;
+			border-radius: 50%;
+			@media screen and (max-width: 800px) {
+				width: 4.4rem;
+				height: 4.4rem;
+			}
+		}
+	
+		& > span {
+			margin-left: 1rem;
+	
+			& > h1 {
+				width: 100%;
+				font-size: 3rem;
+
+				@media screen and (max-width: 800px) {
+					font-size: 1.8rem;
+				}
+	
+			}
+	
+			& > h3 {
+				width: 100%;
+				font-size: 1.3rem;
+				color: $txt_cl_2;
+
+				@media screen and (max-width: 800px) {
+					font-size: 0.8rem;
+				}
+			}
+		}
+	}
+}
+
+.messages_div {
+	padding-top: 3rem;
+	padding-bottom: 2rem;
+	padding-left: 1rem;
+	display: flex;
+	height: 100%;
+	flex-direction: column;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	
+	& > .message_block {
+		margin-bottom: 1rem;
+		padding: 0 3rem;
+		display: flex;
+		flex-direction: column;
+		
+		@media screen and (max-width: 800px) {
+			padding: 0 1rem;
+		}
+
+
+		& > .message_context_menu {
+			width: 10rem;
+			padding: 1rem 0.5rem;
+			border-radius: 10px;
+			position: absolute;
+			box-shadow: 0px 0px 2px 5px rgba(0,0,0,0.75);
+			-webkit-box-shadow: 0px 0px 8px 5px rgba(0,0,0, 0.161);
+			-moz-box-shadow: 0px 0px 2px 5px rgba(0,0,0,0.75);
+			z-index: 1;
+			background-color: #1f1f1f9f;
+			backdrop-filter: blur(20px);
+			display: none;
+			opacity: 0.5;
+			transition: 0.2s;
+			
+			& > form {
+				width: 100%;
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+
+				& > button {
+					width: 100%;
+					height: 4rem;
+					border-radius: 10px;
+					color: $txt_cl_1;
+					background-color: transparent;
+					border: none;
+					outline: none;
+					display: flex;
+					justify-content: start;
+					align-items: center;
+					padding-left: 2rem;
+
+					&:not(:last-child) {
+						transition: 0.2s;
+					}
+
+					& > svg {
+						margin-right: 1rem;
+					}
+					
+
+					&:hover {
+						cursor: pointer;
+						background-color: #0d0d0dbe;
+					}
+
+
+					&:not(:last-child) {
+						margin-bottom: 1rem;
+					}
+				}
+
+				& > .delete_message {
+					color: rgb(212, 40, 40);
+					&:hover {
+						cursor: pointer;
+						color: $txt_cl_1;
+						background-color: rgba(255, 0, 0, 0.29);
+
+						& > svg {
+							stroke: $txt_cl_1;
+						}
+					}
+				}
+			}
+		}
+
+
+		& > .message {
+			display: flex;
+			max-width: 80%;
+			word-wrap: break-word;
+			justify-content: center;
+			align-items: center;
+			padding: 1.2rem 1.8rem ;
+			border-radius: 10px;
+			background-color: $post_bgc;
+			display: flex;
+			justify-content: space-between;
+			align-items: start;
+			flex-direction: column;
+			user-select: none;
+			margin-left: 0px;
+			
+
+			@media screen and (max-width: 800px) {
+				padding: 0.8rem 1.4rem ;
+			}
+
+			& > .reply_message {
+				width: 100%;
+				padding-left: 1rem;
+				border-left: 3px solid $txt_cl_1;
+				border-radius: 3px;
+				margin-bottom: 1.4rem;
+
+				& > h1 {
+					font-size: 1.8rem;
+					margin-bottom: 0.5rem;
+				}
+
+				& > h4 {
+					font-weight: normal;
+					font-size: 1.2rem;
+				}
+			}
+
+			& > .forwored_message {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: start;
+				margin-bottom: 1.4rem;
+
+
+				& > h1 {
+					font-size: 1.2rem;
+					font-weight: normal;
+					color: $txt_cl_1;
+
+					&:last-child {
+						margin-top: 0.5rem;
+						font-weight: bold;
+					}
+				}
+			}
+
+			& > .core_message {
+				display: flex;
+				justify-content: space-between;
+				align-content: center;
+				width: 100%;
+
+				& > h1 {
+					max-width: 90%;
+					font-weight: 100;
+					font-size: 2rem;
+					user-select: text;
+
+				}
+
+				& > .message_more_info {
+					display: flex;
+					justify-content: end;
+					align-items: center;
+					margin-left: 1rem;
+
+					& > h3 {
+						font-size: 1.2rem;
+						display: flex;
+						align-items: end;
+						height: 100%;
+						color: $txt_cl_2;
+						user-select: none;
+
+					}
+		
+					& > p {
+
+						display: flex;
+						align-items: end;
+						height: 100%;
+						padding-top: 0.5rem;
+						margin-left: 0.5rem;
+						user-select: none;
+		
+						& > img {
+							width: 1.8rem;
+							color: rgb(176, 176, 176);
+						}
+					}
+				}
+	
+			}
+
+			
+		}
+	}
+
+	& > .companion_message {
+		align-items: start;
+	}
+
+	& > .user_message {
+		align-items: end;
+
+		& > .message {
+			background: rgb(118,106,200);
+			background: -moz-linear-gradient(142deg, rgba(118,106,200,1) 0%, rgba(97,82,200,1) 100%);
+			background: -webkit-linear-gradient(142deg, rgba(118,106,200,1) 0%, rgba(97,82,200,1) 100%);
+			background: linear-gradient(142deg, rgba(118,106,200,1) 0%, rgba(97,82,200,1) 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#766ac8",endColorstr="#6152c8",GradientType=1);
+		}
+	} 
+	
+}
+
+.user_for_forward {
+	display: none;
+	flex-direction: column;
+	padding: 2rem;
+	border-radius: 10px;
+	position: absolute;
+	box-shadow: 0px 0px 2px 5px rgba(0,0,0,0.75);
+	-webkit-box-shadow: 0px 0px 8px 5px rgba(0,0,0, 0.161);
+	-moz-box-shadow: 0px 0px 2px 5px rgba(0,0,0,0.75);
+	z-index: 2;
+	background-color: #1f1f1f9f;
+	backdrop-filter: blur(20px);
+	border: 2px solid $border_color;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+
+	@media screen and (max-width: 800px) {
+		background-color: #1f1f1f;
+	}
+
+	& > h1 {
+		font-size: 2rem;
+		margin-bottom: 2rem;
+	}
+
+	& > .forward_section_cancel_btn {
+		margin-top: 2rem;
+		width: 100%;
+		height: 4rem;
+		border-radius: 5px;
+		font-size: 1.8rem;
+		border: 2px solid red;		
+		color: red;
+		background-color: rgba(255, 0, 0, 0.087);
+		transition: 0.2s;
+
+		&:hover {
+			cursor: pointer;
+			background-color: rgba(255, 0, 0, 0.239);
+			color: white;
+		}
+	}
+
+	& > form {
+		width: 100%;
+		height: 100%;
+
+		display: flex;
+		justify-content: start;
+		align-items: center;
+		flex-direction: column;
+
+
+		& > button {
+			width: 100%;
+			background: transparent;
+			border: none;
+			border-radius: 10px;
+			outline: none;
+			padding: 0.5rem 2rem;
+			display: flex;
+			align-items: center;
+			justify-content: start;
+			transition: 0.2s;
+
+			
+			&:not(:last-child) {
+				margin-bottom: 1rem;
+			}
+
+			& > img {
+				width: 4rem;
+				height: 4rem;
+				margin-right: 1rem;
+				border-radius: 50%;
+			}
+
+			& > h1 {
+				font-size: 1.8rem;
+				user-select: none;
+				color: $txt_cl_1;
+			}
+
+			&:hover {
+				cursor: pointer;
+				background-color: #b77f17;
+			}
+		}
+
+	}
+}
+
+.send_div {
+	max-height: 14rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 1rem 3rem;
+	background-color: $bgc_2;
+	border-left: 2px solid rgb(65, 65, 65);
+	border-right: 1px solid $border_color;
+	
+	& > div {
+		width: 100%;
+	}
+}
+
+
+
+.reply_section {
+	position:relative;
+	width: 100%;	
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 1.4rem;
+	height: 0%;
+	opacity: 1;
+	display: none;
+
+
+
+	& > .reply_svg {
+		height: 100%;
+		aspect-ratio: 1/1;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0.5rem;
+		border-right: 2px solid orange;
+
+		& > svg {
+			width: 100%;
+			height: 100%;
+			fill: orange;
+		}
+	}
+
+	& > .reply_info {
+		height: 100%;
+		width: 100%;
+		padding-left: 0.8rem;
+		overflow: hidden;
+		
+		@media screen and (max-width: 800px) {
+			width: 80%;
+		}
+
+		& > h1 {
+			font-size: 2rem;
+			color: orange;
+		}
+
+		& > h4 {
+			font-size: 1.4rem;
+		}
+	}
+
+	& > .reply_close_btn {
+		height: 100%;
+		aspect-ratio: 1/1;
+		font-size: 3rem;
+		position: relative;
+		background-color: transparent;
+		color: $txt_cl_2;
+		border: none;
+		outline: none;
+		margin-right: 2rem;
+		transition: 0.2s;
+		
+		&:hover {
+			cursor: pointer;
+			color: $txt_cl_1;			
+		}
+		
+	}
+}
+
+.core_inp {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 90%;
+	padding: 0rem;
+}
+
+.send_inp {
+	height: 100%;
+	width: 94%;
+	padding: 1rem 1rem 1rem 3rem;
+	border-radius: 30px;
+	background: $bgc_1;
+	border: 2px solid $border_color;
+	outline: none;
+	color: $txt_cl_1;
+	font-size: 1.4rem;
+
+	@media screen and (max-width: 800px) {
+		width: 80%;
+	}
+}
+
+.send_btn {
+	height: 5rem;
+	aspect-ratio: 1/1;
+	border-radius: 50%;
+	background: $bgc_1;
+	border: 2px solid $border_color;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	padding-right: 0.2rem;
+	transition: 0.2s;
+
+	&:hover {
+		cursor: pointer;
+		background-color: $bgc_2;
+	}
+
+	& > img {
+		width: 54%;
+		height: 54%;
+	}
+}
+

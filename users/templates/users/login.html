@@ -1,0 +1,74 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset = "UTF-8">
+    <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'users/css/login-register/style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'main/img/smart_chat_icon.webp' %}"/>
+
+    <title> SmartChat | Login </title>
+</head>
+<body>
+    <div>
+
+        <div>
+            <h1> SmartChat </h1>
+        </div>
+
+        
+        <div>
+            <form method="post">
+                {% csrf_token %} 
+
+                <div class="form-control">
+                    <input type="text" name="username" required>
+                    <label>
+                        <span style="transition-delay:0ms;"> <img style="margin-right: 1rem;" width="20px" src="{% static 'main/icon/user.svg' %}" alt=""> </span>
+                        <span style="transition-delay:50ms;"> U </span>
+                        <span style="transition-delay:100ms;"> s </span>
+                        <span style="transition-delay:150ms;"> e </span>
+                        <span style="transition-delay:200ms;"> r </span>
+                        <span style="transition-delay:250ms;"> n </span>
+                        <span style="transition-delay:300ms;"> a </span>
+                        <span style="transition-delay:350ms;"> m </span>
+                        <span style="transition-delay:400ms;"> e </span>
+                    </label>
+                </div>
+
+                <div class="form-control">
+                    <input type="password" name="password" required>
+                    <label>
+                        <span style="transition-delay:0ms;"> <img style="margin-right: 1rem;" width="20px" src="{% static 'main/icon/lock.svg' %}" alt=""> </span>
+                        <span style="transition-delay:50ms;"> P </span>
+                        <span style="transition-delay:100ms;"> a </span>
+                        <span style="transition-delay:150ms;"> s </span>
+                        <span style="transition-delay:200ms;"> s </span>
+                        <span style="transition-delay:250ms;"> w </span>
+                        <span style="transition-delay:300ms;"> o </span>
+                        <span style="transition-delay:350ms;"> r </span>
+                        <span style="transition-delay:400ms;"> d </span>
+                    </label>
+                </div>
+
+                <p> {{ message }} </p>
+
+                <button type="submit" class="cssbuttons-io">
+                    <span>
+                        Login
+                        <img src="{% static 'main/icon/send.svg' %}" alt="">
+                    </span>
+                </button>
+            </form>
+        </div>
+
+        <div>
+            <a href=""> Forgot Password ? </a>
+            <a href="{% url 'register' %}"> Create Account </a>
+        </div>
+
+    </div>
+</body>
+</html>

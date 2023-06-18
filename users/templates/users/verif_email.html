@@ -1,0 +1,28 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'users/css/email_verif/style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'main/img/smart_chat_icon.webp' %}"/>
+
+    <title> SmartChat | Email Veryfi </title>
+</head>
+<body>
+    
+    <main class="verif_passed_img">
+        <img src="{% static 'main/icon/check-circle.svg' %}" alt="">
+
+        <h1> Verification Passed <br> You can login to your account </h1>
+
+        <div>
+            <a href="{% url 'login' %}"> <button> Login </button> </a>
+        </div>
+
+    </main>
+
+</body>
+</html>

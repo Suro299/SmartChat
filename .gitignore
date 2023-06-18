@@ -1,4 +1,6 @@
-venv
-core/tasks.txt
-core/core/config.py
-.vscode
+runtime.txt
+Procfile
+
+
+db.sqlite3
+core/config

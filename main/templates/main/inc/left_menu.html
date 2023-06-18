@@ -1,0 +1,55 @@
+{% load static %}
+
+<menu>
+    <div>
+        <h1> Pages </h1>
+    </div>
+    <hr>
+
+    <ul>
+        <li class = "{% if page == 'posts' %} active {% endif %}" ><a href="{% url 'posts' %}"> <img src="{% static 'main/icon/posts.svg' %}" alt=""> Posts </a></li>
+        <li class = "{% if page == 'chats' %} active {% endif %}" >
+            <a href="{% url 'empty_chat' %}"> 
+                <img src="{% static 'main/icon/message.svg' %}" alt=""> 
+                Chats (Beta)  
+
+                
+                <div style="margin-left: 1rem; display: none;" id = "unreaded_msg_block" >
+                    <span class = "unread_message_div chatlist_urm">
+                        <h1 id = "umc_count"> {{ total_unread_messages }} </h1>
+                    </span>
+                </div>
+                
+            </a>
+        </li>
+        <li> <a href="{% url 'sponsor' %}"> <img src="{% static 'main/icon/film.svg' %}" alt="" /> Sponsor </a></li>
+    
+    </ul>
+
+
+    <script >
+        function UpdateUnreadedMessagesCount() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "{% url 'upadte_total_uread_messages' %}", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    var container = document.getElementById("unreaded_msg_block");  
+
+                    unreaded_messages_count = response.unreaded_messages_count
+
+                    if (unreaded_messages_count) {
+                        container.setAttribute("style", "margin-left: 1rem; display: flex;")
+                        document.getElementById("umc_count").innerText = unreaded_messages_count
+                    } else {
+                        container.setAttribute("style", "display: none;")
+
+                    }
+                }
+            };
+            xhr.send();
+        }
+        setInterval(UpdateUnreadedMessagesCount, 2000);
+    </script>
+
+</menu>

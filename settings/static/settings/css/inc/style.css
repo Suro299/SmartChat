@@ -1,0 +1,95 @@
+menu {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  padding: 2rem;
+  background-color: #181818;
+  box-shadow: 13px 0px 20px 0px rgba(0, 0, 0, 0.308);
+}
+menu > h1 {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+@media screen and (max-width: 900px) {
+  menu > h1 {
+    display: none;
+  }
+}
+menu > ul {
+  list-style: none;
+  width: 100%;
+  padding: 0.5rem;
+}
+@media screen and (max-width: 900px) {
+  menu > ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 0;
+    flex-direction: column;
+  }
+}
+@media (max-width: 900px) {
+  menu > ul:not(:last-child) {
+    border-bottom: 1px solid silver;
+    margin-bottom: 2rem;
+  }
+}
+menu > ul > li {
+  width: 100%;
+  display: flex;
+  margin-bottom: 2rem;
+  justify-content: start;
+  align-items: center;
+  opacity: 70%;
+  transition: 0.2s;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -ms-transition: 0.2s;
+  -o-transition: 0.2s;
+}
+@media (max-width: 900px) {
+  menu > ul > li {
+    justify-content: center;
+  }
+}
+menu > ul > li > a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+menu > ul > li > a > p {
+  color: rgb(167, 167, 167);
+  font-size: 1.8rem;
+}
+@media (max-width: 900px) {
+  menu > ul > li > a > p {
+    display: none;
+  }
+}
+menu > ul > li > a > svg {
+  margin-right: 1rem;
+}
+@media (max-width: 900px) {
+  menu > ul > li > a > svg {
+    margin-right: 0rem;
+  }
+}
+menu > ul > li:hover {
+  cursor: pointer;
+  opacity: 100%;
+}
+menu > ul > li:hover > a > p {
+  color: whitesmoke;
+}
+menu > ul .active {
+  opacity: 100;
+}
+menu > ul .active > a > p {
+  color: rgb(255, 195, 54);
+}
+menu > ul .active > a > svg {
+  stroke: rgb(255, 195, 54);
+}/*# sourceMappingURL=style.css.map */

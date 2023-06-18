@@ -1,0 +1,141 @@
+$bgc_1: #101010;
+$txt_cl_1: whitesmoke;
+$txt_cl_2: rgb(167, 167, 167);
+
+@mixin overflow {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+  width: 1.5rem;
+  border-radius: 0 1rem 1rem 0;
+  background-color: #1f1f1f;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background-color: #7b7b7b;
+  border: 0.5rem solid #1f1f1f;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+html {
+  font-size: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: $txt_cl_1;
+}
+
+body {
+  background-color: $bgc_1;
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 0.8fr repeat(4, 1fr) 0.8fr;
+  grid-template-rows: 0.4fr repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  overflow: hidden;
+}
+
+.goBack {
+    left: 2rem;
+    top: 8rem;    
+    color: #1f1f1f;
+    padding: 0.8rem 2.5rem;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    position: absolute;
+    outline: none;
+    background: #f9513e;
+    border: none;
+    z-index: 1;
+    font-size: 1.6rem;
+    box-shadow:  0 0 8px #cd3c2b, 0 0 8px #a93629;
+
+
+    &::after {
+        position: absolute;
+        content: "";
+        width: 0;
+        height: 100%;
+        top: 0;
+        right: 0;
+        z-index: -1;
+        background-color: #ff3d3d;
+        transition: all 0.3s ease;
+    }
+    
+    &:hover {
+        color: #000000;
+
+        &:after {
+            left: 0;
+            width: 100%;
+        }
+    }
+
+    &:active {
+        top: 6.5rem;    
+    }
+}
+
+main {
+  grid-area: 2 / 1 / 7 / 7;
+  padding: 3rem 0 15rem 0;
+  height: auto;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+
+  @include overflow();
+
+  & > a {
+    width: 30rem;
+    height: 48rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+    margin: 2rem;
+    padding: 2rem;
+    background-color: #181818;
+    border-radius: 1rem;
+    resize: vertical;
+    color: $txt_cl_1;
+    box-shadow:  0 0 16px #0a0a0a, 0 0 16px #262626;
+    transition: 0.2s;
+    
+    &:hover {
+        background-color: #1f1f1f;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    img {
+      width: 100%;
+      height: 70%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: 1.4rem;
+        color: $txt_cl_2;
+    }
+  }
+}

@@ -1,0 +1,116 @@
+$bgc_2: #181818;
+
+$txt_cl_1: whitesmoke;
+$txt_cl_2: rgb(167, 167, 167);
+
+
+
+menu {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+    padding: 2rem;
+    background-color: $bgc_2;
+    -webkit-box-shadow: 13px 0px 20px 0px rgba(0, 0, 0, 0.308);
+    -moz-box-shadow: 13px 0px 20px 0px rgba(0, 0, 0, 0.308);
+    box-shadow: 13px 0px 20px 0px rgba(0, 0, 0, 0.308);
+
+  
+
+    & > h1 {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 3rem;
+
+        @media screen and (max-width: 900px) {
+            display: none;
+        }
+    }
+
+    & > ul {
+        list-style: none;
+        width: 100%;
+        padding: 0.5rem;
+
+        @media screen and (max-width: 900px) {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5rem 0;
+            flex-direction: column;
+        }
+      
+    
+        &:not(:last-child) {
+            @media (max-width: 900px) {
+                border-bottom: 1px solid silver;
+                margin-bottom: 2rem;
+            }
+        }  
+
+        & > li {
+            width: 100%;
+            display: flex;
+            margin-bottom: 2rem;
+            justify-content: start;
+            align-items: center;
+            opacity: 70%;
+            transition: 0.2s;
+            -webkit-transition: 0.2s;
+            -moz-transition: 0.2s;
+            -ms-transition: 0.2s;
+            -o-transition: 0.2s;
+
+            @media (max-width: 900px) {
+                justify-content: center;
+            }
+
+            & > a {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                & > p {
+    
+                    color: $txt_cl_2;
+                    font-size: 1.8rem;
+
+                    @media (max-width: 900px) {
+                        display: none;
+                    }
+                }
+    
+                & > svg {
+                    margin-right: 1rem;
+
+                    @media (max-width: 900px) {
+                        margin-right: 0rem;
+                    }
+                }
+            }
+            
+            &:hover {
+                cursor: pointer;
+                opacity: 100%;
+
+                & > a > p {
+                    color: $txt_cl_1;   
+                }
+            }
+           
+        }
+
+        .active {
+            opacity: 100;
+
+            & > a > p {
+                color: rgb(255, 195, 54);
+            }
+
+            & > a > svg {
+                stroke: rgb(255, 195, 54);
+            }
+        }
+    }
+}

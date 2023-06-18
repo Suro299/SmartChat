@@ -1,0 +1,36 @@
+<div class = "chat_list">
+    <h1> Your Chats </h1>
+      
+    <div id = "chats_div">
+        {% for i in user_chats%}
+            {% if i.member_1 == user %}  
+                <a class = "{% if i.member_2 == companion %} active {% endif %}" href="{% url 'chat' i.member_2.id %}">
+                    <span>
+                        <img src="{{ i.member_2.avatar.url }}" alt="">
+                        <h1> {{ i.member_2.username }} </h1>
+                    </span>
+
+                    {% if i.unread_messages %}
+                        <span class = "unread_message_div" >
+                            <h1> {{ i.unread_messages }} </h1>
+                        </span>
+                    {% endif %}
+                </a>
+            {% else %}
+                <a class = "{% if i.member_1 == companion %} active {% endif %}" href="{% url 'chat' i.member_1.id %}">
+                    <span>
+                        <img src="{{ i.member_1.avatar.url }}" alt="">
+                        <h1> {{ i.member_1.username }} </h1>
+                    </span>
+
+                    {% if i.unread_messages %}
+                        <span class = "unread_message_div" >
+                            <h1> {{ i.unread_messages }} </h1>
+                        </span>
+                    {% endif %}
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+</div>
